@@ -27,7 +27,7 @@ std::tuple<double, double, double> receive_input() {
     std::cin >> b;
     std::cout << "c=";
     std::cin >> c;
-    return std::tuple{a, b, c};
+    return std::tuple<double, double, double>{a, b, c};
 }
 
 std::string format_operand(double multiplier, std::string multiplicand, bool isEquationHead) {
@@ -37,7 +37,6 @@ std::string format_operand(double multiplier, std::string multiplicand, bool isE
         if (!isEquationHead) {
             sstm << "+";
         }
-        
         sstm << multiplicand;
     } else if (multiplier != 0) {
         if (multiplier < 0) {
