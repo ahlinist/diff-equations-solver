@@ -2,4 +2,4 @@
 
 # Run
 
-g++ -o diff-eq-solver *.cpp && ./diff-eq-solver
+g++ -o diff-eq-solver src/*.cpp src/input/*.cpp && ./diff-eq-solver
