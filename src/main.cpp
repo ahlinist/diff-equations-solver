@@ -5,6 +5,8 @@
 #include "input/input_formatter.hpp"
 
 int main() {
+    std::cout << "Greetings at differential equations solver. I can solve linear homogenous differential equations of 2-nd order: a*x''+b*x'+c*x=0" << std::endl;
+    
     input::InputParser input_parser;
     auto [a, b, c] = input_parser.receive_input();
 
