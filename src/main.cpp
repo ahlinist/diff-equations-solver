@@ -13,7 +13,7 @@ int main() {
     input::InputFormatter input_formatter;
     std::string equation = input_formatter.format_equation(a, b, c);
 
-    std::cout << "The equation to be solved: " << equation << "=0" << std::endl;
+    std::cout << "The equation to be solved: " << equation << std::endl;
 
     //to be dealt with later
     long double discriminant = b*b - 4*a*c;
