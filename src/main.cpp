@@ -3,6 +3,8 @@
 
 #include "input/input_parser.hpp"
 #include "input/input_formatter.hpp"
+#include "calc/solution.hpp"
+#include "calc/equation_solver.hpp"
 
 int main() {
     std::cout << "Greetings at differential equations solver. I can solve linear homogenous differential equations of 2-nd order: a*x''+b*x'+c*x=0" << std::endl;
@@ -15,7 +17,11 @@ int main() {
 
     std::cout << "The equation to be solved: " << equation << std::endl;
 
-    //to be dealt with later
-    long double discriminant = b*b - 4*a*c;
-    std::cout << "discriminant: " << discriminant << std::endl;
+    calc::EquationSolver equation_solver;
+    calc::Solution * solution;
+    solution = equation_solver.find_general_solution(a, b, c);
+
+    std::cout << "General solution is: " <<  solution->display() << std::endl;
+
+    delete solution;
 }
