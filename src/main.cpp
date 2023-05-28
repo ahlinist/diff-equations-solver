@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <memory>
 
 #include "input/input_parser.hpp"
 #include "input/input_formatter.hpp"
@@ -18,10 +19,7 @@ int main() {
     std::cout << "The equation to be solved: " << equation << std::endl;
 
     calc::EquationSolver equation_solver;
-    calc::Solution * solution;
-    solution = equation_solver.find_general_solution(a, b, c);
+    std::unique_ptr<calc::Solution> solution = equation_solver.find_general_solution(a, b, c);
 
     std::cout << "General solution is: " <<  solution->display() << std::endl;
-
-    delete solution;
 }
