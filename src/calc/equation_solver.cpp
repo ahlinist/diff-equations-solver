@@ -1,7 +1,8 @@
+#include "equation_solver.hpp"
+
 #include <cmath>
 #include <memory>
 
-#include "equation_solver.hpp"
 #include "solution.hpp"
 
 std::unique_ptr<calc::Solution> calc::EquationSolver::find_general_solution(double a, double b, double c) {

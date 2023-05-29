@@ -1,7 +1,7 @@
+#include "input_formatter.hpp"
+
 #include <sstream>
 #include <string>
-
-#include "input_formatter.hpp"
 
 std::string input::InputFormatter::format_operand(double multiplier, std::string multiplicand, bool isEquationHead) {
     std::stringstream sstm{};

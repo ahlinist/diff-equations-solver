@@ -1,7 +1,7 @@
+#include "input_parser.hpp"
+
 #include <tuple>
 #include <iostream>
-
-#include "input_parser.hpp"
 
 std::tuple<double, double, double> input::InputParser::receive_input() {
     std::cout << "Please enter a, b and c." << std::endl;

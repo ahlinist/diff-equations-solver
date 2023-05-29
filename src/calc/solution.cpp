@@ -1,7 +1,7 @@
+#include "solution.hpp"
+
 #include <string>
 #include <sstream>
-
-#include "solution.hpp"
 
 std::string calc::UnderDampedSolution::display() {
     std::stringstream sstm{};
