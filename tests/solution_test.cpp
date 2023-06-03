@@ -11,6 +11,7 @@ TEST(SolutionTestSuite, DisplaysGeneralUnderDampedSolution) {
     //when
     std::string actual = solution.display_general();
 
+    //then
     EXPECT_EQ(actual, expected);
 }
 
@@ -22,6 +23,7 @@ TEST(SolutionTestSuite, DisplaysGeneralOverDampedSolution) {
     //when
     std::string actual = solution.display_general();
 
+    //then
     EXPECT_EQ(actual, expected);
 }
 
@@ -33,6 +35,7 @@ TEST(SolutionTestSuite, DisplaysGeneralCriticallyDampedSolution) {
     //when
     std::string actual = solution.display_general();
 
+    //then
     EXPECT_EQ(actual, expected);
 }
 
