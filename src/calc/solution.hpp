@@ -14,7 +14,7 @@ namespace calc {
             : first_root{ first_root }, second_root{ second_root } 
             {}
         virtual ~Solution() {}
-        virtual std::string display() = 0;
+        virtual std::string display_general() = 0;
     protected:
         Root first_root;
         Root second_root;
@@ -23,19 +23,19 @@ namespace calc {
     class UnderDampedSolution : public Solution {
         using Solution::Solution;
     public:
-        std::string display();
+        std::string display_general();
     };
 
     class OverDampedSolution : public Solution {
         using Solution::Solution;
     public:
-        std::string display();
+        std::string display_general();
     };
 
     class CriticallyDampedSolution : public Solution {
         using Solution::Solution;
     public:
-        std::string display();
+        std::string display_general();
     };
 }
 

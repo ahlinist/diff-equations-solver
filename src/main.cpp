@@ -21,5 +21,5 @@ int main() {
     calc::EquationSolver equation_solver;
     std::unique_ptr<calc::Solution> solution = equation_solver.find_general_solution(a, b, c);
 
-    std::cout << "General solution is: " <<  solution->display() << std::endl;
+    std::cout << "General solution is: " <<  solution->display_general() << std::endl;
 }
