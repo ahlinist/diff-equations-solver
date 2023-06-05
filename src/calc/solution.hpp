@@ -18,24 +18,31 @@ namespace calc {
     protected:
         Root first_root;
         Root second_root;
+        virtual void validate_roots(Root first_root, Root second_root) = 0;
     };
 
     class UnderDampedSolution : public Solution {
-        using Solution::Solution;
     public:
+        explicit UnderDampedSolution(Root first_root, Root second_root);
         std::string display_general();
+    protected:
+        void validate_roots(Root first_root, Root second_root);
     };
 
     class OverDampedSolution : public Solution {
-        using Solution::Solution;
     public:
+        explicit OverDampedSolution(Root first_root, Root second_root);
         std::string display_general();
+    protected:
+        void validate_roots(Root first_root, Root second_root);
     };
 
     class CriticallyDampedSolution : public Solution {
-        using Solution::Solution;
     public:
+        explicit CriticallyDampedSolution(Root first_root, Root second_root);
         std::string display_general();
+    protected:
+        void validate_roots(Root first_root, Root second_root);
     };
 }
 
