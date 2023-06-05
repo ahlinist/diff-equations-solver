@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <string>
 
-#include "../src/calc/solution.hpp"
+#include "../../src/calc/solution.hpp"
 
 TEST(SolutionTestSuite, DisplaysGeneralUnderDampedSolution) {
     //given
@@ -118,9 +118,4 @@ TEST(SolutionTestSuite, CriticallyDampedThrowsInvalidArgumentWhenImaginaryPartsP
     } catch (const std::invalid_argument& e) {
         EXPECT_STREQ("Roots contain imaginary parts!\nReal parts are not the same!\n", e.what());
     }
-}
-
-int main(int argc, char** argv) {
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
 }

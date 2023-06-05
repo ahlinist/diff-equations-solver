@@ -11,6 +11,8 @@ std::string input::InputFormatter::format_operand(double multiplier, std::string
             sstm << "+";
         }
         sstm << multiplicand;
+    } else if (multiplier == -1) {
+        sstm << "-" << multiplicand;
     } else if (multiplier != 0) {
         if (multiplier > 0 && !isEquationHead) {
             sstm << "+";
