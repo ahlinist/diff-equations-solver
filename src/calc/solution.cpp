@@ -15,6 +15,13 @@ calc::CriticallyDampedSolution::CriticallyDampedSolution(Root first_root, Root s
             : calc::Solution(first_root , second_root) 
             { validate_roots(first_root, second_root); }
 
+bool calc::Solution::operator==(const calc::Solution& other) const {
+    return first_root.real_part == other.first_root.real_part 
+        and first_root.imaginary_part == other.first_root.imaginary_part 
+        and second_root.real_part == other.second_root.real_part
+        and second_root.imaginary_part == other.second_root.imaginary_part;
+}
+
 std::string calc::UnderDampedSolution::display_general() {
     std::stringstream sstm{};
     sstm << "x = e^(" << first_root.real_part << "*t)*(A*cos(" << first_root.imaginary_part << "*t)+i*B*sin(" << first_root.imaginary_part << "*t))";

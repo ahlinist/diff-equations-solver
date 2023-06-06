@@ -15,6 +15,7 @@ namespace calc {
             {}
         virtual ~Solution() {}
         virtual std::string display_general() = 0;
+        virtual bool operator==(const Solution& other) const;
     protected:
         Root first_root;
         Root second_root;

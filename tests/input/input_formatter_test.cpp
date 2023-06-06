@@ -1,5 +1,6 @@
-#include <gtest/gtest.h>
 #include <string>
+
+#include <gtest/gtest.h>
 
 #include "../../src/input/input_formatter.hpp"
 
@@ -18,7 +19,7 @@ TEST_P(InputFormatterMultipleParametersTests, ChecksIfTheEquationIsFormattedCorr
 }
 
 INSTANTIATE_TEST_CASE_P(
-        LeapYearTests,
+        FormatInitialEquation,
         InputFormatterMultipleParametersTests,
         ::testing::Values(
                 std::make_tuple("x''+x'+x=0", 1, 1, 1),
