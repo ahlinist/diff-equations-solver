@@ -11,7 +11,7 @@ int main() {
     std::cout << "Greetings at differential equations solver. I can solve linear homogenous differential equations of 2-nd order: a*x''+b*x'+c*x=0" << std::endl;
     
     input::InputParser input_parser;
-    auto [a, b, c] = input_parser.receive_input();
+    auto [a, b, c] = input_parser.receive_equation_coefficients();
 
     input::InputFormatter input_formatter;
     std::string equation = input_formatter.format_equation(a, b, c);
@@ -22,4 +22,6 @@ int main() {
     std::unique_ptr<calc::Solution> solution = equation_solver.find_general_solution(a, b, c);
 
     std::cout << "General solution is: " <<  solution->display_general() << std::endl;
+
+    auto [initial_x, initial_x_prime] = input_parser.receive_initial_conditions();
 }
