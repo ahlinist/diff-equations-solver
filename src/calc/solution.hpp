@@ -10,22 +10,28 @@ namespace calc {
             long double real_part{};
             long double imaginary_part{};
         };
-        explicit Solution(Root first_root, Root second_root) 
-            : first_root{ first_root }, second_root{ second_root } 
-            {}
+        explicit Solution(Root first_root, Root second_root);
         virtual ~Solution() {}
         virtual std::string display_general() = 0;
-        virtual bool operator==(const Solution& other) const;
+        virtual std::string display_particular() = 0;
+        bool operator==(const Solution& other) const;
+        Root get_first_root();
+        Root get_second_root();
+        void set_coefficient_a(long double coefficient_a);
+        void set_coefficient_b(long double coefficient_b);
     protected:
-        Root first_root;
-        Root second_root;
+        Root first_root{};
+        Root second_root{};
+        double coefficient_a{};
+        double coefficient_b{};
         virtual void validate_roots(Root first_root, Root second_root) = 0;
     };
 
     class UnderDampedSolution : public Solution {
     public:
         explicit UnderDampedSolution(Root first_root, Root second_root);
-        std::string display_general();
+        std::string display_general() override;
+        std::string display_particular() override;
     protected:
         void validate_roots(Root first_root, Root second_root);
     };
@@ -33,7 +39,8 @@ namespace calc {
     class OverDampedSolution : public Solution {
     public:
         explicit OverDampedSolution(Root first_root, Root second_root);
-        std::string display_general();
+        std::string display_general() override;
+        std::string display_particular() override;
     protected:
         void validate_roots(Root first_root, Root second_root);
     };
@@ -41,7 +48,8 @@ namespace calc {
     class CriticallyDampedSolution : public Solution {
     public:
         explicit CriticallyDampedSolution(Root first_root, Root second_root);
-        std::string display_general();
+        std::string display_general() override;
+        std::string display_particular() override;
     protected:
         void validate_roots(Root first_root, Root second_root);
     };

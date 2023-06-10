@@ -7,7 +7,7 @@
 TEST(SolutionTestSuite, DisplaysGeneralUnderDampedSolution) {
     //given
     calc::UnderDampedSolution solution{{-1.1, 2.2}, {-1.1, -2.2}};
-    std::string expected = "x = e^(-1.1*t)*(A*cos(2.2*t)+i*B*sin(2.2*t))";
+    std::string expected = "x = e^(-1.1*t)*(A*cos(2.2*t)+B*sin(2.2*t))";
 
     //when
     std::string actual = solution.display_general();
