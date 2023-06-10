@@ -120,3 +120,6 @@ TEST(SolutionTestSuite, CriticallyDampedThrowsInvalidArgumentWhenImaginaryPartsP
         EXPECT_STREQ("Roots contain imaginary parts!\nReal parts are not the same!\n", e.what());
     }
 }
+
+
+TODO: test display particular here!!!

@@ -23,26 +23,29 @@ std::shared_ptr<calc::Solution> calc::CriticallyDampedEquationSolver::find_gener
     return std::make_shared<calc::CriticallyDampedSolution>(calc::CriticallyDampedSolution{{roots_real_part, 0}, {roots_real_part, 0}});
 }
 
-std::shared_ptr<calc::Solution> calc::UnderDampedEquationSolver::find_particular_solution(std::shared_ptr<calc::Solution> solution, const double& initial_x, const double& initial_x_prime) {    
+std::shared_ptr<calc::Solution> calc::UnderDampedEquationSolver::find_particular_solution(std::shared_ptr<calc::Solution> general_solution, const double& initial_x, const double& initial_x_prime) {    
     long double coefficient_a = initial_x;
-    long double coefficient_b = (initial_x_prime - solution->get_first_root().real_part*initial_x)/solution->get_first_root().imaginary_part;
-    solution->set_coefficient_a(coefficient_a);
-    solution->set_coefficient_b(coefficient_b);
-    return solution;
+    long double coefficient_b = (initial_x_prime - general_solution->get_first_root().real_part*initial_x)/general_solution->get_first_root().imaginary_part;
+    std::shared_ptr<calc::Solution> particular_solution = general_solution;
+    particular_solution->set_coefficient_a(coefficient_a);
+    particular_solution->set_coefficient_b(coefficient_b);
+    return particular_solution;
 }
 
-std::shared_ptr<calc::Solution> calc::OverDampedEquationSolver::find_particular_solution(std::shared_ptr<calc::Solution> solution, const double& initial_x, const double& initial_x_prime) {
-    long double coefficient_b = (initial_x_prime - solution->get_first_root().real_part*initial_x)/(solution->get_second_root().real_part - solution->get_first_root().real_part);
+std::shared_ptr<calc::Solution> calc::OverDampedEquationSolver::find_particular_solution(std::shared_ptr<calc::Solution> general_solution, const double& initial_x, const double& initial_x_prime) {
+    long double coefficient_b = (initial_x_prime - general_solution->get_first_root().real_part*initial_x)/(general_solution->get_second_root().real_part - general_solution->get_first_root().real_part);
     long double coefficient_a = initial_x - coefficient_b;
-    solution->set_coefficient_a(coefficient_a);
-    solution->set_coefficient_b(coefficient_b);
-    return solution;
+    std::shared_ptr<calc::Solution> particular_solution = general_solution;
+    particular_solution->set_coefficient_a(coefficient_a);
+    particular_solution->set_coefficient_b(coefficient_b);
+    return particular_solution;
 }
 
-std::shared_ptr<calc::Solution> calc::CriticallyDampedEquationSolver::find_particular_solution(std::shared_ptr<calc::Solution> solution, const double& initial_x, const double& initial_x_prime) {
+std::shared_ptr<calc::Solution> calc::CriticallyDampedEquationSolver::find_particular_solution(std::shared_ptr<calc::Solution> general_solution, const double& initial_x, const double& initial_x_prime) {
     long double coefficient_a = initial_x;
-    long double coefficient_b = initial_x_prime - solution->get_first_root().real_part;
-    solution->set_coefficient_a(coefficient_a);
-    solution->set_coefficient_b(coefficient_b);
-    return solution;
+    long double coefficient_b = initial_x_prime - general_solution->get_first_root().real_part;
+    std::shared_ptr<calc::Solution> particular_solution = general_solution;
+    particular_solution->set_coefficient_a(coefficient_a);
+    particular_solution->set_coefficient_b(coefficient_b);
+    return particular_solution;
 }

@@ -28,5 +28,5 @@ int main() {
 
     auto [initial_x, initial_x_prime] = input_parser.receive_initial_conditions();
     std::shared_ptr<calc::Solution> particular_solution = equation_solver->find_particular_solution(general_solution, initial_x, initial_x_prime);
-    //std::cout << "Particular solution for the given initial conditions is: " << particular_solution->display_particular() << std::endl; <- HERE COMES THE DOUBLE FREE!!!
+    std::cout << "Particular solution for the given initial conditions is: " << particular_solution->display_particular() << std::endl;
 }

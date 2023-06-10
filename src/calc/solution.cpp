@@ -76,7 +76,9 @@ std::string calc::OverDampedSolution::display_general() {
 }
 
 std::string calc::OverDampedSolution::display_particular() {
-
+    std::stringstream sstm{};
+    sstm << "x = " << coefficient_a << "*e^(" << first_root.real_part << "*t) + " << coefficient_b << "*e^(" << second_root.real_part << "*t)";
+    return sstm.str();
 }
 
 void calc::OverDampedSolution::validate_roots(calc::Solution::Root first_root, calc::Solution::Root second_root) {
@@ -101,7 +103,9 @@ std::string calc::CriticallyDampedSolution::display_general() {
 }
 
 std::string calc::CriticallyDampedSolution::display_particular() {
-
+    std::stringstream sstm{};
+    sstm << "x = (" << coefficient_a << " + " << coefficient_b << "*t)e^(" << first_root.real_part << "*t)";
+    return sstm.str();
 }
 
 void calc::CriticallyDampedSolution::validate_roots(calc::Solution::Root first_root, calc::Solution::Root second_root) {
