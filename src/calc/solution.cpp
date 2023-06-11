@@ -61,9 +61,9 @@ std::string calc::UnderDampedSolution::display_particular() {
     sstm << "x = ";
     if (first_root.real_part) {
         if (first_root.real_part == 1) {
-            sstm << "e^t*";
+            sstm << "e^(t)*";
         } else if (first_root.real_part == -1) {
-            sstm << "e^-t*";
+            sstm << "e^(-t)*";
         } else {
             sstm << "e^(" << first_root.real_part << "t)*";
         }
@@ -140,10 +140,48 @@ std::string calc::OverDampedSolution::display_general() {
     return sstm.str();
 }
 
-//TODO: format so that 0, 1, and -1 are reflected gracefully
 std::string calc::OverDampedSolution::display_particular() {
     std::stringstream sstm{};
-    sstm << "x = " << coefficient_a << "*e^(" << first_root.real_part << "*t) + " << coefficient_b << "*e^(" << second_root.real_part << "*t)";
+    sstm << "x = ";
+    if (coefficient_a) {
+        if (coefficient_a == -1) {
+            sstm << "-";
+        } else if (coefficient_a != 1) {
+            sstm << coefficient_a;
+        }
+
+        if (first_root.real_part) {
+            sstm << "e^";
+            
+            if (first_root.real_part == 1) {
+                sstm << "(t)";
+            } else if (first_root.real_part == -1) {
+                sstm << "(-t)";
+            } else {
+                sstm << "(" << first_root.real_part << "t)";
+            }
+        }
+    }
+
+    if (coefficient_a and coefficient_b > 0) {
+        sstm << "+";
+    }
+
+    if (coefficient_b) {
+        sstm << coefficient_b;
+
+        if (second_root.real_part) {
+            sstm << "e^";
+            
+            if (second_root.real_part == 1) {
+                sstm << "(t)";
+            } else if (second_root.real_part == -1) {
+                sstm << "(-t)";
+            } else {
+                sstm << "(" << second_root.real_part << "t)";
+            }
+        }
+    }
     return sstm.str();
 }
 

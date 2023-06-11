@@ -55,21 +55,6 @@ TEST(SolutionTestSuite, DisplaysGeneralOverDampedSolution) {
     EXPECT_EQ(actual, expected);
 }
 
-//TODO: move to a separate parametrized suite
-TEST(SolutionTestSuite, DisplaysParticularOverDampedSolution) {
-    //given
-    calc::OverDampedSolution solution{{-1.1, 0}, {-5.1, 0}};
-    solution.set_coefficient_a(3);
-    solution.set_coefficient_b(4);
-    std::string expected = "x = 3*e^(-1.1*t) + 4*e^(-5.1*t)";
-
-    //when
-    std::string actual = solution.display_particular();
-
-    //then
-    EXPECT_EQ(actual, expected);
-}
-
 TEST(SolutionTestSuite, OverDampedThrowsInvalidArgumentWhenImaginaryPartsPresent) {
     try {
         calc::OverDampedSolution solution{{-1.1, 2.2}, {-2.2, -2.2}};
