@@ -56,10 +56,66 @@ std::string calc::UnderDampedSolution::display_general() {
     return sstm.str();
 }
 
-//TODO: format so that 0, 1, and -1 are reflected gracefully
 std::string calc::UnderDampedSolution::display_particular() {
     std::stringstream sstm{};
-    sstm << "x = e^(" << first_root.real_part << "*t)*(" << coefficient_a << "*cos(" << first_root.imaginary_part << "*t)+" << coefficient_b << "*sin(" << first_root.imaginary_part << "*t))";
+    sstm << "x = ";
+    if (first_root.real_part) {
+        if (first_root.real_part == 1) {
+            sstm << "e^t*";
+        } else if (first_root.real_part == -1) {
+            sstm << "e^-t*";
+        } else {
+            sstm << "e^(" << first_root.real_part << "t)*";
+        }
+    }
+    
+    if (coefficient_a and coefficient_b) {
+        sstm << "(";
+    }
+
+    if (coefficient_a) {
+        if (coefficient_a == 1) {
+            sstm << "cos(";
+        } else if (coefficient_a == -1) {
+            sstm << "-cos(";
+        } else {
+            sstm << coefficient_a << "cos(";
+        }
+
+        if (first_root.imaginary_part == 1) {
+            sstm << "t)";
+        } else if (first_root.imaginary_part == -1) {
+            sstm << "-t)";
+        } else {
+            sstm << first_root.imaginary_part << "t)";
+        }
+    }
+
+    if (coefficient_b) {
+        if (coefficient_b == 1) {
+            sstm << "+sin(";
+        } else if (coefficient_b == -1) {
+            sstm << "-sin(";
+        } else {
+            if (coefficient_b > 0 and coefficient_a) {
+                sstm << "+";
+            }
+            sstm << coefficient_b << "sin(";
+        }
+
+        if (first_root.imaginary_part == 1) {
+            sstm << "t)";
+        } else if (first_root.imaginary_part == -1) {
+            sstm << "-t)";
+        } else {
+            sstm << first_root.imaginary_part << "t)";
+        }
+    }
+
+    if (coefficient_a and coefficient_b) {
+        sstm << ")";
+    }
+
     return sstm.str();
 }
 

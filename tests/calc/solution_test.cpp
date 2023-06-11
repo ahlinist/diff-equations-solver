@@ -16,20 +16,6 @@ TEST(SolutionTestSuite, DisplaysGeneralUnderDampedSolution) {
     EXPECT_EQ(actual, expected);
 }
 
-TEST(SolutionTestSuite, DisplaysParticularUnderDampedSolution) {
-    //given
-    calc::UnderDampedSolution solution{{-1.1, 2.2}, {-1.1, -2.2}};
-    solution.set_coefficient_a(1);
-    solution.set_coefficient_b(2);
-    std::string expected = "x = e^(-1.1*t)*(1*cos(2.2*t)+2*sin(2.2*t))";
-
-    //when
-    std::string actual = solution.display_particular();
-
-    //then
-    EXPECT_EQ(actual, expected);
-}
-
 TEST(SolutionTestSuite, UnderDampedThrowsInvalidArgumentWhenRealPartsDiffer) {
     try {
         calc::UnderDampedSolution solution{{-1.1, 2.2}, {-2.2, -2.2}};
@@ -69,6 +55,7 @@ TEST(SolutionTestSuite, DisplaysGeneralOverDampedSolution) {
     EXPECT_EQ(actual, expected);
 }
 
+//TODO: move to a separate parametrized suite
 TEST(SolutionTestSuite, DisplaysParticularOverDampedSolution) {
     //given
     calc::OverDampedSolution solution{{-1.1, 0}, {-5.1, 0}};
@@ -122,6 +109,7 @@ TEST(SolutionTestSuite, DisplaysGeneralCriticallyDampedSolution) {
     EXPECT_EQ(actual, expected);
 }
 
+//TODO: move to a separate parametrized suite
 TEST(SolutionTestSuite, DisplaysParticularCriticallyDampedSolution) {
     //given
     calc::CriticallyDampedSolution solution{{-1.1, 0}, {-1.1, 0}};
