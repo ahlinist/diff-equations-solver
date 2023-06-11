@@ -94,21 +94,6 @@ TEST(SolutionTestSuite, DisplaysGeneralCriticallyDampedSolution) {
     EXPECT_EQ(actual, expected);
 }
 
-//TODO: move to a separate parametrized suite
-TEST(SolutionTestSuite, DisplaysParticularCriticallyDampedSolution) {
-    //given
-    calc::CriticallyDampedSolution solution{{-1.1, 0}, {-1.1, 0}};
-    solution.set_coefficient_a(0);
-    solution.set_coefficient_b(1);
-    std::string expected = "x = (0 + 1*t)e^(-1.1*t)";
-
-    //when
-    std::string actual = solution.display_particular();
-
-    //then
-    EXPECT_EQ(actual, expected);
-}
-
 TEST(SolutionTestSuite, CriticallyDampedThrowsInvalidArgumentWhenImaginaryPartsPresent) {
     try {
         calc::CriticallyDampedSolution solution{{-1.1, 2.2}, {-1.1, -2.2}};
