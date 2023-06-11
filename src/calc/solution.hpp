@@ -17,6 +17,8 @@ namespace calc {
         bool operator==(const Solution& other) const;
         Root get_first_root();
         Root get_second_root();
+        long double get_coefficient_a();
+        long double get_coefficient_b();
         void set_coefficient_a(long double coefficient_a);
         void set_coefficient_b(long double coefficient_b);
     protected:

@@ -16,6 +16,20 @@ TEST(SolutionTestSuite, DisplaysGeneralUnderDampedSolution) {
     EXPECT_EQ(actual, expected);
 }
 
+TEST(SolutionTestSuite, DisplaysParticularUnderDampedSolution) {
+    //given
+    calc::UnderDampedSolution solution{{-1.1, 2.2}, {-1.1, -2.2}};
+    solution.set_coefficient_a(1);
+    solution.set_coefficient_b(2);
+    std::string expected = "x = e^(-1.1*t)*(1*cos(2.2*t)+2*sin(2.2*t))";
+
+    //when
+    std::string actual = solution.display_particular();
+
+    //then
+    EXPECT_EQ(actual, expected);
+}
+
 TEST(SolutionTestSuite, UnderDampedThrowsInvalidArgumentWhenRealPartsDiffer) {
     try {
         calc::UnderDampedSolution solution{{-1.1, 2.2}, {-2.2, -2.2}};
@@ -50,6 +64,20 @@ TEST(SolutionTestSuite, DisplaysGeneralOverDampedSolution) {
 
     //when
     std::string actual = solution.display_general();
+
+    //then
+    EXPECT_EQ(actual, expected);
+}
+
+TEST(SolutionTestSuite, DisplaysParticularOverDampedSolution) {
+    //given
+    calc::OverDampedSolution solution{{-1.1, 0}, {-5.1, 0}};
+    solution.set_coefficient_a(3);
+    solution.set_coefficient_b(4);
+    std::string expected = "x = 3*e^(-1.1*t) + 4*e^(-5.1*t)";
+
+    //when
+    std::string actual = solution.display_particular();
 
     //then
     EXPECT_EQ(actual, expected);
@@ -94,6 +122,20 @@ TEST(SolutionTestSuite, DisplaysGeneralCriticallyDampedSolution) {
     EXPECT_EQ(actual, expected);
 }
 
+TEST(SolutionTestSuite, DisplaysParticularCriticallyDampedSolution) {
+    //given
+    calc::CriticallyDampedSolution solution{{-1.1, 0}, {-1.1, 0}};
+    solution.set_coefficient_a(0);
+    solution.set_coefficient_b(1);
+    std::string expected = "x = (0 + 1*t)e^(-1.1*t)";
+
+    //when
+    std::string actual = solution.display_particular();
+
+    //then
+    EXPECT_EQ(actual, expected);
+}
+
 TEST(SolutionTestSuite, CriticallyDampedThrowsInvalidArgumentWhenImaginaryPartsPresent) {
     try {
         calc::CriticallyDampedSolution solution{{-1.1, 2.2}, {-1.1, -2.2}};
@@ -120,6 +162,3 @@ TEST(SolutionTestSuite, CriticallyDampedThrowsInvalidArgumentWhenImaginaryPartsP
         EXPECT_STREQ("Roots contain imaginary parts!\nReal parts are not the same!\n", e.what());
     }
 }
-
-
-TODO: test display particular here!!!

@@ -52,7 +52,8 @@ TEST(EquationSolverTestSuite, ShouldReturnPointerToCriticallyDampedParticularSol
     std::shared_ptr<calc::Solution> actual = equation_solver.find_particular_solution(general_solution, 1, 2);
 
     //then
-    EXPECT_EQ(actual->display_particular(), "x = (1 + 3*t)e^(-1*t)");
+    EXPECT_EQ(actual->get_coefficient_a(), 1);
+    EXPECT_EQ(actual->get_coefficient_b(), 3);
 }
 
 TEST(EquationSolverTestSuite, ShouldReturnPointerToUnderDampedParticularSolution) {
@@ -65,7 +66,8 @@ TEST(EquationSolverTestSuite, ShouldReturnPointerToUnderDampedParticularSolution
     std::shared_ptr<calc::Solution> actual = equation_solver.find_particular_solution(general_solution, 1, 1);
 
     //then
-    EXPECT_EQ(actual->display_particular(), "x = e^(-0.5*t)*(1*cos(0.866025*t)+1.73205*sin(0.866025*t))");
+    EXPECT_EQ(actual->get_coefficient_a(), 1);
+    EXPECT_EQ(actual->get_coefficient_b(), std::sqrt(3));
 }
 
 TEST(EquationSolverTestSuite, ShouldReturnPointerToOverDampedParticularSolution) {
@@ -77,7 +79,6 @@ TEST(EquationSolverTestSuite, ShouldReturnPointerToOverDampedParticularSolution)
     std::shared_ptr<calc::Solution> actual = equation_solver.find_particular_solution(general_solution, 2, 5);
 
     //then
-    EXPECT_EQ(actual->display_particular(), "x = -4*e^(-2*t) + 6*e^(-0.5*t)");
+    EXPECT_EQ(actual->get_coefficient_a(), -4);
+    EXPECT_EQ(actual->get_coefficient_b(), 6);
 }
-
-TODO: test not display solution, but getters for coefficients! create the required getters!

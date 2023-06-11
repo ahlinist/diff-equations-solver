@@ -27,6 +27,14 @@ calc::Solution::Root calc::Solution::get_second_root() {
     return second_root;
 }
 
+long double calc::Solution::get_coefficient_a() {
+    return coefficient_a;
+}
+
+long double calc::Solution::get_coefficient_b() {
+    return coefficient_b;
+}
+
 void calc::Solution::set_coefficient_a(long double coefficient_value) {
     coefficient_a = coefficient_value;
 }
@@ -48,6 +56,7 @@ std::string calc::UnderDampedSolution::display_general() {
     return sstm.str();
 }
 
+//TODO: format so that 0, 1, and -1 are reflected gracefully
 std::string calc::UnderDampedSolution::display_particular() {
     std::stringstream sstm{};
     sstm << "x = e^(" << first_root.real_part << "*t)*(" << coefficient_a << "*cos(" << first_root.imaginary_part << "*t)+" << coefficient_b << "*sin(" << first_root.imaginary_part << "*t))";
@@ -75,6 +84,7 @@ std::string calc::OverDampedSolution::display_general() {
     return sstm.str();
 }
 
+//TODO: format so that 0, 1, and -1 are reflected gracefully
 std::string calc::OverDampedSolution::display_particular() {
     std::stringstream sstm{};
     sstm << "x = " << coefficient_a << "*e^(" << first_root.real_part << "*t) + " << coefficient_b << "*e^(" << second_root.real_part << "*t)";
@@ -102,6 +112,7 @@ std::string calc::CriticallyDampedSolution::display_general() {
     return sstm.str();
 }
 
+//TODO: format so that 0, 1, and -1 are reflected gracefully
 std::string calc::CriticallyDampedSolution::display_particular() {
     std::stringstream sstm{};
     sstm << "x = (" << coefficient_a << " + " << coefficient_b << "*t)e^(" << first_root.real_part << "*t)";
