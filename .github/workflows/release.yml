@@ -22,6 +22,4 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: 
-          - ${{ secrets.DOCKERHUB_USERNAME }}/diff-eq-solver:${{github.run_number}}
-          - ${{ secrets.DOCKERHUB_USERNAME }}/diff-eq-solver:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/diff-eq-solver:${{github.run_number}}, ${{ secrets.DOCKERHUB_USERNAME }}/diff-eq-solver:latest
