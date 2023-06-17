@@ -19,3 +19,7 @@ g++ -o diff-eq-solver-tests tests/main.cpp tests/*/*.cpp src/*/*.cpp -lgtest -lg
 or  
 
 sudo docker build -f Dockerfile_tests -t diff-eq-solver-tests .  
+
+and  
+
+sudo docker run diff-eq-solver-tests  
