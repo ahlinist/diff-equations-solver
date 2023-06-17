@@ -22,11 +22,11 @@ int main() {
     long double discriminant = b * b - 4 * a * c;
     calc::EquationSolverFactory equation_solver_factory;
     std::unique_ptr<calc::EquationSolver> equation_solver = equation_solver_factory.create_equation_solver(discriminant);
-    std::shared_ptr<calc::Solution> general_solution = equation_solver->find_general_solution(discriminant, a, b, c);
+    std::shared_ptr<calc::Solution> solution = equation_solver->find_general_solution(discriminant, a, b, c);
 
-    std::cout << "General solution is: " <<  general_solution->display_general() << std::endl;
+    std::cout << "General solution is: " <<  solution->display_general() << std::endl;
 
     auto [initial_x, initial_x_prime] = input_parser.receive_initial_conditions();
-    std::shared_ptr<calc::Solution> particular_solution = equation_solver->find_particular_solution(general_solution, initial_x, initial_x_prime);
-    std::cout << "Particular solution for the given initial conditions is: " << particular_solution->display_particular() << std::endl;
+    equation_solver->find_particular_solution(solution, initial_x, initial_x_prime);
+    std::cout << "Particular solution for the given initial conditions is: " << solution->display_particular() << std::endl;
 }
