@@ -1,4 +1,4 @@
-![example workflow] (https://github.com/ahlinist/diff-equations-solver/actions/workflows/release.yml/badge.svg)
+[![Release job](https://github.com/ahlinist/diff-equations-solver/actions/workflows/release.yml/badge.svg)](https://github.com/ahlinist/diff-equations-solver/actions/workflows/release.yml)
 
 # diff-equations-solver
 
