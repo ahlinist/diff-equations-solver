@@ -1,0 +1,13 @@
+name: C/C++ CI
+
+on:
+  push:
+      branches: '*'
+
+jobs:
+  build-and-test:
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v2
+      - name: run build test image
+      run: docker build -f Dockerfile_tests -t diff-eq-solver-tests .
