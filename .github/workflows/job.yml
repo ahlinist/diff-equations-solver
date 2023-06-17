@@ -10,4 +10,4 @@ jobs:
       steps:
       - uses: actions/checkout@v2
       - name: run build test image
-      run: docker build -f Dockerfile_tests -t diff-eq-solver-tests .
+        run: docker build -f Dockerfile_tests -t diff-eq-solver-tests .
