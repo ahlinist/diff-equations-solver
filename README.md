@@ -2,8 +2,7 @@
 
 # Run 
 
-docker build -t diff-eq-solver . && docker run -i diff-eq-solver 
- 
+docker build -t diff-eq-solver . && docker run -i diff-eq-solver  
 
 # Test 
 
