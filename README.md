@@ -2,7 +2,11 @@
 
 # diff-equations-solver
 
-# Run 
+# Run the image from dockerhub
+
+docker run -i antonhlinisty/diff-eq-solver
+
+# Build and Run 
 
 docker build -t diff-eq-solver . && docker run -i diff-eq-solver  
 
