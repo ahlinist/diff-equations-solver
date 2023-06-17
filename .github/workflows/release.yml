@@ -2,7 +2,7 @@ name: C/C++ CI
 
 on:
   push:
-      branches: '!master'
+      branches: 'master'
 
 jobs:
   build-and-test:
@@ -13,3 +13,7 @@ jobs:
         run: docker build -f Dockerfile_tests -t diff-eq-solver-tests .
       - name: run tests
         run: docker run diff-eq-solver-tests
+      - name: build app image
+        run: docker build -t diff-eq-solver:${{github.run_number}} .
+      #- name: push image
+        #run: docker run diff-eq-solver-tests
