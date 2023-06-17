@@ -9,5 +9,7 @@ jobs:
       runs-on: ubuntu-latest
       steps:
       - uses: actions/checkout@v2
-      - name: run build test image
+      - name: build tests
         run: docker build -f Dockerfile_tests -t diff-eq-solver-tests .
+      - name: run tests
+        run: docker run diff-eq-solver-tests

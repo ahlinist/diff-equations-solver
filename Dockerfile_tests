@@ -10,4 +10,4 @@ COPY tests/ ./tests/
 
 RUN g++ -o diff-eq-solver-tests tests/main.cpp tests/*/*.cpp src/*/*.cpp -lgtest -lgtest_main -pthread && ./diff-eq-solver-tests
 
-RUN g++ -o diff-eq-solver src/*.cpp src/*/*.cpp
+ENTRYPOINT [ "/app/diff-eq-solver-tests" ]
