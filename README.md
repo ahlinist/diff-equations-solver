@@ -1,3 +1,5 @@
+![example workflow] (https://github.com/ahlinist/diff-equations-solver/actions/workflows/release.yml/badge.svg)
+
 # diff-equations-solver
 
 # Run 
