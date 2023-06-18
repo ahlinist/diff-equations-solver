@@ -1,13 +1,13 @@
 FROM alpine:3.18.2
 
 RUN apk update && \
-    apk add --no-cache g++ gtest-dev
+    apk add --no-cache g++ gtest-dev google-mock 
 
 WORKDIR /app
 
 COPY src/ ./src/
 COPY tests/ ./tests/
 
-RUN g++ -o diff-eq-solver-tests tests/main.cpp tests/*/*.cpp src/*/*.cpp -lgtest -lgtest_main -pthread
+RUN g++ -o diff-eq-solver-tests tests/*.cpp tests/*/*.cpp src/*/*.cpp src/equation_processor.cpp -lgtest -lgtest_main -lgmock -pthread
 
 ENTRYPOINT [ "/app/diff-eq-solver-tests" ]

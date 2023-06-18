@@ -6,7 +6,8 @@
 namespace input {
     class InputParser {
     public:
-        std::tuple<double, double, double, double, double> receive_input();
+        virtual ~InputParser() {}
+        virtual std::tuple<double, double, double, double, double> receive_input();
     };
 }
 
