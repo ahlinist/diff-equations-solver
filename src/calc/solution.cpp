@@ -3,20 +3,20 @@
 #include <string>
 #include <sstream>
 
-calc::Solution::Solution(Root first_root, Root second_root) 
-            : first_root{ first_root }, second_root{ second_root } 
+calc::Solution::Solution(Root first_root, Root second_root, long double coefficient_a, long double coefficient_b) 
+            : first_root{ first_root }, second_root{ second_root }, coefficient_a{ coefficient_a }, coefficient_b{ coefficient_b }
             {}
 
-calc::UnderDampedSolution::UnderDampedSolution(Root first_root, Root second_root) 
-            : calc::Solution(first_root , second_root) 
+calc::UnderDampedSolution::UnderDampedSolution(Root first_root, Root second_root, long double coefficient_a, long double coefficient_b) 
+            : calc::Solution(first_root , second_root, coefficient_a, coefficient_b) 
             { validate_roots(first_root, second_root); }
 
-calc::OverDampedSolution::OverDampedSolution(Root first_root, Root second_root) 
-            : calc::Solution(first_root , second_root) 
+calc::OverDampedSolution::OverDampedSolution(Root first_root, Root second_root, long double coefficient_a, long double coefficient_b) 
+            : calc::Solution(first_root , second_root, coefficient_a, coefficient_b) 
             { validate_roots(first_root, second_root); }
 
-calc::CriticallyDampedSolution::CriticallyDampedSolution(Root first_root, Root second_root) 
-            : calc::Solution(first_root , second_root) 
+calc::CriticallyDampedSolution::CriticallyDampedSolution(Root first_root, Root second_root, long double coefficient_a, long double coefficient_b) 
+            : calc::Solution(first_root , second_root, coefficient_a, coefficient_b) 
             { validate_roots(first_root, second_root); }
 
 calc::Solution::Root calc::Solution::get_first_root() {
@@ -35,19 +35,13 @@ long double calc::Solution::get_coefficient_b() {
     return coefficient_b;
 }
 
-void calc::Solution::set_coefficient_a(long double coefficient_value) {
-    coefficient_a = coefficient_value;
-}
-
-void calc::Solution::set_coefficient_b(long double coefficient_value) {
-    coefficient_b = coefficient_value;
-}
-
 bool calc::Solution::operator==(const calc::Solution& other) const {
     return first_root.real_part == other.first_root.real_part 
         and first_root.imaginary_part == other.first_root.imaginary_part 
         and second_root.real_part == other.second_root.real_part
-        and second_root.imaginary_part == other.second_root.imaginary_part;
+        and second_root.imaginary_part == other.second_root.imaginary_part
+        and coefficient_a == other.coefficient_a
+        and coefficient_b == other.coefficient_b;
 }
 
 std::string calc::UnderDampedSolution::display_general() {

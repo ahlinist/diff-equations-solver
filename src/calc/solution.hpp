@@ -10,7 +10,7 @@ namespace calc {
             long double real_part{};
             long double imaginary_part{};
         };
-        explicit Solution(Root first_root, Root second_root);
+        explicit Solution(Root first_root, Root second_root, long double coefficient_a, long double coefficient_b);
         virtual ~Solution() {}
         virtual std::string display_general() = 0;
         virtual std::string display_particular() = 0;
@@ -19,19 +19,17 @@ namespace calc {
         Root get_second_root();
         long double get_coefficient_a();
         long double get_coefficient_b();
-        void set_coefficient_a(long double coefficient_a);
-        void set_coefficient_b(long double coefficient_b);
     protected:
         Root first_root{};
         Root second_root{};
-        double coefficient_a{};
-        double coefficient_b{};
+        long double coefficient_a{};
+        long double coefficient_b{};
         virtual void validate_roots(Root first_root, Root second_root) = 0;
     };
 
     class UnderDampedSolution : public Solution {
     public:
-        explicit UnderDampedSolution(Root first_root, Root second_root);
+        explicit UnderDampedSolution(Root first_root, Root second_root, long double coefficient_a, long double coefficient_b);
         std::string display_general() override;
         std::string display_particular() override;
     protected:
@@ -40,7 +38,7 @@ namespace calc {
 
     class OverDampedSolution : public Solution {
     public:
-        explicit OverDampedSolution(Root first_root, Root second_root);
+        explicit OverDampedSolution(Root first_root, Root second_root, long double coefficient_a, long double coefficient_b);
         std::string display_general() override;
         std::string display_particular() override;
     protected:
@@ -49,7 +47,7 @@ namespace calc {
 
     class CriticallyDampedSolution : public Solution {
     public:
-        explicit CriticallyDampedSolution(Root first_root, Root second_root);
+        explicit CriticallyDampedSolution(Root first_root, Root second_root, long double coefficient_a, long double coefficient_b);
         std::string display_general() override;
         std::string display_particular() override;
     protected:
