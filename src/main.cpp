@@ -1,12 +1,14 @@
 
 #include "equation_processor.hpp"
 
+#include <memory>
+
 #include "input/input_parser.hpp"
 #include "input/input_formatter.hpp"
 #include "calc/equation_solver_factory.hpp"
 
 int main() {
-   input::InputParser input_parser{}; 
+   std::shared_ptr<input::InputParser> input_parser = std::make_shared<input::ConsoleInputParser>(); 
    input::InputFormatter input_formatter{}; 
    calc::EquationSolverFactory equation_solver_factory{};
 

@@ -3,7 +3,7 @@
 #include <tuple>
 #include <iostream>
 
-std::tuple<double, double, double, double, double> input::InputParser::receive_input() {
+std::tuple<double, double, double, double, double> input::ConsoleInputParser::receive_input() {
     std::cout << "Please enter a, b and c." << std::endl;
     double a{}, b{}, c{}, initial_x{}, initial_x_prime{};
     std::cout << "a=";

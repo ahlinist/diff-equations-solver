@@ -10,13 +10,13 @@
 #include "calc/solution.hpp"
 #include "calc/equation_solver.hpp"
 
-EquationProcessor::EquationProcessor(const input::InputParser& input_parser, const input::InputFormatter& input_formatter, const calc::EquationSolverFactory& equation_solver_factory) 
+EquationProcessor::EquationProcessor(const std::shared_ptr<input::InputParser> input_parser, const input::InputFormatter& input_formatter, const calc::EquationSolverFactory& equation_solver_factory) 
     : input_parser{ input_parser }, input_formatter{ input_formatter }, equation_solver_factory{ equation_solver_factory }
     {}
 
 void EquationProcessor::process() {
     std::cout << "Greetings at differential equations solver. I can solve linear homogenous differential equations of 2-nd order: a*x''+b*x'+c*x=0" << std::endl;
-    auto [a, b, c, initial_x, initial_x_prime] = input_parser.receive_input();
+    auto [a, b, c, initial_x, initial_x_prime] = input_parser->receive_input();
 
     std::string equation = input_formatter.format_equation(a, b, c);
     std::cout << "The equation to be solved: " << equation << std::endl;

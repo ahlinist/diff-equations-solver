@@ -1,4 +1,5 @@
 #include <tuple>
+#include <memory>
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -13,12 +14,12 @@ namespace input {
 }
 
 TEST(EquationProcessorTestSuite, ShouldProcessEquationInputAndPrintSolution) {
-    input::MockInputParser input_parser{}; 
+    std::shared_ptr<input::MockInputParser> input_parser = std::make_shared<input::MockInputParser>(); 
     input::InputFormatter input_formatter{}; 
     calc::EquationSolverFactory equation_solver_factory{};
     EquationProcessor equation_processor{input_parser, input_formatter, equation_solver_factory};
 
-    EXPECT_CALL(input_parser, receive_input())
+    EXPECT_CALL(*input_parser, receive_input())
         .WillOnce(::testing::Return(std::make_tuple(6.0, 7.0, 8.0, 9.0, 10.0)));
 
     equation_processor.process();
