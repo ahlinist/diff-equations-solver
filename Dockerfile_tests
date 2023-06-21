@@ -1,7 +1,7 @@
 FROM alpine:3.18.2
 
 RUN apk update && \
-    apk add --no-cache g++ gtest-dev google-mock 
+    apk add --no-cache g++ gtest-dev gmock 
 
 WORKDIR /app
 
