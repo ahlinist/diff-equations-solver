@@ -9,8 +9,8 @@
 
 int main() {
    std::shared_ptr<input::InputParser> input_parser = std::make_shared<input::ConsoleInputParser>(); 
-   input::InputFormatter input_formatter{}; 
-   calc::EquationSolverFactory equation_solver_factory{};
+   std::shared_ptr<input::InputFormatter> input_formatter = std::make_shared<input::SecondOrderInputFormatter>(); 
+   std::shared_ptr<calc::EquationSolverFactory> equation_solver_factory = std::make_shared<calc::SecondOrderEquationSolverFactory>();
 
    EquationProcessor equation_processor{input_parser, input_formatter, equation_solver_factory};
    equation_processor.process();

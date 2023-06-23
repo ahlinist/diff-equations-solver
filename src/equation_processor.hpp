@@ -9,10 +9,13 @@
 
 class EquationProcessor {
     std::shared_ptr<input::InputParser> input_parser;
-    input::InputFormatter input_formatter;
-    calc::EquationSolverFactory equation_solver_factory;
+    std::shared_ptr<input::InputFormatter> input_formatter;
+    std::shared_ptr<calc::EquationSolverFactory> equation_solver_factory;
 public:
-    explicit EquationProcessor(const std::shared_ptr<input::InputParser> input_parser, const input::InputFormatter& input_formatter, const calc::EquationSolverFactory& equation_solver_factory);
+    explicit EquationProcessor(
+        const std::shared_ptr<input::InputParser> input_parser, 
+        const std::shared_ptr<input::InputFormatter> input_formatter, 
+        const std::shared_ptr<calc::EquationSolverFactory> equation_solver_factory);
     void process();
 };
 

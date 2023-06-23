@@ -6,7 +6,7 @@
 
 class InputFormatterMultipleParametersTests :public ::testing::TestWithParam<std::tuple<std::string, double, double, double>> {
 protected:
-    input::InputFormatter input_formatter;
+    input::SecondOrderInputFormatter input_formatter;
 };
 
 TEST_P(InputFormatterMultipleParametersTests, ChecksIfTheEquationIsFormattedCorrectly) {

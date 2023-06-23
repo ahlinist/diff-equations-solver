@@ -9,7 +9,7 @@
 TEST(EquationSolverFactoryTestSuite, ShouldReturnPointerToCriticallyDampedEquationSolver) {
     //given
     long double discriminant = 0;
-    calc::EquationSolverFactory equation_solver_factory{};
+    calc::SecondOrderEquationSolverFactory equation_solver_factory{};
     calc::CriticallyDampedEquationSolver expected = calc::CriticallyDampedEquationSolver{};
 
     //when
@@ -22,7 +22,7 @@ TEST(EquationSolverFactoryTestSuite, ShouldReturnPointerToCriticallyDampedEquati
 TEST(EquationSolverFactoryTestSuite, ShouldReturnPointerToOverDampedEquationSolver) {
     //given
     long double discriminant = 1;
-    calc::EquationSolverFactory equation_solver_factory{};
+    calc::SecondOrderEquationSolverFactory equation_solver_factory{};
     calc::OverDampedEquationSolver expected = calc::OverDampedEquationSolver{};
 
     //when
@@ -35,7 +35,7 @@ TEST(EquationSolverFactoryTestSuite, ShouldReturnPointerToOverDampedEquationSolv
 TEST(EquationSolverFactoryTestSuite, ShouldReturnPointerToUnderDampedEquationSolver) {
     //given
     long double discriminant = -1;
-    calc::EquationSolverFactory equation_solver_factory{};
+    calc::SecondOrderEquationSolverFactory equation_solver_factory{};
     calc::UnderDampedEquationSolver expected = calc::UnderDampedEquationSolver{};
 
     //when

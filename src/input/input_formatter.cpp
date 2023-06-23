@@ -23,7 +23,7 @@ std::string input::InputFormatter::format_operand(double multiplier, std::string
     return sstm.str();
 }
 
-std::string input::InputFormatter::format_equation(double a, double b, double c) {
+std::string input::SecondOrderInputFormatter::format_equation(double a, double b, double c) {
     std::stringstream sstm{};
 
     sstm << format_operand(a, "x''", sstm.tellp() == std::streampos(0));
