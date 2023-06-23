@@ -24,4 +24,4 @@ docker build -f Dockerfile_tests -t diff-eq-solver-tests . && docker run diff-eq
 
 ## cli
 
-g++ -o diff-eq-solver-tests tests/main.cpp tests/*/*.cpp src/*/*.cpp -lgtest -lgtest_main -pthread && ./diff-eq-solver-tests  
+g++ -o diff-eq-solver-tests tests/*.cpp tests/*/*.cpp src/*/*.cpp src/equation_processor.cpp -lgtest -lgtest_main -lgmock -pthread && ./diff-eq-solver-tests  

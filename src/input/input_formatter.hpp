@@ -6,9 +6,15 @@
 namespace input {
     class InputFormatter {
     public:
-        std::string format_equation(double a, double b, double c);
-    private:
+        virtual ~InputFormatter() {}
+        virtual std::string format_equation(double a, double b, double c) = 0;
+    protected:
         std::string format_operand(double multiplier, std::string multiplicand, bool isEquationHead);
+    };
+
+    class SecondOrderInputFormatter : public InputFormatter {
+    public:
+        std::string format_equation(double a, double b, double c) override;
     };
 }
 
