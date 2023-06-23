@@ -13,7 +13,7 @@ TEST(EquationSolverFactoryTestSuite, ShouldReturnPointerToCriticallyDampedEquati
     calc::CriticallyDampedEquationSolver expected = calc::CriticallyDampedEquationSolver{};
 
     //when
-    std::unique_ptr<calc::EquationSolver> actual = equation_solver_factory.create_equation_solver(discriminant);
+    std::shared_ptr<calc::EquationSolver> actual = equation_solver_factory.create_equation_solver(discriminant);
 
     //then
     EXPECT_EQ(typeid(*actual), typeid(expected));
@@ -26,7 +26,7 @@ TEST(EquationSolverFactoryTestSuite, ShouldReturnPointerToOverDampedEquationSolv
     calc::OverDampedEquationSolver expected = calc::OverDampedEquationSolver{};
 
     //when
-    std::unique_ptr<calc::EquationSolver> actual = equation_solver_factory.create_equation_solver(discriminant);
+    std::shared_ptr<calc::EquationSolver> actual = equation_solver_factory.create_equation_solver(discriminant);
 
     //then
     EXPECT_EQ(typeid(*actual), typeid(expected));
@@ -39,7 +39,7 @@ TEST(EquationSolverFactoryTestSuite, ShouldReturnPointerToUnderDampedEquationSol
     calc::UnderDampedEquationSolver expected = calc::UnderDampedEquationSolver{};
 
     //when
-    std::unique_ptr<calc::EquationSolver> actual = equation_solver_factory.create_equation_solver(discriminant);
+    std::shared_ptr<calc::EquationSolver> actual = equation_solver_factory.create_equation_solver(discriminant);
 
     //then
     EXPECT_EQ(typeid(*actual), typeid(expected));

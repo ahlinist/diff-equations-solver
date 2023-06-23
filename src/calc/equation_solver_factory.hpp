@@ -8,12 +8,12 @@
 namespace calc {
     class EquationSolverFactory {
     public:
-        virtual std::unique_ptr<calc::EquationSolver> create_equation_solver(const long double& discriminant) = 0;
+        virtual std::shared_ptr<calc::EquationSolver> create_equation_solver(const long double& discriminant) = 0;
     };
 
     class SecondOrderEquationSolverFactory : public EquationSolverFactory {
     public:
-        std::unique_ptr<calc::EquationSolver> create_equation_solver(const long double& discriminant) override;
+        std::shared_ptr<calc::EquationSolver> create_equation_solver(const long double& discriminant) override;
     };
 }
 

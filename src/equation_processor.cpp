@@ -25,7 +25,7 @@ void EquationProcessor::process() {
     std::cout << "The equation to be solved: " << equation << std::endl;
 
     long double discriminant = b * b - 4 * a * c;
-    std::unique_ptr<calc::EquationSolver> equation_solver = equation_solver_factory->create_equation_solver(discriminant);
+    std::shared_ptr<calc::EquationSolver> equation_solver = equation_solver_factory->create_equation_solver(discriminant);
     std::shared_ptr<calc::Solution> solution = equation_solver->solve(discriminant, a, b, c, initial_x, initial_x_prime);
 
     std::cout << "General solution is: " <<  solution->display_general() << std::endl;
