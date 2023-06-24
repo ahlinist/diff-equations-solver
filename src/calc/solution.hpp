@@ -13,8 +13,7 @@ namespace calc {
         Solution() {}
         explicit Solution(Root first_root, Root second_root, long double coefficient_a, long double coefficient_b);
         virtual ~Solution() {}
-        virtual std::string display_general() = 0;
-        virtual std::string display_particular() = 0;
+        virtual std::string display() = 0;
         bool operator==(const Solution& other) const;
         Root get_first_root();
         Root get_second_root();
@@ -31,8 +30,7 @@ namespace calc {
     class UnderDampedSolution : public Solution {
     public:
         explicit UnderDampedSolution(Root first_root, Root second_root, long double coefficient_a, long double coefficient_b);
-        std::string display_general() override;
-        std::string display_particular() override;
+        std::string display() override;
     protected:
         void validate_roots(Root first_root, Root second_root);
     };
@@ -40,8 +38,7 @@ namespace calc {
     class OverDampedSolution : public Solution {
     public:
         explicit OverDampedSolution(Root first_root, Root second_root, long double coefficient_a, long double coefficient_b);
-        std::string display_general() override;
-        std::string display_particular() override;
+        std::string display() override;
     protected:
         void validate_roots(Root first_root, Root second_root);
     };
@@ -49,8 +46,7 @@ namespace calc {
     class CriticallyDampedSolution : public Solution {
     public:
         explicit CriticallyDampedSolution(Root first_root, Root second_root, long double coefficient_a, long double coefficient_b);
-        std::string display_general() override;
-        std::string display_particular() override;
+        std::string display() override;
     protected:
         void validate_roots(Root first_root, Root second_root);
     };

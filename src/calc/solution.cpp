@@ -44,12 +44,6 @@ bool calc::Solution::operator==(const calc::Solution& other) const {
         and coefficient_b == other.coefficient_b;
 }
 
-std::string calc::UnderDampedSolution::display_general() {
-    std::stringstream sstm{};
-    sstm << "x = e^(" << first_root.real_part << "*t)*(A*cos(" << first_root.imaginary_part << "*t)+B*sin(" << first_root.imaginary_part << "*t))";
-    return sstm.str();
-}
-
 void calc::UnderDampedSolution::validate_roots(calc::Solution::Root first_root, calc::Solution::Root second_root) {
     std::string error_message{};
     
@@ -63,12 +57,6 @@ void calc::UnderDampedSolution::validate_roots(calc::Solution::Root first_root, 
     if (error_message.size()) {
         throw std::invalid_argument(error_message);
     }
-}
-
-std::string calc::OverDampedSolution::display_general() {
-    std::stringstream sstm{};
-    sstm << "x = A*e^(" << first_root.real_part << "*t) + B*e^(" << second_root.real_part << "*t)";
-    return sstm.str();
 }
 
 void calc::OverDampedSolution::validate_roots(calc::Solution::Root first_root, calc::Solution::Root second_root) {
@@ -86,12 +74,6 @@ void calc::OverDampedSolution::validate_roots(calc::Solution::Root first_root, c
     }
 }
 
-std::string calc::CriticallyDampedSolution::display_general() {
-    std::stringstream sstm{};
-    sstm << "x = (A + B*t)e^(" << first_root.real_part << "*t)";
-    return sstm.str();
-}
-
 void calc::CriticallyDampedSolution::validate_roots(calc::Solution::Root first_root, calc::Solution::Root second_root) {
     std::string error_message{};
     
@@ -107,7 +89,7 @@ void calc::CriticallyDampedSolution::validate_roots(calc::Solution::Root first_r
     }
 }
 
-std::string calc::UnderDampedSolution::display_particular() {
+std::string calc::UnderDampedSolution::display() {
     std::stringstream sstm{};
     sstm << "x = ";
     if (first_root.real_part) {
@@ -170,7 +152,7 @@ std::string calc::UnderDampedSolution::display_particular() {
     return sstm.str();
 }
 
-std::string calc::OverDampedSolution::display_particular() {
+std::string calc::OverDampedSolution::display() {
     std::stringstream sstm{};
     sstm << "x = ";
     if (coefficient_a) {
@@ -215,7 +197,7 @@ std::string calc::OverDampedSolution::display_particular() {
     return sstm.str();
 }
 
-std::string calc::CriticallyDampedSolution::display_particular() {
+std::string calc::CriticallyDampedSolution::display() {
     std::stringstream sstm{};
     sstm << "x = ";
 

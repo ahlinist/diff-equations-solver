@@ -4,10 +4,10 @@
 
 #include "../../src/calc/solution.hpp"
 
-class UnderDampedDisplayParticularMultipleParametersTests :public ::testing::TestWithParam<std::tuple<std::string, double, double, double, double, double, double>> {
+class UnderDampedDisplayMultipleParametersTests :public ::testing::TestWithParam<std::tuple<std::string, double, double, double, double, double, double>> {
 };
 
-TEST_P(UnderDampedDisplayParticularMultipleParametersTests, CheckIfParticularSolutionIsPrintedCorrectly) {
+TEST_P(UnderDampedDisplayMultipleParametersTests, CheckIfParticularSolutionIsPrintedCorrectly) {
     //given
     std::string expected = std::get<0>(GetParam());
     double first_root_real = std::get<1>(GetParam());
@@ -21,12 +21,12 @@ TEST_P(UnderDampedDisplayParticularMultipleParametersTests, CheckIfParticularSol
     calc::UnderDampedSolution solution{{first_root_real, first_root_imaginary}, {second_root_real, second_root_imaginary}, initial_x, initial_x_prime};
 
     //then
-    ASSERT_EQ(expected, solution.display_particular());
+    ASSERT_EQ(expected, solution.display());
 }
 
 INSTANTIATE_TEST_CASE_P(
         DisplayParticularSolution,
-        UnderDampedDisplayParticularMultipleParametersTests,
+        UnderDampedDisplayMultipleParametersTests,
         ::testing::Values(
                 std::make_tuple("x = cos(t)", 0, 1, 0, -1, 1, 0),
                 std::make_tuple("x = e^(11t)*(9cos(7t)+13sin(7t))", 11, 7, 11, -7, 9, 13),
@@ -36,10 +36,10 @@ INSTANTIATE_TEST_CASE_P(
                 std::make_tuple("x = e^(-t)*(-cos(t)-sin(t))", -1, 1, -1, -1, -1, -1),
                 std::make_tuple("x = e^(t)*(cos(-t)+sin(-t))", 1, -1, 1, 1, 1, 1)));
 
-class OverDampedDisplayParticularMultipleParametersTests :public ::testing::TestWithParam<std::tuple<std::string, double, double, double, double, double, double>> {
+class OverDampedDisplayMultipleParametersTests :public ::testing::TestWithParam<std::tuple<std::string, double, double, double, double, double, double>> {
 };
 
-TEST_P(OverDampedDisplayParticularMultipleParametersTests, CheckIfParticularSolutionIsPrintedCorrectly) {
+TEST_P(OverDampedDisplayMultipleParametersTests, CheckIfParticularSolutionIsPrintedCorrectly) {
     //given
     std::string expected = std::get<0>(GetParam());
     double first_root_real = std::get<1>(GetParam());
@@ -53,22 +53,22 @@ TEST_P(OverDampedDisplayParticularMultipleParametersTests, CheckIfParticularSolu
     calc::OverDampedSolution solution{{first_root_real, first_root_imaginary}, {second_root_real, second_root_imaginary}, initial_x, initial_x_prime};
 
     //then
-    ASSERT_EQ(expected, solution.display_particular());
+    ASSERT_EQ(expected, solution.display());
 }
 
 INSTANTIATE_TEST_CASE_P(
         DisplayParticularSolution,
-        OverDampedDisplayParticularMultipleParametersTests,
+        OverDampedDisplayMultipleParametersTests,
         ::testing::Values(
                 std::make_tuple("x = -6e^(-2t)-8e^(-3t)", -2, 0, -3, 0, -6, -8),
                 std::make_tuple("x = 5e^(3.14t)", 2, 0, 3.14, 0, 0, 5),
                 std::make_tuple("x = -e^(-t)-1", -1, 0, 0, 0, -1, -1),
                 std::make_tuple("x = 3e^(t)+4e^(-t)", 1, 0, -1, 0, 3, 4)));
 
-class CriticallyDampedDisplayParticularMultipleParametersTests :public ::testing::TestWithParam<std::tuple<std::string, double, double, double, double, double, double>> {
+class CriticallyDampedDisplayMultipleParametersTests :public ::testing::TestWithParam<std::tuple<std::string, double, double, double, double, double, double>> {
 };
 
-TEST_P(CriticallyDampedDisplayParticularMultipleParametersTests, CheckIfParticularSolutionIsPrintedCorrectly) {
+TEST_P(CriticallyDampedDisplayMultipleParametersTests, CheckIfParticularSolutionIsPrintedCorrectly) {
     //given
     std::string expected = std::get<0>(GetParam());
     double first_root_real = std::get<1>(GetParam());
@@ -82,12 +82,12 @@ TEST_P(CriticallyDampedDisplayParticularMultipleParametersTests, CheckIfParticul
     calc::CriticallyDampedSolution solution{{first_root_real, first_root_imaginary}, {second_root_real, second_root_imaginary}, initial_x, initial_x_prime};
 
     //then
-    ASSERT_EQ(expected, solution.display_particular());
+    ASSERT_EQ(expected, solution.display());
 }
 
 INSTANTIATE_TEST_CASE_P(
         DisplayParticularSolution,
-        CriticallyDampedDisplayParticularMultipleParametersTests,
+        CriticallyDampedDisplayMultipleParametersTests,
         ::testing::Values(
                 std::make_tuple("x = (11+15t)*e^(1.2t)", 1.2, 0, 1.2, 0, 11, 15),
                 std::make_tuple("x = (-6-8t)*e^(-2t)", -2, 0, -2, 0, -6, -8),

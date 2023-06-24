@@ -28,6 +28,5 @@ void EquationProcessor::process() {
     std::shared_ptr<calc::EquationSolver> equation_solver = equation_solver_selector->select_equation_solver(discriminant);
     std::shared_ptr<calc::Solution> solution = equation_solver->solve(discriminant, a, b, c, initial_x, initial_x_prime);
 
-    std::cout << "General solution is: " <<  solution->display_general() << std::endl;
-    std::cout << "Particular solution for the given initial conditions is: " << solution->display_particular() << std::endl;
+    std::cout << "Solution: " << solution->display() << std::endl;
 }

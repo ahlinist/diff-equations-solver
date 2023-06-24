@@ -32,8 +32,7 @@ public:
 
 class MockSolution : public calc::Solution {
     public:
-        MOCK_METHOD(std::string, display_general, (), (override));
-        MOCK_METHOD(std::string, display_particular, (), (override));
+        MOCK_METHOD(std::string, display, (), (override));
     protected:
         void validate_roots(Root first_root, Root second_root) {}
 };
@@ -55,10 +54,8 @@ TEST(EquationProcessorTestSuite, ShouldProcessEquationInputAndPrintSolution) {
         .WillOnce(::testing::Return(equation_solver));
     EXPECT_CALL(*equation_solver, solve(-143, 6.0, 7.0, 8.0, 9.0, 10.0))
         .WillOnce(::testing::Return(solution));
-    EXPECT_CALL(*solution, display_general())
-        .WillOnce(::testing::Return("general solution"));
-    EXPECT_CALL(*solution, display_particular())
-        .WillOnce(::testing::Return("particular solution"));
+    EXPECT_CALL(*solution, display())
+        .WillOnce(::testing::Return("Solution"));
 
     equation_processor.process();
 }

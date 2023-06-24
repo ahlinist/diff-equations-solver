@@ -4,18 +4,6 @@
 
 #include "../../src/calc/solution.hpp"
 
-TEST(SolutionTestSuite, DisplaysGeneralUnderDampedSolution) {
-    //given
-    calc::UnderDampedSolution solution{{-1.1, 2.2}, {-1.1, -2.2}, 1, 1};
-    std::string expected = "x = e^(-1.1*t)*(A*cos(2.2*t)+B*sin(2.2*t))";
-
-    //when
-    std::string actual = solution.display_general();
-
-    //then
-    EXPECT_EQ(actual, expected);
-}
-
 TEST(SolutionTestSuite, UnderDampedThrowsInvalidArgumentWhenRealPartsDiffer) {
     try {
         calc::UnderDampedSolution solution{{-1.1, 2.2}, {-2.2, -2.2}, 1, 0};
@@ -41,18 +29,6 @@ TEST(SolutionTestSuite, UnderDampedThrowsInvalidArgumentWhenRealPartsDifferAndIm
     } catch (const std::invalid_argument& e) {
         EXPECT_STREQ("Real parts of roots are different!\nValues of roots imaginary parts are not opposite!\n", e.what());
     }
-}
-
-TEST(SolutionTestSuite, DisplaysGeneralOverDampedSolution) {
-    //given
-    calc::OverDampedSolution solution{{-1.1, 0}, {-5.1, 0}, 1, 0};
-    std::string expected = "x = A*e^(-1.1*t) + B*e^(-5.1*t)";
-
-    //when
-    std::string actual = solution.display_general();
-
-    //then
-    EXPECT_EQ(actual, expected);
 }
 
 TEST(SolutionTestSuite, OverDampedThrowsInvalidArgumentWhenImaginaryPartsPresent) {
@@ -82,18 +58,6 @@ TEST(SolutionTestSuite, OverDampedThrowsInvalidArgumentWhenImaginaryPartsPresent
     }
 }
 
-TEST(SolutionTestSuite, DisplaysGeneralCriticallyDampedSolution) {
-    //given
-    calc::CriticallyDampedSolution solution{{-1.1, 0}, {-1.1, 0}, 1, 1};
-    std::string expected = "x = (A + B*t)e^(-1.1*t)";
-
-    //when
-    std::string actual = solution.display_general();
-
-    //then
-    EXPECT_EQ(actual, expected);
-}
-
 TEST(SolutionTestSuite, CriticallyDampedThrowsInvalidArgumentWhenImaginaryPartsPresent) {
     try {
         calc::CriticallyDampedSolution solution{{-1.1, 2.2}, {-1.1, -2.2}, 1, 1};
@@ -120,5 +84,3 @@ TEST(SolutionTestSuite, CriticallyDampedThrowsInvalidArgumentWhenImaginaryPartsP
         EXPECT_STREQ("Roots contain imaginary parts!\nReal parts are not the same!\n", e.what());
     }
 }
-
-//TODO: make parametrized tests for general solutions in a separate test suite
