@@ -10,3 +10,6 @@ COPY src/ ./src/
 RUN g++ -o diff-eq-solver src/*.cpp src/*/*.cpp
 
 ENTRYPOINT [ "/app/diff-eq-solver" ]
+
+#TODO: check smaller base images
+#TODO: fix compiler and gtest versions
