@@ -10,6 +10,7 @@ namespace calc {
             long double real_part{};
             long double imaginary_part{};
         };
+        Solution() {}
         explicit Solution(Root first_root, Root second_root, long double coefficient_a, long double coefficient_b);
         virtual ~Solution() {}
         virtual std::string display_general() = 0;

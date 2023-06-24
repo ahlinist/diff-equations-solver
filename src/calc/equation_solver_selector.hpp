@@ -10,7 +10,7 @@
 namespace calc {
     class EquationSolverSelector {
     public:
-        EquationSolverSelector(){}
+        EquationSolverSelector() {}
         explicit EquationSolverSelector(
             std::shared_ptr<calc::EquationSolver> under_damped_equation_solver, 
             std::shared_ptr<calc::EquationSolver> over_damped_equation_solver, 
