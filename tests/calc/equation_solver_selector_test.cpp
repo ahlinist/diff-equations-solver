@@ -1,22 +1,47 @@
 #include <memory>
 #include <cmath>
 
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include "../../src/calc/equation_solver_selector.hpp"
 #include "../../src/calc/equation_solver.hpp"
 
-//TODO: use mocks instead of real instances of solvers
 //TODO: try out setup method or so
+
+class MockUnderDampedEquationSolver : public calc::EquationSolver {
+public:
+    std::shared_ptr<calc::Solution> solve(
+            const long double& discriminant, const double& a, const double& b, const double& c, const double& initial_x, const double& initial_x_prime) {
+        return nullptr;
+    }
+};
+
+class MockOverDampedEquationSolver : public calc::EquationSolver {
+public:
+    std::shared_ptr<calc::Solution> solve(
+            const long double& discriminant, const double& a, const double& b, const double& c, const double& initial_x, const double& initial_x_prime) {
+        return nullptr;
+    }
+
+};
+
+class MockCriticallyDampedEquationSolver : public calc::EquationSolver {
+public:
+    std::shared_ptr<calc::Solution> solve(
+            const long double& discriminant, const double& a, const double& b, const double& c, const double& initial_x, const double& initial_x_prime) {
+        return nullptr;
+    }
+};
 
 TEST(EquationSolverFactoryTestSuite, ShouldReturnPointerToCriticallyDampedEquationSolver) {
     //given
     long double discriminant = 0;
-    std::shared_ptr<calc::EquationSolver> under_damped_equation_solver = std::make_shared<calc::UnderDampedEquationSolver>(calc::UnderDampedEquationSolver{});
-    std::shared_ptr<calc::EquationSolver> over_damped_equation_solver = std::make_shared<calc::OverDampedEquationSolver>(calc::OverDampedEquationSolver{});
-    std::shared_ptr<calc::EquationSolver> critically_damped_equation_solver = std::make_shared<calc::CriticallyDampedEquationSolver>(calc::CriticallyDampedEquationSolver{});
+    std::shared_ptr<MockUnderDampedEquationSolver> under_damped_equation_solver = std::make_shared<MockUnderDampedEquationSolver>();
+    std::shared_ptr<MockOverDampedEquationSolver> over_damped_equation_solver = std::make_shared<MockOverDampedEquationSolver>();
+    std::shared_ptr<MockCriticallyDampedEquationSolver> critically_damped_equation_solver = std::make_shared<MockCriticallyDampedEquationSolver>();
     calc::SecondOrderEquationSolverSelector equation_solver_selector{under_damped_equation_solver, over_damped_equation_solver, critically_damped_equation_solver};
-    calc::CriticallyDampedEquationSolver expected = calc::CriticallyDampedEquationSolver{};
+    MockCriticallyDampedEquationSolver expected = MockCriticallyDampedEquationSolver{};
 
     //when
     std::shared_ptr<calc::EquationSolver> actual = equation_solver_selector.select_equation_solver(discriminant);
@@ -28,10 +53,11 @@ TEST(EquationSolverFactoryTestSuite, ShouldReturnPointerToCriticallyDampedEquati
 TEST(EquationSolverFactoryTestSuite, ShouldReturnPointerToOverDampedEquationSolver) {
     //given
     long double discriminant = 1;
-    std::shared_ptr<calc::EquationSolver> under_damped_equation_solver = std::make_shared<calc::UnderDampedEquationSolver>(calc::UnderDampedEquationSolver{});
-    std::shared_ptr<calc::EquationSolver> over_damped_equation_solver = std::make_shared<calc::OverDampedEquationSolver>(calc::OverDampedEquationSolver{});
-    std::shared_ptr<calc::EquationSolver> critically_damped_equation_solver = std::make_shared<calc::CriticallyDampedEquationSolver>(calc::CriticallyDampedEquationSolver{});
-    calc::SecondOrderEquationSolverSelector equation_solver_selector{under_damped_equation_solver, over_damped_equation_solver, critically_damped_equation_solver};    calc::OverDampedEquationSolver expected = calc::OverDampedEquationSolver{};
+    std::shared_ptr<MockUnderDampedEquationSolver> under_damped_equation_solver = std::make_shared<MockUnderDampedEquationSolver>();
+    std::shared_ptr<MockOverDampedEquationSolver> over_damped_equation_solver = std::make_shared<MockOverDampedEquationSolver>();
+    std::shared_ptr<MockCriticallyDampedEquationSolver> critically_damped_equation_solver = std::make_shared<MockCriticallyDampedEquationSolver>();
+    calc::SecondOrderEquationSolverSelector equation_solver_selector{under_damped_equation_solver, over_damped_equation_solver, critically_damped_equation_solver};    
+    MockOverDampedEquationSolver expected = MockOverDampedEquationSolver{};
 
     //when
     std::shared_ptr<calc::EquationSolver> actual = equation_solver_selector.select_equation_solver(discriminant);
@@ -43,10 +69,11 @@ TEST(EquationSolverFactoryTestSuite, ShouldReturnPointerToOverDampedEquationSolv
 TEST(EquationSolverFactoryTestSuite, ShouldReturnPointerToUnderDampedEquationSolver) {
     //given
     long double discriminant = -1;
-    std::shared_ptr<calc::EquationSolver> under_damped_equation_solver = std::make_shared<calc::UnderDampedEquationSolver>(calc::UnderDampedEquationSolver{});
-    std::shared_ptr<calc::EquationSolver> over_damped_equation_solver = std::make_shared<calc::OverDampedEquationSolver>(calc::OverDampedEquationSolver{});
-    std::shared_ptr<calc::EquationSolver> critically_damped_equation_solver = std::make_shared<calc::CriticallyDampedEquationSolver>(calc::CriticallyDampedEquationSolver{});
-    calc::SecondOrderEquationSolverSelector equation_solver_selector{under_damped_equation_solver, over_damped_equation_solver, critically_damped_equation_solver};    calc::UnderDampedEquationSolver expected = calc::UnderDampedEquationSolver{};
+    std::shared_ptr<MockUnderDampedEquationSolver> under_damped_equation_solver = std::make_shared<MockUnderDampedEquationSolver>();
+    std::shared_ptr<MockOverDampedEquationSolver> over_damped_equation_solver = std::make_shared<MockOverDampedEquationSolver>();
+    std::shared_ptr<MockCriticallyDampedEquationSolver> critically_damped_equation_solver = std::make_shared<MockCriticallyDampedEquationSolver>();
+    calc::SecondOrderEquationSolverSelector equation_solver_selector{under_damped_equation_solver, over_damped_equation_solver, critically_damped_equation_solver};    
+    MockUnderDampedEquationSolver expected = MockUnderDampedEquationSolver{};
 
     //when
     std::shared_ptr<calc::EquationSolver> actual = equation_solver_selector.select_equation_solver(discriminant);
