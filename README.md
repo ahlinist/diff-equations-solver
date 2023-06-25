@@ -4,7 +4,7 @@
 
 # Run the image from dockerhub
 
-docker run -i antonhlinisty/diff-eq-solver  
+docker run --pull=always -i antonhlinisty/diff-eq-solver  
 
 # Build and Run 
 
