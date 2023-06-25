@@ -1,13 +1,18 @@
 FROM alpine:3.18.2
 
 RUN apk update && \
-    apk add --no-cache g++ gtest-dev gmock 
+    apk add --no-cache cmake make g++ gtest-dev gmock 
 
 WORKDIR /app
 
 COPY src/ ./src/
 COPY tests/ ./tests/
+COPY CMakeLists.txt .
 
-RUN g++ -o diff-eq-solver-tests tests/*.cpp tests/*/*.cpp src/*/*.cpp src/equation_processor.cpp -lgtest -lgtest_main -lgmock -pthread
+RUN cd tests && cmake -B build && cd build && cmake .. && make
+# && make test #TODO: figure out how to run tests using "make test"
 
-ENTRYPOINT [ "/app/diff-eq-solver-tests" ]
+ENTRYPOINT [ "/app/tests/build/DifferentialEquationsSolverTests" ]
+
+#TODO: check smaller base images
+#TODO: fix compiler and gtest versions

@@ -1,3 +1,6 @@
+build
 .vscode
 diff-eq-solver
 diff-eq-solver-tests
+DifferentialEquationsSolver
+DifferentialEquationsSolverTests

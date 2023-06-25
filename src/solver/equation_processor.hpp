@@ -3,9 +3,9 @@
 
 #include <memory>
 
-#include "input/input_parser.hpp"
-#include "input/input_formatter.hpp"
-#include "calc/equation_solver_selector.hpp"
+#include "../input/input_parser.hpp"
+#include "../input/input_formatter.hpp"
+#include "../calc/equation_solver_selector.hpp"
 
 class EquationProcessor {
     std::shared_ptr<input::InputParser> input_parser;

@@ -5,10 +5,10 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "../src/equation_processor.hpp"
-#include "../src/input/input_parser.hpp"
-#include "../src/input/input_formatter.hpp"
-#include "../src/calc/equation_solver_selector.hpp"
+#include "../../src/solver/equation_processor.hpp"
+#include "../../src/input/input_parser.hpp"
+#include "../../src/input/input_formatter.hpp"
+#include "../../src/calc/equation_solver_selector.hpp"
 
 class MockInputParser : public input::InputParser {
 public:

@@ -1,15 +1,16 @@
 FROM alpine:3.18.2
 
 RUN apk update && \
-    apk add --no-cache g++
+    apk add --no-cache g++ make cmake
 
 WORKDIR /app
 
 COPY src/ ./src/
+COPY CMakeLists.txt .
 
-RUN g++ -o diff-eq-solver src/*.cpp src/*/*.cpp
+RUN cmake -B build && cd build && make
 
-ENTRYPOINT [ "/app/diff-eq-solver" ]
+ENTRYPOINT [ "/app/build/DifferentialEquationsSolver" ]
 
 #TODO: check smaller base images
 #TODO: fix compiler and gtest versions

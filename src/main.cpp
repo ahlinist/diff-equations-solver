@@ -1,5 +1,5 @@
 
-#include "equation_processor.hpp"
+#include "solver/equation_processor.hpp"
 
 #include <memory>
 

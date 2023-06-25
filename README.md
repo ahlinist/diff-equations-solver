@@ -12,9 +12,9 @@ docker run -i antonhlinisty/diff-eq-solver
 
 docker build -t diff-eq-solver . && docker run -i diff-eq-solver  
 
-## cli
+## cmake
 
-g++ -o diff-eq-solver src/*.cpp src/*/*.cpp && ./diff-eq-solver  
+cmake -B build && cd build && make && ./DifferentialEquationsSolver  
 
 # Test 
 
@@ -22,6 +22,6 @@ g++ -o diff-eq-solver src/*.cpp src/*/*.cpp && ./diff-eq-solver
 
 docker build -f Dockerfile_tests -t diff-eq-solver-tests . && docker run diff-eq-solver-tests   
 
-## cli
+## cmake
 
-g++ -o diff-eq-solver-tests tests/*.cpp tests/*/*.cpp src/*/*.cpp src/equation_processor.cpp -lgtest -lgtest_main -lgmock -pthread && ./diff-eq-solver-tests  
+cd tests && cmake -B build && cd build && cmake .. && make && ./DifferentialEquationsSolverTests  
