@@ -9,10 +9,9 @@ COPY src/ ./src/
 COPY tests/ ./tests/
 COPY CMakeLists.txt .
 
-RUN cd tests && cmake -B build && cd build && cmake .. && make
-# && make test #TODO: figure out how to run tests using "make test"
+RUN cd tests && cmake -B build && cd build && cmake .. && make 
 
-ENTRYPOINT [ "/app/tests/build/DifferentialEquationsSolverTests" ]
+CMD cd tests/build && make test
 
 #TODO: check smaller base images
 #TODO: fix compiler and gtest versions

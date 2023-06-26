@@ -15,6 +15,6 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 
 target_link_libraries(${PROJECT_NAME} gtest gtest_main gmock)
 
-enable_testing() #TODO: make it work with "make test"
+enable_testing()
 
 add_test(NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME})
