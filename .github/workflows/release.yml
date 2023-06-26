@@ -25,12 +25,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-
-      - name: check files
-        run: pwd && ls -al $GITHUB_WORKSPACE/build/src
-
-
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
