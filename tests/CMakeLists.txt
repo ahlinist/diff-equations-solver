@@ -1,20 +1,9 @@
-cmake_minimum_required(VERSION 3.22.1)
-
-project(DifferentialEquationsSolverTests)
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
 file(GLOB SOURCES
     tests.cpp 
     */*.cpp
     ../src/*/*.cpp
 )
 
-add_executable(${PROJECT_NAME} ${SOURCES})
+add_executable(${PROJECT_NAME}Tests ${SOURCES})
 
-target_link_libraries(${PROJECT_NAME} gtest gtest_main gmock)
-
-enable_testing()
-
-add_test(NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME})
+target_link_libraries(${PROJECT_NAME}Tests gtest gtest_main gmock)

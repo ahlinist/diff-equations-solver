@@ -5,12 +5,9 @@ RUN apk update && \
 
 WORKDIR /app
 
-COPY src/ ./src/
-COPY CMakeLists.txt .
+COPY build/src .
 
-RUN cmake -B build && cd build && make
-
-ENTRYPOINT [ "/app/build/DifferentialEquationsSolver" ]
+ENTRYPOINT [ "/app/DifferentialEquationsSolver" ]
 
 #TODO: check smaller base images
 #TODO: fix compiler and gtest versions

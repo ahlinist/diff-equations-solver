@@ -11,7 +11,7 @@ COPY CMakeLists.txt .
 
 RUN cmake -B build && cd build && make 
 
-ENTRYPOINT [ "/app/build/tests/DifferentialEquationsSolverTests" ]
+ENTRYPOINT [ "/app/build/src/DifferentialEquationsSolver" ]
 
 #TODO: check smaller base images
 #TODO: fix compiler and gtest versions

@@ -10,11 +10,11 @@ docker run --pull=always -i antonhlinisty/diff-eq-solver
 
 ## docker
 
-docker build -t diff-eq-solver . && docker run -i diff-eq-solver  
+docker build -f Dockerfile_local -t diff-eq-solver-local . && docker run -i diff-eq-solver-local  
 
 ## cmake
 
-cmake -B build && cd build && make && ./DifferentialEquationsSolver  
+cmake -B build && cd build && make && ./src/DifferentialEquationsSolver  
 
 # Test 
 
@@ -24,4 +24,4 @@ docker build -f Dockerfile_tests -t diff-eq-solver-tests . && docker run diff-eq
 
 ## cmake
 
-cd tests && cmake -B build && cd build && cmake .. && make && ./DifferentialEquationsSolverTests  
+cmake -B build && cd build && make && make test  

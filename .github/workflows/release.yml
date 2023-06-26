@@ -10,9 +10,12 @@ jobs:
       steps:
       - uses: actions/checkout@v2
       - name: build tests
-        run: docker build -f Dockerfile_tests -t diff-eq-solver-tests .
+        run: |
+          cmake -B build \
+          cd build \
+          make
       - name: run tests
-        run: docker run diff-eq-solver-tests
+        run: ./tests/DifferentialEquationsSolverTests  
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
