@@ -1,7 +1,7 @@
 FROM alpine:3.18.2 AS builder
 
 RUN apk update && \
-    apk add --no-cache g++ make cmake
+    apk add --no-cache g++ make cmake gtest-dev gmock 
 
 WORKDIR /app
 
