@@ -6,12 +6,12 @@ RUN apk update && \
 WORKDIR /app
 
 COPY src /app/src
+COPY tests /app/tests
 COPY CMakeLists.txt /app/CMakeLists.txt
 
-RUN mkdir build && \
+RUN cmake -B build && \
     cd build && \
-    cmake .. && \
-    make
+    make 
 
 # Start a new stage for the final image
 FROM alpine:3.18.2
