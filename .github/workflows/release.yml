@@ -15,7 +15,7 @@ jobs:
           cd build \
           make
       - name: run tests
-        run: ./build/tests/DifferentialEquationsSolverTests  
+        run: pwd && ls && ls ./build/tests && ./build/tests/DifferentialEquationsSolverTests  
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
