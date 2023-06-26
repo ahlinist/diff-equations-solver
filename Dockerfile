@@ -5,9 +5,7 @@ RUN apk update && \
 
 WORKDIR /app
 
-RUN ls -al
-
-COPY build/src/DifferentialEquationsSolver /app/DifferentialEquationsSolver
+COPY build/src/DifferentialEquationsSolver .
 
 ENTRYPOINT [ "/app/DifferentialEquationsSolver" ]
 
