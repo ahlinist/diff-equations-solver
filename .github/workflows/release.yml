@@ -28,7 +28,7 @@ jobs:
 
 
       - name: check files
-        run: ls ./build/src  
+        run: ls -al $GITHUB_WORKSPACE/build/src
 
 
       - name: Build and push Docker image
