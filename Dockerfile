@@ -16,17 +16,13 @@ RUN cmake -B build && \
 RUN ./build/tests/DifferentialEquationsSolverTests
 
 # Start a new stage for the final image
-#FROM alpine:3.18.2
+FROM alpine:3.18.2
 
-FROM scratch
+RUN apk update && \
+    apk add --no-cache libstdc++
 
-#RUN apk update && \
-#    apk add --no-cache libstdc++
+COPY --from=builder /app/build/src/DifferentialEquationsSolver /app/DifferentialEquationsSolver
 
-# Copy only the executable from the build stage
-COPY --from=builder /app/build/src/DifferentialEquationsSolver .
+ENTRYPOINT ["/app/DifferentialEquationsSolver"]
 
-ENTRYPOINT ["/DifferentialEquationsSolver"]
-
-#TODO: check smaller base images
 #TODO: fix compiler and gtest versions
