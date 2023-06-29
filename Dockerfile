@@ -24,7 +24,7 @@ FROM scratch
 #    apk add --no-cache libstdc++
 
 # Copy only the executable from the build stage
-COPY --from=builder /app/build/src/DifferentialEquationsSolver /
+COPY --from=builder /app/build/src/DifferentialEquationsSolver .
 
 ENTRYPOINT ["/DifferentialEquationsSolver"]
 
