@@ -6,6 +6,7 @@
 #include "calc/equation_solver_selector.hpp"
 #include "service/equation_solver_service.hpp"
 #include "controller/equation_solver_controller.hpp"
+#include "router/equation_solver_router.hpp"
 
 int main() {
     std::shared_ptr<input::InputFormatter> input_formatter = std::make_shared<input::SecondOrderInputFormatter>(); 
@@ -18,9 +19,9 @@ int main() {
 
     std::shared_ptr<httplib::Server> server = std::make_shared<httplib::Server>();
     std::shared_ptr<service::EquationSolverService> equation_solver_service = std::make_shared<service::EquationSolverServiceImpl>(equation_solver_selector);
-    std::shared_ptr<controller::EquationSolverController> equation_solver_controller = std::make_shared<controller::EquationSolverControllerImpl>(server, equation_solver_service);
-
-    equation_solver_controller->enable();
+    std::shared_ptr<controller::EquationSolverController> equation_solver_controller = std::make_shared<controller::EquationSolverControllerImpl>(equation_solver_service);
+    router::EquationSolverRouter equation_solver_router{ server, equation_solver_controller };
+    equation_solver_router.register_routes();
 
     //TODO: separate web-server and app logic
     std::cout << "Starting up a server..." << std::endl;

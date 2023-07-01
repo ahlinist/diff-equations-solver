@@ -1,4 +1,5 @@
 #include <memory>
+#include <string>
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -8,14 +9,9 @@
 #include "../../src/calc/solution.hpp"
 #include "../../libs/httplib.h"
 
-class MockServer : public httplib::Server {
-public:
-    MOCK_METHOD(void, Get, (const char* pattern, const std::function<void(const httplib::Request&, httplib::Response&)>& handler), ());
-};
-
 class MockService : public service::EquationSolverService {
 public:
-    MOCK_METHOD(std::shared_ptr<calc::Solution>, solve_second_level, (const double&, const double&, const double&, const double&, const double&), (override));
+    MOCK_METHOD(std::shared_ptr<calc::Solution>, solve_second_order, (const double&, const double&, const double&, const double&, const double&), (override));
 };
 
 class MockSolution : public calc::Solution {
@@ -27,14 +23,20 @@ protected:
 
 TEST(EquationControllerTestSuite, ShouldReceiveTheRequestAndReturnResponse) {
     //given
-    std::shared_ptr<MockServer> server = std::make_shared<MockServer>();
     std::shared_ptr<MockService> equation_solver_service = std::make_shared<MockService>();
     std::shared_ptr<MockSolution> solution = std::make_shared<MockSolution>();
+    std::string expected = "solution";
 
-    controller::EquationSolverControllerImpl equation_solver_controller{server, equation_solver_service};
+    controller::EquationSolverControllerImpl equation_solver_controller{ equation_solver_service };
 
-    //TODO: write proper tests when controllers and routers are separated
+    EXPECT_CALL(*equation_solver_service, solve_second_order(6.0, 7.0, 8.0, 9.0, 10.0))
+        .WillOnce(::testing::Return(solution));
+    EXPECT_CALL(*solution, display())
+        .WillOnce(::testing::Return("solution"));
 
     //when
-    equation_solver_controller.enable();
+    std::string actual = equation_solver_controller.solve_second_order(6.0, 7.0, 8.0, 9.0, 10.0);
+
+    //then
+    EXPECT_EQ(expected, actual);
 }

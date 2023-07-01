@@ -4,23 +4,22 @@
 #include <string>
 
 #include "../service/equation_solver_service.hpp"
-#include "../../libs/httplib.h"
 
 namespace controller {
     class EquationSolverController {
     protected:
-        std::shared_ptr<httplib::Server> server;
         std::shared_ptr<service::EquationSolverService> equation_solver_service;
     public:
-        explicit EquationSolverController(
-            const std::shared_ptr<httplib::Server> server, const std::shared_ptr<service::EquationSolverService> equation_solver_service);
+        explicit EquationSolverController(const std::shared_ptr<service::EquationSolverService> equation_solver_service);
         virtual ~EquationSolverController() {}
-        virtual void enable() = 0;
+        virtual std::string solve_second_order(
+            const double& a, const double& b, const double& c, const double& initial_x, const double& initial_x_prime) = 0;
     };
 
     class EquationSolverControllerImpl : public EquationSolverController {
     public:
         using EquationSolverController::EquationSolverController;
-        void enable() override;
+        std::string solve_second_order(
+            const double& a, const double& b, const double& c, const double& initial_x, const double& initial_x_prime) override;
     };
 }

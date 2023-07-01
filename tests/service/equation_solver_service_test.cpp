@@ -38,8 +38,8 @@ TEST(EquationServiceTestSuite, ShouldSolveTheEquationAndReturnTheSolution) {
         .WillOnce(::testing::Return(expected));
 
     //when
-    std::shared_ptr<calc::Solution> solution = equation_solver_service.solve_second_level(6, 7, 8, 9, 10);
+    std::shared_ptr<calc::Solution> actual = equation_solver_service.solve_second_order(6, 7, 8, 9, 10);
 
     //then
-    EXPECT_EQ(expected, solution);
+    EXPECT_EQ(expected, actual);
 }
