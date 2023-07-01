@@ -11,7 +11,9 @@ namespace service {
     protected:
         std::shared_ptr<calc::EquationSolverSelector> equation_solver_selector;
     public:
+        EquationSolverService() {}
         explicit EquationSolverService(const std::shared_ptr<calc::EquationSolverSelector> equation_solver_selector);
+        virtual ~EquationSolverService() {}
         virtual std::shared_ptr<calc::Solution> solve_second_level(
             const double& a, const double& b, const double& c, const double& initial_x, const double& initial_x_prime) = 0;
     };
