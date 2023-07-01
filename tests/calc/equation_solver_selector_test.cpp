@@ -21,7 +21,6 @@ public:
             const long double& discriminant, const double& a, const double& b, const double& c, const double& initial_x, const double& initial_x_prime) {
         return nullptr;
     }
-
 };
 
 class MockCriticallyDampedEquationSolver : public calc::EquationSolver {

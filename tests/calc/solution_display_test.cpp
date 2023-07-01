@@ -16,9 +16,11 @@ TEST_P(UnderDampedDisplayMultipleParametersTests, CheckIfParticularSolutionIsPri
     double second_root_imaginary = std::get<4>(GetParam());
     double initial_x = std::get<5>(GetParam());
     double initial_x_prime = std::get<6>(GetParam());
+    std::string initial_equation = "equation";
 
     //when
-    calc::UnderDampedSolution solution{{first_root_real, first_root_imaginary}, {second_root_real, second_root_imaginary}, initial_x, initial_x_prime};
+    calc::UnderDampedSolution solution{
+        {first_root_real, first_root_imaginary}, {second_root_real, second_root_imaginary}, initial_x, initial_x_prime, initial_equation};
 
     //then
     ASSERT_EQ(expected, solution.display());
@@ -48,9 +50,11 @@ TEST_P(OverDampedDisplayMultipleParametersTests, CheckIfParticularSolutionIsPrin
     double second_root_imaginary = std::get<4>(GetParam());
     double initial_x = std::get<5>(GetParam());
     double initial_x_prime = std::get<6>(GetParam());
+    std::string initial_equation = "equation";
 
     //when
-    calc::OverDampedSolution solution{{first_root_real, first_root_imaginary}, {second_root_real, second_root_imaginary}, initial_x, initial_x_prime};
+    calc::OverDampedSolution solution{
+        {first_root_real, first_root_imaginary}, {second_root_real, second_root_imaginary}, initial_x, initial_x_prime, initial_equation};
 
     //then
     ASSERT_EQ(expected, solution.display());
@@ -77,9 +81,11 @@ TEST_P(CriticallyDampedDisplayMultipleParametersTests, CheckIfParticularSolution
     double second_root_imaginary = std::get<4>(GetParam());
     double initial_x = std::get<5>(GetParam());
     double initial_x_prime = std::get<6>(GetParam());
+    std::string initial_equation = "equation";
 
     //when
-    calc::CriticallyDampedSolution solution{{first_root_real, first_root_imaginary}, {second_root_real, second_root_imaginary}, initial_x, initial_x_prime};
+    calc::CriticallyDampedSolution solution{
+        {first_root_real, first_root_imaginary}, {second_root_real, second_root_imaginary}, initial_x, initial_x_prime, initial_equation};
 
     //then
     ASSERT_EQ(expected, solution.display());

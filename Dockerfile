@@ -5,6 +5,7 @@ RUN apk update && \
 
 WORKDIR /app
 
+COPY libs /app/libs
 COPY src /app/src
 COPY tests /app/tests
 COPY CMakeLists.txt /app/CMakeLists.txt

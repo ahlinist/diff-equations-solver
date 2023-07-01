@@ -3,20 +3,24 @@
 #include <string>
 #include <sstream>
 
-calc::Solution::Solution(Root first_root, Root second_root, long double coefficient_a, long double coefficient_b) 
-            : first_root{ first_root }, second_root{ second_root }, coefficient_a{ coefficient_a }, coefficient_b{ coefficient_b }
+calc::Solution::Solution(
+    const Root& first_root, const Root& second_root, const long double& coefficient_a, const long double& coefficient_b, const std::string& initial_equation) 
+            : first_root{ first_root }, second_root{ second_root }, coefficient_a{ coefficient_a }, coefficient_b{ coefficient_b }, initial_equation {initial_equation}
             {}
 
-calc::UnderDampedSolution::UnderDampedSolution(Root first_root, Root second_root, long double coefficient_a, long double coefficient_b) 
-            : calc::Solution(first_root , second_root, coefficient_a, coefficient_b) 
+calc::UnderDampedSolution::UnderDampedSolution(
+    const Root& first_root, const Root& second_root, const long double& coefficient_a, const long double& coefficient_b, const std::string& initial_equation) 
+            : calc::Solution(first_root , second_root, coefficient_a, coefficient_b, initial_equation) 
             { validate_roots(first_root, second_root); }
 
-calc::OverDampedSolution::OverDampedSolution(Root first_root, Root second_root, long double coefficient_a, long double coefficient_b) 
-            : calc::Solution(first_root , second_root, coefficient_a, coefficient_b) 
+calc::OverDampedSolution::OverDampedSolution(
+    const Root& first_root, const Root& second_root, const long double& coefficient_a, const long double& coefficient_b, const std::string& initial_equation) 
+            : calc::Solution(first_root , second_root, coefficient_a, coefficient_b, initial_equation) 
             { validate_roots(first_root, second_root); }
 
-calc::CriticallyDampedSolution::CriticallyDampedSolution(Root first_root, Root second_root, long double coefficient_a, long double coefficient_b) 
-            : calc::Solution(first_root , second_root, coefficient_a, coefficient_b) 
+calc::CriticallyDampedSolution::CriticallyDampedSolution(
+    const Root& first_root, const Root& second_root, const long double& coefficient_a, const long double& coefficient_b, const std::string& initial_equation) 
+            : calc::Solution(first_root , second_root, coefficient_a, coefficient_b, initial_equation) 
             { validate_roots(first_root, second_root); }
 
 calc::Solution::Root calc::Solution::get_first_root() {
@@ -44,7 +48,7 @@ bool calc::Solution::operator==(const calc::Solution& other) const {
         and coefficient_b == other.coefficient_b;
 }
 
-void calc::UnderDampedSolution::validate_roots(calc::Solution::Root first_root, calc::Solution::Root second_root) {
+void calc::UnderDampedSolution::validate_roots(const calc::Solution::Root& first_root, const calc::Solution::Root& second_root) {
     std::string error_message{};
     
     if (first_root.real_part != second_root.real_part) {
@@ -59,7 +63,7 @@ void calc::UnderDampedSolution::validate_roots(calc::Solution::Root first_root, 
     }
 }
 
-void calc::OverDampedSolution::validate_roots(calc::Solution::Root first_root, calc::Solution::Root second_root) {
+void calc::OverDampedSolution::validate_roots(const calc::Solution::Root& first_root, const calc::Solution::Root& second_root) {
     std::string error_message{};
     
     if (first_root.imaginary_part != 0 or second_root.imaginary_part != 0) {
@@ -74,7 +78,7 @@ void calc::OverDampedSolution::validate_roots(calc::Solution::Root first_root, c
     }
 }
 
-void calc::CriticallyDampedSolution::validate_roots(calc::Solution::Root first_root, calc::Solution::Root second_root) {
+void calc::CriticallyDampedSolution::validate_roots(const calc::Solution::Root& first_root, const calc::Solution::Root& second_root) {
     std::string error_message{};
     
     if (first_root.imaginary_part != 0 or second_root.imaginary_part != 0) {
