@@ -24,7 +24,7 @@ class MockSolution : public calc::Solution {
         void validate_roots(const Root& first_root, const Root& second_root) {}
 };
 
-TEST(EquationServiceTestSuite, ShouldSolveTheEquation) {
+TEST(EquationServiceTestSuite, ShouldSolveTheEquationAndReturnTheSolution) {
     //given
     std::shared_ptr<MockEquationSolverSelector> equation_solver_selector = std::make_shared<MockEquationSolverSelector>();
     std::shared_ptr<MockEquationSolver> equation_solver = std::make_shared<MockEquationSolver>();
