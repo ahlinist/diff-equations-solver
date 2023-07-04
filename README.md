@@ -28,4 +28,4 @@ cmake -B build && cd build && make && make test
 
 # Use
 
-http://localhost:8080/solution?a=1&b=2&c=3&initial_x=1&initial_x_prime=3  
+http://localhost:8080  

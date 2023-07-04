@@ -11,12 +11,18 @@ router::EquationSolverRouter::EquationSolverRouter(
     : server{ server }, equation_solver_controller{ equation_solver_controller } {}
 
 void router::EquationSolverRouter::register_routes() {
-    server->Get("/solution", [this](const httplib::Request& request, httplib::Response& response) {
+    server->set_mount_point("/", "./static");
+
+    server->Get("/", [=](const httplib::Request& request, httplib::Response& response) {
+        response.set_redirect("/index.html");
+    });
+
+    server->Get("/second-order/solution", [this](const httplib::Request& request, httplib::Response& response) {
         double a = std::stod(request.get_param_value("a"));
         double b = std::stod(request.get_param_value("b"));
         double c = std::stod(request.get_param_value("c"));
-        double initial_x = std::stod(request.get_param_value("initial_x"));
-        double initial_x_prime = std::stod(request.get_param_value("initial_x_prime"));
+        double initial_x = std::stod(request.get_param_value("initial-x"));
+        double initial_x_prime = std::stod(request.get_param_value("initial-x-prime"));
         response.set_content(equation_solver_controller->solve_second_order(a, b, c, initial_x, initial_x_prime), "text/plain");
     });
 }
