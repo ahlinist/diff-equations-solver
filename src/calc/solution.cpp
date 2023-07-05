@@ -93,7 +93,7 @@ void calc::CriticallyDampedSolution::validate_roots(const calc::Solution::Root& 
     }
 }
 
-std::string calc::UnderDampedSolution::display() {
+std::string calc::UnderDampedSolution::get_result_equation() {
     std::stringstream sstm{};
     sstm << "x = ";
     if (first_root.real_part) {
@@ -156,7 +156,7 @@ std::string calc::UnderDampedSolution::display() {
     return sstm.str();
 }
 
-std::string calc::OverDampedSolution::display() {
+std::string calc::OverDampedSolution::get_result_equation() {
     std::stringstream sstm{};
     sstm << "x = ";
     if (coefficient_a) {
@@ -201,7 +201,7 @@ std::string calc::OverDampedSolution::display() {
     return sstm.str();
 }
 
-std::string calc::CriticallyDampedSolution::display() {
+std::string calc::CriticallyDampedSolution::get_result_equation() {
     std::stringstream sstm{};
     sstm << "x = ";
 
@@ -243,4 +243,8 @@ std::string calc::CriticallyDampedSolution::display() {
         }
     }
     return sstm.str();
+}
+
+std::string calc::Solution::get_initial_equation() {
+    return initial_equation;
 }

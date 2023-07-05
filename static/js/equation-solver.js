@@ -13,10 +13,10 @@ const handleFormInput = () => {
     url.searchParams.append("initial-x-prime", initialXPrime || 0);
     
     fetch(url)
-        //.then(response => response.json())
-        .then(response => response.text())
+        .then(response => response.json())
         .then(data => {
-            document.querySelector("div#resultEquation").textContent = data;
+            document.querySelector("div#initialEquation").textContent = data.initialEquation;
+            document.querySelector("div#resultEquation").textContent = data.resultEquation;
         })
         .catch(error => {
             console.error(error);

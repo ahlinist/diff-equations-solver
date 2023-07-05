@@ -14,12 +14,13 @@ namespace calc {
         explicit Solution(
             const Root& first_root, const Root& second_root, const long double& coefficient_a, const long double& coefficient_b, const std::string& initial_equation);
         virtual ~Solution() {}
-        virtual std::string display() = 0;
+        virtual std::string get_result_equation() = 0;
         bool operator==(const Solution& other) const;
         Root get_first_root();
         Root get_second_root();
         long double get_coefficient_a();
         long double get_coefficient_b();
+        virtual std::string get_initial_equation();
     protected:
         Root first_root{};
         Root second_root{};
@@ -33,7 +34,7 @@ namespace calc {
     public:
         explicit UnderDampedSolution(
             const Root& first_root, const Root& second_root, const long double& coefficient_a, const long double& coefficient_b, const std::string& initial_equation);
-        std::string display() override;
+        std::string get_result_equation() override;
     protected:
         void validate_roots(const Root& first_root, const Root& second_root) override;
     };
@@ -42,7 +43,7 @@ namespace calc {
     public:
         explicit OverDampedSolution(
             const Root& first_root, const Root& second_root, const long double& coefficient_a, const long double& coefficient_b, const std::string& initial_equation);
-        std::string display() override;
+        std::string get_result_equation() override;
     protected:
         void validate_roots(const Root& first_root, const Root& second_root) override;
     };
@@ -51,7 +52,7 @@ namespace calc {
     public:
         explicit CriticallyDampedSolution(
             const Root& first_root, const Root& second_root, const long double& coefficient_a, const long double& coefficient_b, const std::string& initial_equation);
-        std::string display() override;
+        std::string get_result_equation() override;
     protected:
         void validate_roots(const Root& first_root, const Root& second_root) override;
     };

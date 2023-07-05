@@ -16,22 +16,29 @@ public:
 
 class MockSolution : public calc::Solution {
 public:
-    MOCK_METHOD(std::string, display, (), (override));
+    MOCK_METHOD(std::string, get_initial_equation, (), (override));
+    MOCK_METHOD(std::string, get_result_equation, (), (override));
 protected:
     void validate_roots(const Root& first_root, const Root& second_root) {}
+};
+
+class MockSolutionMapper : public mapper::SolutionMapper {
+public:
+    MOCK_METHOD(std::string, serialize, (std::shared_ptr<calc::Solution>), (override));
 };
 
 TEST(EquationControllerTestSuite, ShouldReceiveTheRequestAndReturnResponse) {
     //given
     std::shared_ptr<MockService> equation_solver_service = std::make_shared<MockService>();
-    std::shared_ptr<MockSolution> solution = std::make_shared<MockSolution>();
+    std::shared_ptr<calc::Solution> solution = std::make_shared<MockSolution>();
+    std::shared_ptr<MockSolutionMapper> mapper = std::make_shared<MockSolutionMapper>();
     std::string expected = "solution";
 
-    controller::EquationSolverControllerImpl equation_solver_controller{ equation_solver_service };
+    controller::EquationSolverControllerImpl equation_solver_controller{ equation_solver_service, mapper };
 
     EXPECT_CALL(*equation_solver_service, solve_second_order(6.0, 7.0, 8.0, 9.0, 10.0))
         .WillOnce(::testing::Return(solution));
-    EXPECT_CALL(*solution, display())
+    EXPECT_CALL(*mapper, serialize(solution))
         .WillOnce(::testing::Return("solution"));
 
     //when

@@ -23,7 +23,7 @@ TEST_P(UnderDampedDisplayMultipleParametersTests, CheckIfParticularSolutionIsPri
         {first_root_real, first_root_imaginary}, {second_root_real, second_root_imaginary}, initial_x, initial_x_prime, initial_equation};
 
     //then
-    ASSERT_EQ(expected, solution.display());
+    ASSERT_EQ(expected, solution.get_result_equation());
 }
 
 INSTANTIATE_TEST_CASE_P(
@@ -57,7 +57,7 @@ TEST_P(OverDampedDisplayMultipleParametersTests, CheckIfParticularSolutionIsPrin
         {first_root_real, first_root_imaginary}, {second_root_real, second_root_imaginary}, initial_x, initial_x_prime, initial_equation};
 
     //then
-    ASSERT_EQ(expected, solution.display());
+    ASSERT_EQ(expected, solution.get_result_equation());
 }
 
 INSTANTIATE_TEST_CASE_P(
@@ -88,7 +88,7 @@ TEST_P(CriticallyDampedDisplayMultipleParametersTests, CheckIfParticularSolution
         {first_root_real, first_root_imaginary}, {second_root_real, second_root_imaginary}, initial_x, initial_x_prime, initial_equation};
 
     //then
-    ASSERT_EQ(expected, solution.display());
+    ASSERT_EQ(expected, solution.get_result_equation());
 }
 
 INSTANTIATE_TEST_CASE_P(

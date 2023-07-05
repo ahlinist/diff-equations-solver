@@ -5,11 +5,7 @@ RUN apk update && \
 
 WORKDIR /app
 
-COPY static/ ./static/
-COPY libs /app/libs
-COPY src /app/src
-COPY tests /app/tests
-COPY CMakeLists.txt /app/CMakeLists.txt
+COPY . /app
 
 RUN cmake -B build && \
     cd build && \
