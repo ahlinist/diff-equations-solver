@@ -17,7 +17,6 @@ int main() {
     std::shared_ptr<calc::EquationSolverSelector> equation_solver_selector = std::make_shared<calc::SecondOrderEquationSolverSelector>(
         under_damped_equation_solver, over_damped_equation_solver, critically_damped_equation_solver);
 
-
     std::shared_ptr<httplib::Server> server = std::make_shared<httplib::Server>();
     std::shared_ptr<service::EquationSolverService> equation_solver_service 
         = std::make_shared<service::EquationSolverServiceImpl>(equation_solver_selector);

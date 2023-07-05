@@ -20,7 +20,8 @@ RUN apk update && \
     apk add --no-cache libstdc++
 
 COPY --from=builder /app/build/src/DifferentialEquationsSolver /app/DifferentialEquationsSolver
+COPY --from=builder /app/static/ /static/
 
-ENTRYPOINT ["/app/DifferentialEquationsSolver"]
+ENTRYPOINT [ "/app/DifferentialEquationsSolver" ]
 
 #TODO: fix compiler and gtest versions
