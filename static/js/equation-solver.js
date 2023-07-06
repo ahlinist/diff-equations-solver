@@ -28,6 +28,7 @@ const drawGraph = (solution) => {
     const canvas = document.getElementById('graphCanvas');
     const context = canvas.getContext('2d');
     
+    //TODO: determine canvas scale and ranges dynamically from solution's params
     const startRange = 0;
     const endRange = 17;
     
