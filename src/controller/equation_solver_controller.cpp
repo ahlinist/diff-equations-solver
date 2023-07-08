@@ -19,4 +19,6 @@ std::string controller::EquationSolverControllerImpl::solve_second_order(
     input_validator->validate_second_order(a, b, c, initial_x, initial_x_prime);
     std::shared_ptr<calc::Solution> solution = equation_solver_service->solve_second_order(a, b, c, initial_x, initial_x_prime);
     return solution_mapper->serialize(solution);
+
+    //TODO: to check how to return string reference instead of copying a string
 };
