@@ -1,6 +1,7 @@
 #include "equation_solver_router.hpp"
 
 #include <memory>
+#include <string>
 
 #include "../../libs/httplib.h"
 
@@ -23,6 +24,15 @@ void router::EquationSolverRouter::register_routes() {
         double c = std::stod(request.get_param_value("c"));
         double initial_x = std::stod(request.get_param_value("initial-x"));
         double initial_x_prime = std::stod(request.get_param_value("initial-x-prime"));
-        response.set_content(equation_solver_controller->solve_second_order(a, b, c, initial_x, initial_x_prime), "text/plain");
+
+        std::string responseBody{};
+
+        try {
+            response.set_content(equation_solver_controller->solve_second_order(a, b, c, initial_x, initial_x_prime), "application/json");
+        } 
+        catch (const std::invalid_argument& e) {
+            response.status = 400;
+            response.set_content(e.what(), "text/plain");
+        }
     });
 }

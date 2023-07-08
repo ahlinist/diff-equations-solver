@@ -9,19 +9,11 @@
 </head>
 <body>
     <h1 class="text-center">Differential equations solver</h1>
-    <p class="text-center">Hello! I can solve linear second order homogenous differential equations (e.g. harmonic oscillator) such as: ax'' + bx' + c = 0</p>
+    <p class="text-center">Hello! I can solve linear second order homogenous differential equations (e.g. harmonic oscillator) such as: ax'' + bx' + c = 0.</p>
 
     <form id="equation-form">
         <div class="row">
           <div class="col"></div>
-          <div class="col">
-            <input name="initial-x" type="text" class="form-control" aria-describedby="initial-xHelp" placeholder="x(0)" oninput="handleFormInput()">
-            <small id="initial-xHelp" class="form-text text-muted">Displacement at t = 0</small>
-          </div>
-          <div class="col">
-            <input name="initial-x-prime" type="text" class="form-control" aria-describedby="initial-x-primeHelp" placeholder="x'(0)" oninput="handleFormInput()">
-            <small id="initial-x-primeHelp" class="form-text text-muted">Velocity at t = 0</small>
-          </div>
           <div class="col">
             <input name="a" type="text" class="form-control" aria-describedby="aHelp" placeholder="Coefficient a" oninput="handleFormInput()">
             <small id="aHelp" class="form-text text-muted">Mass</small>
@@ -33,6 +25,14 @@
           <div class="col">
             <input name="c" type="text" class="form-control" aria-describedby="cHelp" placeholder="Coefficient c" oninput="handleFormInput()">
             <small id="cHelp" class="form-text text-muted">Spring stiffness</small>
+          </div>
+          <div class="col">
+            <input name="initial-x" type="text" class="form-control" aria-describedby="initial-xHelp" placeholder="x(0)" oninput="handleFormInput()">
+            <small id="initial-xHelp" class="form-text text-muted">Displacement at t = 0</small>
+          </div>
+          <div class="col">
+            <input name="initial-x-prime" type="text" class="form-control" aria-describedby="initial-x-primeHelp" placeholder="x'(0)" oninput="handleFormInput()">
+            <small id="initial-x-primeHelp" class="form-text text-muted">Velocity at t = 0</small>
           </div>
           <div class="col"></div>
         </div>
