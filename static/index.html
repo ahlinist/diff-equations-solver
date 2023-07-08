@@ -15,43 +15,46 @@
         <div class="row">
           <div class="col"></div>
           <div class="col">
-            <input name="a" type="text" class="form-control" aria-describedby="aHelp" placeholder="Coefficient a" oninput="handleFormInput()">
+            <input name="a" type="number" class="form-control" aria-describedby="aHelp" placeholder="Coefficient a" min="0" oninput="handleFormInput()">
             <small id="aHelp" class="form-text text-muted">Mass</small>
           </div>
           <div class="col">
-            <input name="b" type="text" class="form-control" aria-describedby="bHelp" placeholder="Coefficient b" oninput="handleFormInput()">
+            <input name="b" type="number" class="form-control" aria-describedby="bHelp" placeholder="Coefficient b" min="0" oninput="handleFormInput()">
             <small id="bHelp" class="form-text text-muted">Damping coefficient</small>
           </div>
           <div class="col">
-            <input name="c" type="text" class="form-control" aria-describedby="cHelp" placeholder="Coefficient c" oninput="handleFormInput()">
+            <input name="c" type="number" class="form-control" aria-describedby="cHelp" placeholder="Coefficient c" min="0" oninput="handleFormInput()">
             <small id="cHelp" class="form-text text-muted">Spring stiffness</small>
           </div>
           <div class="col">
-            <input name="initial-x" type="text" class="form-control" aria-describedby="initial-xHelp" placeholder="x(0)" oninput="handleFormInput()">
+            <input name="initial-x" type="number" class="form-control" aria-describedby="initial-xHelp" placeholder="x(0)" oninput="handleFormInput()">
             <small id="initial-xHelp" class="form-text text-muted">Displacement at t = 0</small>
           </div>
           <div class="col">
-            <input name="initial-x-prime" type="text" class="form-control" aria-describedby="initial-x-primeHelp" placeholder="x'(0)" oninput="handleFormInput()">
+            <input name="initial-x-prime" type="number" class="form-control" aria-describedby="initial-x-primeHelp" placeholder="x'(0)" oninput="handleFormInput()">
             <small id="initial-x-primeHelp" class="form-text text-muted">Velocity at t = 0</small>
           </div>
           <div class="col"></div>
         </div>
       </form>
-    <div class="row">
-        <div class="col"></div>
-        <div class="col">
-            <div>Initial equation:</div><div id="initialEquation"></div>
-        </div>
-        <div class="col"></div>
-    </div>
-    <div class="row">
-        <div class="col"></div>
-        <div class="col">
-            <div>Result equation:</div><div id="resultEquation"></div>
-        </div>
-        <div class="col"></div>
-    </div>
-    <div class="row">
+      <div class="row">
+        <p  class="text-center" id="error-message"></p>
+      </div>
+      <div class="row">
+          <div class="col"></div>
+          <div class="col">
+              <div>Initial equation:</div><div id="initialEquation"></div>
+          </div>
+          <div class="col"></div>
+      </div>
+      <div class="row">
+          <div class="col"></div>
+          <div class="col">
+              <div>Result equation:</div><div id="resultEquation"></div>
+          </div>
+          <div class="col"></div>
+      </div>
+      <div class="row">
         <div class="col"></div>
         <div class="col">
             <canvas id="graphCanvas" width="400" height="400"></canvas>

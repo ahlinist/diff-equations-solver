@@ -5,6 +5,14 @@ const handleFormInput = () => {
     const c = form.querySelector("input[name='c']").value;
     const initialX = form.querySelector("input[name='initial-x']").value;
     const initialXPrime = form.querySelector("input[name='initial-x-prime']").value;
+
+    const isInputValid = validateInput(a, b, c, initialX, initialXPrime);
+
+    if (!isInputValid) {
+        clearCanvas();
+        return;
+    }
+
     const url = new URL(window.location.protocol + "//" + window.location.host + "/second-order/solution");
     url.searchParams.append("a", a || 0);
     url.searchParams.append("b", b || 0);
@@ -25,15 +33,13 @@ const handleFormInput = () => {
 }
 
 const drawGraph = (solution) => {
+    clearCanvas();
     const canvas = document.getElementById('graphCanvas');
     const context = canvas.getContext('2d');
     
     //TODO: determine canvas scale and ranges dynamically from solution's params
     const startRange = 0;
     const endRange = 17;
-    
-    // Clear the canvas
-    context.clearRect(0, 0, canvas.width, canvas.height);
     
     // Set the graph parameters
     const scale = 20;
@@ -91,4 +97,32 @@ const calculateTerm = (term, t) => {
     if (term.type === "t") {
         return term.coefficient * t;
     }
+}
+
+const validateInput = (a, b, c, initialX, initialXPrime) => {
+    const errorBox = document.querySelector("p#error-message");
+    errorBox.innerHTML = "";
+
+    let errorMessage = "";
+
+    if (a < 0 || b < 0 || c < 0) {
+        errorMessage += "a, b or c should be greater than 0.<br>"
+    }
+
+    if ((!initialX || initialX == 0) && (!initialXPrime || initialXPrime == 0)) {
+        errorMessage += "x(0) and x'(0) can't be zero at the same time.<br>"
+    }
+
+    if (errorMessage) {
+        errorBox.innerHTML = errorMessage;
+        return false;
+    } else {
+        return true;
+    }
+}
+
+const clearCanvas = () => {
+    const canvas = document.getElementById('graphCanvas');
+    const context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
 }
