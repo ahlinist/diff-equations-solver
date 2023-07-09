@@ -55,6 +55,22 @@ const drawGraph = (solution) => {
     context.strokeStyle = 'black';
     context.stroke();
     
+
+    // Draw labels for x-axis
+    context.fillStyle = 'black'; // Set the fill color for the labels
+    for (let t = startRange; t <= endRange; t += 1) {
+        const labelX = t * scale + offsetX;
+        const labelY = offsetY + 12;
+        context.fillText(t, labelX, labelY);
+    }
+
+    // Draw labels for y-axis
+    for (let y = -10; y <= 10; y += 1) {
+        const labelX = offsetX - 20;
+        const labelY = -y * scale + offsetY + 5;
+        context.fillText(y, labelX, labelY);
+    }
+
     // Draw the function graph
     context.beginPath();
     context.strokeStyle = 'blue';

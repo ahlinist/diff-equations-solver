@@ -15,9 +15,18 @@ std::shared_ptr<calc::Solution> calc::UnderDampedEquationSolver::solve(
     calc::Solution::Root first_root{roots_real_part, first_root_imaginary_part};
     calc::Solution::Root second_root{roots_real_part, second_root_imaginary_part};
     long double coefficient_a = initial_x;
-    long double coefficient_b = (initial_x_prime - roots_real_part * initial_x)/first_root_imaginary_part;
+    long double coefficient_b = (initial_x_prime - roots_real_part * initial_x) * first_root_imaginary_part;
     std::string initial_equation = input_formatter->format_equation(a, b, c);
-    return std::make_shared<calc::UnderDampedSolution>(calc::UnderDampedSolution{first_root, second_root, coefficient_a, coefficient_b, initial_equation});
+    long double max_at_t = calculate_max_at_t(first_root, coefficient_a, coefficient_b);
+    return std::make_shared<calc::UnderDampedSolution>(
+        calc::UnderDampedSolution{first_root, second_root, coefficient_a, coefficient_b, initial_equation, max_at_t});
+}
+
+long double calc::UnderDampedEquationSolver::calculate_max_at_t(
+        const calc::Solution::Root& first_root, const long double& coefficient_a, const long double& coefficient_b) {
+    long double arctan_numerator = -(first_root.real_part * coefficient_a + coefficient_b / first_root.imaginary_part);
+    long double arctan_denominator = first_root.real_part * coefficient_b - coefficient_a / first_root.imaginary_part;
+    return std::atan(arctan_numerator / arctan_denominator) / first_root.imaginary_part;
 }
 
 std::shared_ptr<calc::Solution> calc::OverDampedEquationSolver::solve(
@@ -29,7 +38,15 @@ std::shared_ptr<calc::Solution> calc::OverDampedEquationSolver::solve(
     long double coefficient_b = (initial_x_prime - first_root_real_part * initial_x)/(second_root_real_part - first_root_real_part);
     long double coefficient_a = initial_x - coefficient_b;
     std::string initial_equation = input_formatter->format_equation(a, b, c);
-    return std::make_shared<calc::OverDampedSolution>(calc::OverDampedSolution{first_root, second_root, coefficient_a, coefficient_b, initial_equation});
+    long double max_at_t = calculate_max_at_t(first_root, second_root, coefficient_a, coefficient_b);
+    return std::make_shared<calc::OverDampedSolution>(
+        calc::OverDampedSolution{first_root, second_root, coefficient_a, coefficient_b, initial_equation, max_at_t});
+}
+
+long double calc::OverDampedEquationSolver::calculate_max_at_t(
+        const calc::Solution::Root& first_root, const calc::Solution::Root& second_root, const long double& coefficient_a, const long double& coefficient_b) {
+    long double ln_arg = (-coefficient_b * second_root.real_part) / (coefficient_a * first_root.real_part);
+    return std::log(ln_arg) / (first_root.real_part - second_root.real_part);
 }
 
 std::shared_ptr<calc::Solution> calc::CriticallyDampedEquationSolver::solve(
@@ -40,5 +57,11 @@ std::shared_ptr<calc::Solution> calc::CriticallyDampedEquationSolver::solve(
     long double coefficient_a = initial_x;
     long double coefficient_b = initial_x_prime - roots_real_part;
     std::string initial_equation = input_formatter->format_equation(a, b, c);
-    return std::make_shared<calc::CriticallyDampedSolution>(calc::CriticallyDampedSolution{first_root, second_root, coefficient_a, coefficient_b, initial_equation});
+    long double max_at_t = calculate_max_at_t(first_root, coefficient_a, coefficient_b);
+    return std::make_shared<calc::CriticallyDampedSolution>(calc::CriticallyDampedSolution{first_root, second_root, coefficient_a, coefficient_b, initial_equation, max_at_t});
+}
+
+long double calc::CriticallyDampedEquationSolver::calculate_max_at_t(
+        const calc::Solution::Root& first_root, const long double& coefficient_a, const long double& coefficient_b) {
+    return (-coefficient_a * first_root.real_part / coefficient_b) - 1.0L;
 }

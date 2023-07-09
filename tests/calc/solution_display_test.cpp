@@ -20,7 +20,7 @@ TEST_P(UnderDampedDisplayMultipleParametersTests, CheckIfParticularSolutionIsPri
 
     //when
     calc::UnderDampedSolution solution{
-        {first_root_real, first_root_imaginary}, {second_root_real, second_root_imaginary}, initial_x, initial_x_prime, initial_equation};
+        {first_root_real, first_root_imaginary}, {second_root_real, second_root_imaginary}, initial_x, initial_x_prime, initial_equation, 3};
 
     //then
     ASSERT_EQ(expected, solution.get_result_equation());
@@ -54,7 +54,7 @@ TEST_P(OverDampedDisplayMultipleParametersTests, CheckIfParticularSolutionIsPrin
 
     //when
     calc::OverDampedSolution solution{
-        {first_root_real, first_root_imaginary}, {second_root_real, second_root_imaginary}, initial_x, initial_x_prime, initial_equation};
+        {first_root_real, first_root_imaginary}, {second_root_real, second_root_imaginary}, initial_x, initial_x_prime, initial_equation, 3};
 
     //then
     ASSERT_EQ(expected, solution.get_result_equation());
@@ -85,7 +85,7 @@ TEST_P(CriticallyDampedDisplayMultipleParametersTests, CheckIfParticularSolution
 
     //when
     calc::CriticallyDampedSolution solution{
-        {first_root_real, first_root_imaginary}, {second_root_real, second_root_imaginary}, initial_x, initial_x_prime, initial_equation};
+        {first_root_real, first_root_imaginary}, {second_root_real, second_root_imaginary}, initial_x, initial_x_prime, initial_equation, 3};
 
     //then
     ASSERT_EQ(expected, solution.get_result_equation());

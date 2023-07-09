@@ -12,7 +12,12 @@ namespace calc {
         };
         Solution() {}
         explicit Solution(
-            const Root& first_root, const Root& second_root, const long double& coefficient_a, const long double& coefficient_b, const std::string& initial_equation);
+            const Root& first_root, 
+            const Root& second_root, 
+            const long double& coefficient_a, 
+            const long double& coefficient_b, 
+            const std::string& initial_equation,
+            const long double& max_at_t);
         virtual ~Solution() {}
         virtual std::string get_result_equation() = 0;
         bool operator==(const Solution& other) const;
@@ -20,6 +25,7 @@ namespace calc {
         Root get_second_root();
         long double get_coefficient_a();
         long double get_coefficient_b();
+        long double get_max_at_t();
         virtual std::string get_initial_equation();
     protected:
         Root first_root{};
@@ -27,13 +33,19 @@ namespace calc {
         long double coefficient_a{};
         long double coefficient_b{};
         std::string initial_equation;
+        long double max_at_t;
         virtual void validate_roots(const Root& first_root, const Root& second_root) = 0;
     };
 
     class UnderDampedSolution : public Solution {
     public:
         explicit UnderDampedSolution(
-            const Root& first_root, const Root& second_root, const long double& coefficient_a, const long double& coefficient_b, const std::string& initial_equation);
+            const Root& first_root, 
+            const Root& second_root, 
+            const long double& coefficient_a, 
+            const long double& coefficient_b, 
+            const std::string& initial_equation,
+            const long double& max_at_t);
         std::string get_result_equation() override;
     protected:
         void validate_roots(const Root& first_root, const Root& second_root) override;
@@ -42,7 +54,12 @@ namespace calc {
     class OverDampedSolution : public Solution {
     public:
         explicit OverDampedSolution(
-            const Root& first_root, const Root& second_root, const long double& coefficient_a, const long double& coefficient_b, const std::string& initial_equation);
+            const Root& first_root, 
+            const Root& second_root, 
+            const long double& coefficient_a, 
+            const long double& coefficient_b, 
+            const std::string& initial_equation,
+            const long double& max_at_t);
         std::string get_result_equation() override;
     protected:
         void validate_roots(const Root& first_root, const Root& second_root) override;
@@ -51,7 +68,12 @@ namespace calc {
     class CriticallyDampedSolution : public Solution {
     public:
         explicit CriticallyDampedSolution(
-            const Root& first_root, const Root& second_root, const long double& coefficient_a, const long double& coefficient_b, const std::string& initial_equation);
+            const Root& first_root, 
+            const Root& second_root, 
+            const long double& coefficient_a, 
+            const long double& coefficient_b, 
+            const std::string& initial_equation,
+            const long double& max_at_t);
         std::string get_result_equation() override;
     protected:
         void validate_roots(const Root& first_root, const Root& second_root) override;

@@ -4,23 +4,23 @@
 #include <sstream>
 
 calc::Solution::Solution(
-    const Root& first_root, const Root& second_root, const long double& coefficient_a, const long double& coefficient_b, const std::string& initial_equation) 
-            : first_root{ first_root }, second_root{ second_root }, coefficient_a{ coefficient_a }, coefficient_b{ coefficient_b }, initial_equation {initial_equation}
+    const Root& first_root, const Root& second_root, const long double& coefficient_a, const long double& coefficient_b, const std::string& initial_equation, const long double& max_at_t) 
+            : first_root{ first_root }, second_root{ second_root }, coefficient_a{ coefficient_a }, coefficient_b{ coefficient_b }, initial_equation {initial_equation}, max_at_t{ max_at_t }
             {}
 
 calc::UnderDampedSolution::UnderDampedSolution(
-    const Root& first_root, const Root& second_root, const long double& coefficient_a, const long double& coefficient_b, const std::string& initial_equation) 
-            : calc::Solution(first_root , second_root, coefficient_a, coefficient_b, initial_equation) 
+    const Root& first_root, const Root& second_root, const long double& coefficient_a, const long double& coefficient_b, const std::string& initial_equation, const long double& max_at_t) 
+            : calc::Solution(first_root , second_root, coefficient_a, coefficient_b, initial_equation, max_at_t) 
             { validate_roots(first_root, second_root); }
 
 calc::OverDampedSolution::OverDampedSolution(
-    const Root& first_root, const Root& second_root, const long double& coefficient_a, const long double& coefficient_b, const std::string& initial_equation) 
-            : calc::Solution(first_root , second_root, coefficient_a, coefficient_b, initial_equation) 
+    const Root& first_root, const Root& second_root, const long double& coefficient_a, const long double& coefficient_b, const std::string& initial_equation, const long double& max_at_t) 
+            : calc::Solution(first_root , second_root, coefficient_a, coefficient_b, initial_equation, max_at_t) 
             { validate_roots(first_root, second_root); }
 
 calc::CriticallyDampedSolution::CriticallyDampedSolution(
-    const Root& first_root, const Root& second_root, const long double& coefficient_a, const long double& coefficient_b, const std::string& initial_equation) 
-            : calc::Solution(first_root , second_root, coefficient_a, coefficient_b, initial_equation) 
+    const Root& first_root, const Root& second_root, const long double& coefficient_a, const long double& coefficient_b, const std::string& initial_equation, const long double& max_at_t) 
+            : calc::Solution(first_root , second_root, coefficient_a, coefficient_b, initial_equation, max_at_t) 
             { validate_roots(first_root, second_root); }
 
 calc::Solution::Root calc::Solution::get_first_root() {
@@ -39,13 +39,20 @@ long double calc::Solution::get_coefficient_b() {
     return coefficient_b;
 }
 
+long double calc::Solution::get_max_at_t() {
+    return max_at_t;
+}
+
 bool calc::Solution::operator==(const calc::Solution& other) const {
+    long double rounding_difference = 1e-9; 
+
     return first_root.real_part == other.first_root.real_part 
         and first_root.imaginary_part == other.first_root.imaginary_part 
         and second_root.real_part == other.second_root.real_part
         and second_root.imaginary_part == other.second_root.imaginary_part
         and coefficient_a == other.coefficient_a
-        and coefficient_b == other.coefficient_b;
+        and coefficient_b == other.coefficient_b
+        and std::abs(max_at_t - other.max_at_t) < rounding_difference;
 }
 
 void calc::UnderDampedSolution::validate_roots(const calc::Solution::Root& first_root, const calc::Solution::Root& second_root) {
@@ -93,6 +100,7 @@ void calc::CriticallyDampedSolution::validate_roots(const calc::Solution::Root& 
     }
 }
 
+//TODO: move to a separate class to make Solution just a data holder
 std::string calc::UnderDampedSolution::get_result_equation() {
     std::stringstream sstm{};
     sstm << "x = ";
