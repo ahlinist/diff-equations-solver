@@ -25,22 +25,30 @@ const handleFormInput = () => {
         .then(data => {
             document.querySelector("div#initialEquation").textContent = data.initialEquation;
             document.querySelector("div#resultEquation").textContent = data.resultEquation;
-            drawGraph(data.solution);
+            drawGraph(data);
         })
         .catch(error => {
             console.error(error);
         });
 }
 
-const drawGraph = (solution) => {
+const drawGraph = (data) => {
     clearCanvas();
     const canvas = document.getElementById('graphCanvas');
     const context = canvas.getContext('2d');
     
     //TODO: determine canvas scale and ranges dynamically from solution's params
     const startRange = 0;
-    const endRange = 17;
+    const endRange = 20;
     
+    const solution = data.solution;
+    const multiplier = solution.multiplier;
+    const augend = solution.augend;
+    const addend = solution.addend;
+    const valueAtZero = calculateFunctionValue(multiplier, augend, addend, 0);
+    const maxValue = calculateFunctionValue(multiplier, augend, addend, data.maxAmplitudeExtremumAtT);
+
+
     // Set the graph parameters
     const scale = 20;
     const offsetX = 20;
@@ -65,6 +73,7 @@ const drawGraph = (solution) => {
     }
 
     // Draw labels for y-axis
+    //TODO: change 10 and -10 to factors of scale/range
     for (let y = -10; y <= 10; y += 1) {
         const labelX = offsetX - 20;
         const labelY = -y * scale + offsetY + 5;
@@ -74,10 +83,6 @@ const drawGraph = (solution) => {
     // Draw the function graph
     context.beginPath();
     context.strokeStyle = 'blue';
-    
-    const multiplier = solution.multiplier;
-    const augend = solution.augend;
-    const addend = solution.addend;
 
     for (let t = startRange; t <= endRange; t += 0.1) {
       const y = calculateFunctionValue(multiplier, augend, addend, t);

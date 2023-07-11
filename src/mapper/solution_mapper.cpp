@@ -12,7 +12,7 @@
 namespace mapper {
     NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Term, coefficient, type, argument)
     NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Solution, multiplier, augend, addend)
-    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Response, initialEquation, resultEquation, solution, max_at_t)
+    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Response, initialEquation, resultEquation, solution, maxAmplitudeExtremumAtT)
 }
 
 mapper::Response serialize_under_damped(std::shared_ptr<calc::Solution> solution_ptr) {
@@ -20,7 +20,7 @@ mapper::Response serialize_under_damped(std::shared_ptr<calc::Solution> solution
     mapper::Term augend{solution_ptr->get_coefficient_a(), "cos", solution_ptr->get_first_root().imaginary_part};
     mapper::Term addend{solution_ptr->get_coefficient_b(), "sin", solution_ptr->get_first_root().imaginary_part};
     mapper::Solution solution{multiplier, augend, addend};
-    mapper::Response response{solution_ptr->get_initial_equation(), solution_ptr->get_result_equation(), solution, solution_ptr->get_max_at_t()};
+    mapper::Response response{solution_ptr->get_initial_equation(), solution_ptr->get_result_equation(), solution, solution_ptr->get_max_amplitude_extremum_at_t()};
     return response;
 }
 
@@ -29,7 +29,7 @@ mapper::Response serialize_over_damped(std::shared_ptr<calc::Solution> solution_
     mapper::Term augend{solution_ptr->get_coefficient_a(), "e", solution_ptr->get_first_root().real_part};
     mapper::Term addend{solution_ptr->get_coefficient_b(), "e", solution_ptr->get_second_root().real_part};
     mapper::Solution solution{multiplier, augend, addend};
-    mapper::Response response{solution_ptr->get_initial_equation(), solution_ptr->get_result_equation(), solution, solution_ptr->get_max_at_t()};
+    mapper::Response response{solution_ptr->get_initial_equation(), solution_ptr->get_result_equation(), solution, solution_ptr->get_max_amplitude_extremum_at_t()};
     return response;
 }
 
@@ -38,7 +38,7 @@ mapper::Response serialize_critically_damped(std::shared_ptr<calc::Solution> sol
     mapper::Term augend{solution_ptr->get_coefficient_a(), "e", 0};
     mapper::Term addend{solution_ptr->get_coefficient_b(), "t", 1};
     mapper::Solution solution{multiplier, augend, addend};
-    mapper::Response response{solution_ptr->get_initial_equation(), solution_ptr->get_result_equation(), solution, solution_ptr->get_max_at_t()};
+    mapper::Response response{solution_ptr->get_initial_equation(), solution_ptr->get_result_equation(), solution, solution_ptr->get_max_amplitude_extremum_at_t()};
     return response;
 }
 

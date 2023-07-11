@@ -23,7 +23,7 @@ namespace mapper {
         std::string initialEquation{};
         std::string resultEquation{};
         Solution solution{};
-        long double max_at_t{};
+        long double maxAmplitudeExtremumAtT{};
     };
 
     class SolutionMapper {

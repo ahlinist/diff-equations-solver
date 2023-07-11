@@ -19,7 +19,7 @@ namespace calc {
     };
 
     class UnderDampedEquationSolver : public EquationSolver {
-        long double calculate_max_at_t(
+        long double calculate_max_amplitude_extremum_at_t(
             const calc::Solution::Root& first_root, const long double& coefficient_a, const long double& coefficient_b);
     public:
         using EquationSolver::EquationSolver;
@@ -28,7 +28,7 @@ namespace calc {
     };
     
     class OverDampedEquationSolver : public EquationSolver {
-        long double calculate_max_at_t(
+        long double calculate_max_amplitude_extremum_at_t(
             const calc::Solution::Root& first_root, const calc::Solution::Root& second_root, const long double& coefficient_a, const long double& coefficient_b);
     public:
         using EquationSolver::EquationSolver;
@@ -37,7 +37,7 @@ namespace calc {
     };
 
     class CriticallyDampedEquationSolver : public EquationSolver {
-        long double calculate_max_at_t(
+        long double calculate_max_amplitude_extremum_at_t(
             const calc::Solution::Root& first_root, const long double& coefficient_a, const long double& coefficient_b);
     public:
         using EquationSolver::EquationSolver;
