@@ -45,12 +45,13 @@ const drawGraph = (data) => {
     const multiplier = solution.multiplier;
     const augend = solution.augend;
     const addend = solution.addend;
-    const valueAtZero = calculateFunctionValue(multiplier, augend, addend, 0);
-    const maxValue = calculateFunctionValue(multiplier, augend, addend, data.maxAmplitudeExtremumAtT);
-
+    const maxAmplitude = Math.max(
+        calculateFunctionValue(multiplier, augend, addend, 0),
+        calculateFunctionValue(multiplier, augend, addend, data.maxAmplitudeExtremumAtT)
+    );
 
     // Set the graph parameters
-    const scale = 20;
+    const scale = canvas.height / (2 * maxAmplitude);
     const offsetX = 20;
     const offsetY = canvas.height / 2;
     
@@ -63,18 +64,22 @@ const drawGraph = (data) => {
     context.strokeStyle = 'black';
     context.stroke();
     
+    context.fillStyle = 'black'; // Set the fill color for the labels
 
     // Draw labels for x-axis
-    context.fillStyle = 'black'; // Set the fill color for the labels
-    for (let t = startRange; t <= endRange; t += 1) {
+    const minXValue = Math.floor(startRange * scale);
+    const maxXValue = Math.ceil(endRange * scale);
+
+    for (let t = minXValue; t <= maxXValue; t += 1) {
         const labelX = t * scale + offsetX;
         const labelY = offsetY + 12;
         context.fillText(t, labelX, labelY);
     }
 
     // Draw labels for y-axis
-    //TODO: change 10 and -10 to factors of scale/range
-    for (let y = -10; y <= 10; y += 1) {
+    const maxYValue = Math.ceil(endRange * scale / 2);
+
+    for (let y = -maxYValue; y <= maxYValue; y += 1) {
         const labelX = offsetX - 20;
         const labelY = -y * scale + offsetY + 5;
         context.fillText(y, labelX, labelY);

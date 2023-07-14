@@ -9,7 +9,7 @@ COPY . /app
 
 RUN cmake -B build && \
     cd build && \
-    make 
+     make -j8 
 
 RUN ./build/tests/DifferentialEquationsSolverTests
 

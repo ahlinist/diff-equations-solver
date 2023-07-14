@@ -7,7 +7,7 @@ WORKDIR /app
 
 COPY . /app
 
-RUN cmake -B build && cd build && make 
+RUN cmake -B build && cd build && make -j8
 
 ENTRYPOINT [ "/app/build/tests/DifferentialEquationsSolverTests" ]
 
