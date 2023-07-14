@@ -2,7 +2,7 @@
 
 #include "../libs/httplib.h"
 
-#include "input/input_formatter.hpp"
+#include "text/equation_formatter.hpp"
 #include "calc/equation_solver_selector.hpp"
 #include "service/equation_solver_service.hpp"
 #include "controller/equation_solver_controller.hpp"
@@ -11,10 +11,10 @@
 #include "input/input_validator.hpp"
 
 int main() {
-    std::shared_ptr<input::InputFormatter> input_formatter = std::make_shared<input::SecondOrderInputFormatter>(); 
-    std::shared_ptr<calc::EquationSolver> under_damped_equation_solver = std::make_shared<calc::UnderDampedEquationSolver>(input_formatter);
-    std::shared_ptr<calc::EquationSolver> over_damped_equation_solver = std::make_shared<calc::OverDampedEquationSolver>(input_formatter);
-    std::shared_ptr<calc::EquationSolver> critically_damped_equation_solver = std::make_shared<calc::CriticallyDampedEquationSolver>(input_formatter);
+    std::shared_ptr<text::EquationFormatter> equation_formatter = std::make_shared<text::SecondOrderEquationFormatter>(); 
+    std::shared_ptr<calc::EquationSolver> under_damped_equation_solver = std::make_shared<calc::UnderDampedEquationSolver>(equation_formatter);
+    std::shared_ptr<calc::EquationSolver> over_damped_equation_solver = std::make_shared<calc::OverDampedEquationSolver>(equation_formatter);
+    std::shared_ptr<calc::EquationSolver> critically_damped_equation_solver = std::make_shared<calc::CriticallyDampedEquationSolver>(equation_formatter);
     std::shared_ptr<calc::EquationSolverSelector> equation_solver_selector = std::make_shared<calc::SecondOrderEquationSolverSelector>(
         under_damped_equation_solver, over_damped_equation_solver, critically_damped_equation_solver);
 

@@ -3,9 +3,10 @@
 #include <cmath>
 #include <memory>
 
+#include "../text/equation_formatter.hpp"
 #include "solution.hpp"
 
-calc::EquationSolver::EquationSolver(const std::shared_ptr<input::InputFormatter> input_formatter) : input_formatter{ input_formatter } {}
+calc::EquationSolver::EquationSolver(const std::shared_ptr<text::EquationFormatter> equation_formatter) : equation_formatter{ equation_formatter } {}
 
 std::shared_ptr<calc::Solution> calc::UnderDampedEquationSolver::solve(
         const long double& discriminant, const double& a, const double& b, const double& c, const double& initial_x, const double& initial_x_prime) {
@@ -15,7 +16,7 @@ std::shared_ptr<calc::Solution> calc::UnderDampedEquationSolver::solve(
     calc::Solution::Root second_root{roots_real_part, -first_root_imaginary_part};
     long double coefficient_a = initial_x;
     long double coefficient_b = (initial_x_prime - roots_real_part * initial_x) * first_root_imaginary_part;
-    std::string initial_equation = input_formatter->format_equation(a, b, c);
+    std::string initial_equation = equation_formatter->format_second_order(a, b, c);
     long double max_amplitude_extremum_at_t = calculate_max_amplitude_extremum_at_t(first_root, coefficient_a, coefficient_b);
     return std::make_shared<calc::UnderDampedSolution>(
         calc::UnderDampedSolution{first_root, second_root, coefficient_a, coefficient_b, initial_equation, max_amplitude_extremum_at_t});
@@ -37,7 +38,7 @@ std::shared_ptr<calc::Solution> calc::OverDampedEquationSolver::solve(
     calc::Solution::Root second_root{second_root_real_part, 0};
     long double coefficient_b = (initial_x_prime - first_root_real_part * initial_x)/(second_root_real_part - first_root_real_part);
     long double coefficient_a = initial_x - coefficient_b;
-    std::string initial_equation = input_formatter->format_equation(a, b, c);
+    std::string initial_equation = equation_formatter->format_second_order(a, b, c);
     long double max_amplitude_extremum_at_t = calculate_max_amplitude_extremum_at_t(first_root, second_root, coefficient_a, coefficient_b);
     return std::make_shared<calc::OverDampedSolution>(
         calc::OverDampedSolution{first_root, second_root, coefficient_a, coefficient_b, initial_equation, max_amplitude_extremum_at_t});
@@ -56,7 +57,7 @@ std::shared_ptr<calc::Solution> calc::CriticallyDampedEquationSolver::solve(
     calc::Solution::Root second_root{roots_real_part, 0};
     long double coefficient_a = initial_x;
     long double coefficient_b = initial_x_prime - roots_real_part;
-    std::string initial_equation = input_formatter->format_equation(a, b, c);
+    std::string initial_equation = equation_formatter->format_second_order(a, b, c);
     long double max_amplitude_extremum_at_t = calculate_max_amplitude_extremum_at_t(first_root, coefficient_a, coefficient_b);
     return std::make_shared<calc::CriticallyDampedSolution>(calc::CriticallyDampedSolution{first_root, second_root, coefficient_a, coefficient_b, initial_equation, max_amplitude_extremum_at_t});
 }

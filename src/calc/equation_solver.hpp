@@ -1,18 +1,17 @@
-#ifndef EQUATION_SOLVER_HEADER
-#define EQUATION_SOLVER_HEADER
+#pragma once
 
 #include <memory>
 
-#include "../input/input_formatter.hpp"
+#include "../text/equation_formatter.hpp"
 #include "solution.hpp"
 
 namespace calc {
     class EquationSolver {
     protected:
-        std::shared_ptr<input::InputFormatter> input_formatter;
+        std::shared_ptr<text::EquationFormatter> equation_formatter;
     public:
         EquationSolver() {}
-        explicit EquationSolver(const std::shared_ptr<input::InputFormatter> input_formatter);
+        explicit EquationSolver(const std::shared_ptr<text::EquationFormatter> equation_formatter);
         virtual ~EquationSolver() {}
         virtual std::shared_ptr<calc::Solution> solve(
             const long double& discriminant, const double& a, const double& b, const double& c, const double& initial_x, const double& initial_x_prime) = 0;
@@ -45,5 +44,3 @@ namespace calc {
             const long double& discriminant, const double& a, const double& b, const double& c, const double& initial_x, const double& initial_x_prime) override;
     };
 }
-
-#endif

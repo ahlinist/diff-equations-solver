@@ -2,7 +2,6 @@
 
 #include <memory>
 
-#include "../input/input_formatter.hpp"
 #include "../calc/equation_solver_selector.hpp"
 #include "../calc/solution.hpp"
 
