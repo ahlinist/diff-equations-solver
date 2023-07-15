@@ -8,13 +8,15 @@ calc::Solution::Solution(
     const Root& second_root, 
     const long double& coefficient_a, 
     const long double& coefficient_b, 
-    const std::string& initial_equation, 
+    const std::string& initial_equation,
+    const std::string& result_equation, 
     const long double& max_amplitude_extremum_at_t) 
             :   first_root{ first_root }, 
                 second_root{ second_root }, 
                 coefficient_a{ coefficient_a }, 
                 coefficient_b{ coefficient_b }, 
-                initial_equation {initial_equation}, 
+                initial_equation { initial_equation }, 
+                result_equation { result_equation },
                 max_amplitude_extremum_at_t{ max_amplitude_extremum_at_t } {}
 
 calc::UnderDampedSolution::UnderDampedSolution(
@@ -23,8 +25,9 @@ calc::UnderDampedSolution::UnderDampedSolution(
     const long double& coefficient_a, 
     const long double& coefficient_b, 
     const std::string& initial_equation, 
+    const std::string& result_equation, 
     const long double& max_amplitude_extremum_at_t) 
-            :  calc::Solution(first_root , second_root, coefficient_a, coefficient_b, initial_equation, max_amplitude_extremum_at_t) 
+            :  calc::Solution(first_root , second_root, coefficient_a, coefficient_b, initial_equation, result_equation, max_amplitude_extremum_at_t) 
             { validate_roots(first_root, second_root); }
 
 calc::OverDampedSolution::OverDampedSolution(
@@ -33,8 +36,9 @@ calc::OverDampedSolution::OverDampedSolution(
     const long double& coefficient_a, 
     const long double& coefficient_b, 
     const std::string& initial_equation, 
+    const std::string& result_equation, 
     const long double& max_amplitude_extremum_at_t) 
-            : calc::Solution(first_root , second_root, coefficient_a, coefficient_b, initial_equation, max_amplitude_extremum_at_t) 
+            : calc::Solution(first_root , second_root, coefficient_a, coefficient_b, initial_equation, result_equation, max_amplitude_extremum_at_t) 
             { validate_roots(first_root, second_root); }
 
 calc::CriticallyDampedSolution::CriticallyDampedSolution(
@@ -42,25 +46,34 @@ calc::CriticallyDampedSolution::CriticallyDampedSolution(
     const Root& second_root, 
     const long double& coefficient_a, 
     const long double& coefficient_b, 
-    const std::string& initial_equation, 
+    const std::string& initial_equation,
+    const std::string& result_equation, 
     const long double& max_amplitude_extremum_at_t) 
-            : calc::Solution(first_root , second_root, coefficient_a, coefficient_b, initial_equation, max_amplitude_extremum_at_t) 
+            : calc::Solution(first_root , second_root, coefficient_a, coefficient_b, initial_equation, result_equation, max_amplitude_extremum_at_t) 
             { validate_roots(first_root, second_root); }
 
-calc::Solution::Root calc::Solution::get_first_root() {
+calc::Solution::Root calc::Solution::get_first_root() const {
     return first_root;
 }
 
-calc::Solution::Root calc::Solution::get_second_root() {
+calc::Solution::Root calc::Solution::get_second_root() const {
     return second_root;
 }
 
-long double calc::Solution::get_coefficient_a() {
+long double calc::Solution::get_coefficient_a() const {
     return coefficient_a;
 }
 
-long double calc::Solution::get_coefficient_b() {
+long double calc::Solution::get_coefficient_b() const {
     return coefficient_b;
+}
+
+std::string calc::Solution::get_initial_equation() {
+    return initial_equation;
+}
+
+std::string calc::Solution::get_result_equation() {
+    return result_equation;
 }
 
 long double calc::Solution::get_max_amplitude_extremum_at_t() {
@@ -122,161 +135,4 @@ void calc::CriticallyDampedSolution::validate_roots(const calc::Solution::Root& 
     if (error_message.size()) {
         throw std::invalid_argument(error_message);
     }
-}
-
-//TODO: move to a separate class to make Solution just a data holder
-std::string calc::UnderDampedSolution::get_result_equation() {
-    std::stringstream sstm{};
-    sstm << "x = ";
-    if (first_root.real_part) {
-        if (first_root.real_part == 1) {
-            sstm << "e^(t)*";
-        } else if (first_root.real_part == -1) {
-            sstm << "e^(-t)*";
-        } else {
-            sstm << "e^(" << first_root.real_part << "t)*";
-        }
-    }
-    
-    if (coefficient_a and coefficient_b) {
-        sstm << "(";
-    }
-
-    if (coefficient_a) {
-        if (coefficient_a == 1) {
-            sstm << "cos(";
-        } else if (coefficient_a == -1) {
-            sstm << "-cos(";
-        } else {
-            sstm << coefficient_a << "cos(";
-        }
-
-        if (first_root.imaginary_part == 1) {
-            sstm << "t)";
-        } else if (first_root.imaginary_part == -1) {
-            sstm << "-t)";
-        } else {
-            sstm << first_root.imaginary_part << "t)";
-        }
-    }
-
-    if (coefficient_b) {
-        if (coefficient_b == 1) {
-            sstm << "+sin(";
-        } else if (coefficient_b == -1) {
-            sstm << "-sin(";
-        } else {
-            if (coefficient_b > 0 and coefficient_a) {
-                sstm << "+";
-            }
-            sstm << coefficient_b << "sin(";
-        }
-
-        if (first_root.imaginary_part == 1) {
-            sstm << "t)";
-        } else if (first_root.imaginary_part == -1) {
-            sstm << "-t)";
-        } else {
-            sstm << first_root.imaginary_part << "t)";
-        }
-    }
-
-    if (coefficient_a and coefficient_b) {
-        sstm << ")";
-    }
-
-    return sstm.str();
-}
-
-std::string calc::OverDampedSolution::get_result_equation() {
-    std::stringstream sstm{};
-    sstm << "x = ";
-    if (coefficient_a) {
-        if (coefficient_a == -1) {
-            sstm << "-";
-        } else if (coefficient_a != 1) {
-            sstm << coefficient_a;
-        }
-
-        if (first_root.real_part) {
-            sstm << "e^";
-            
-            if (first_root.real_part == 1) {
-                sstm << "(t)";
-            } else if (first_root.real_part == -1) {
-                sstm << "(-t)";
-            } else {
-                sstm << "(" << first_root.real_part << "t)";
-            }
-        }
-    }
-
-    if (coefficient_a and coefficient_b > 0) {
-        sstm << "+";
-    }
-
-    if (coefficient_b) {
-        sstm << coefficient_b;
-
-        if (second_root.real_part) {
-            sstm << "e^";
-            
-            if (second_root.real_part == 1) {
-                sstm << "(t)";
-            } else if (second_root.real_part == -1) {
-                sstm << "(-t)";
-            } else {
-                sstm << "(" << second_root.real_part << "t)";
-            }
-        }
-    }
-    return sstm.str();
-}
-
-std::string calc::CriticallyDampedSolution::get_result_equation() {
-    std::stringstream sstm{};
-    sstm << "x = ";
-
-    if (coefficient_a and coefficient_b) {
-        sstm << "(";
-    }
-
-    if (coefficient_a) {
-        sstm << coefficient_a;
-
-        if (coefficient_b > 0) {
-            sstm << "+";
-        }
-    }
-
-    if (coefficient_b) {
-        if (coefficient_b == 1) {
-            sstm << "t";
-        } else if (coefficient_b == -1) {
-            sstm << "-t";
-        } else {
-            sstm << coefficient_b << "t";
-        }
-    }
-
-    if (coefficient_a and coefficient_b) {
-        sstm << ")";
-    }
-
-    if (first_root.real_part) {
-        sstm << "*e^(";
-
-        if (first_root.real_part == 1) {
-            sstm << "t)";
-        } else if (first_root.real_part == -1) {
-            sstm << "-t)";
-        } else {
-            sstm << first_root.real_part << "t)";
-        }
-    }
-    return sstm.str();
-}
-
-std::string calc::Solution::get_initial_equation() {
-    return initial_equation;
 }

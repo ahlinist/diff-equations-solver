@@ -17,9 +17,10 @@ std::shared_ptr<calc::Solution> calc::UnderDampedEquationSolver::solve(
     long double coefficient_a = initial_x;
     long double coefficient_b = (initial_x_prime - roots_real_part * initial_x) * first_root_imaginary_part;
     std::string initial_equation = equation_formatter->format_second_order(a, b, c);
+    std::string result_equation = equation_formatter->format_under_damped_result(roots_real_part, first_root_imaginary_part, coefficient_a, coefficient_b);
     long double max_amplitude_extremum_at_t = calculate_max_amplitude_extremum_at_t(first_root, coefficient_a, coefficient_b);
     return std::make_shared<calc::UnderDampedSolution>(
-        calc::UnderDampedSolution{first_root, second_root, coefficient_a, coefficient_b, initial_equation, max_amplitude_extremum_at_t});
+        calc::UnderDampedSolution{first_root, second_root, coefficient_a, coefficient_b, initial_equation, result_equation, max_amplitude_extremum_at_t});
 }
 
 long double calc::UnderDampedEquationSolver::calculate_max_amplitude_extremum_at_t(
@@ -39,9 +40,10 @@ std::shared_ptr<calc::Solution> calc::OverDampedEquationSolver::solve(
     long double coefficient_b = (initial_x_prime - first_root_real_part * initial_x)/(second_root_real_part - first_root_real_part);
     long double coefficient_a = initial_x - coefficient_b;
     std::string initial_equation = equation_formatter->format_second_order(a, b, c);
+    std::string result_equation = equation_formatter->format_over_damped_result(first_root_real_part, second_root_real_part, coefficient_a, coefficient_b);
     long double max_amplitude_extremum_at_t = calculate_max_amplitude_extremum_at_t(first_root, second_root, coefficient_a, coefficient_b);
     return std::make_shared<calc::OverDampedSolution>(
-        calc::OverDampedSolution{first_root, second_root, coefficient_a, coefficient_b, initial_equation, max_amplitude_extremum_at_t});
+        calc::OverDampedSolution{first_root, second_root, coefficient_a, coefficient_b, initial_equation, result_equation, max_amplitude_extremum_at_t});
 }
 
 long double calc::OverDampedEquationSolver::calculate_max_amplitude_extremum_at_t(
@@ -58,8 +60,10 @@ std::shared_ptr<calc::Solution> calc::CriticallyDampedEquationSolver::solve(
     long double coefficient_a = initial_x;
     long double coefficient_b = initial_x_prime - roots_real_part;
     std::string initial_equation = equation_formatter->format_second_order(a, b, c);
+    std::string result_equation = equation_formatter->format_critically_damped_result(roots_real_part, coefficient_a, coefficient_b);
     long double max_amplitude_extremum_at_t = calculate_max_amplitude_extremum_at_t(first_root, coefficient_a, coefficient_b);
-    return std::make_shared<calc::CriticallyDampedSolution>(calc::CriticallyDampedSolution{first_root, second_root, coefficient_a, coefficient_b, initial_equation, max_amplitude_extremum_at_t});
+    return std::make_shared<calc::CriticallyDampedSolution>(
+        calc::CriticallyDampedSolution{first_root, second_root, coefficient_a, coefficient_b, initial_equation, result_equation, max_amplitude_extremum_at_t});
 }
 
 long double calc::CriticallyDampedEquationSolver::calculate_max_amplitude_extremum_at_t(

@@ -17,9 +17,6 @@ public:
 };
 
 class MockSolution : public calc::Solution {
-public:
-    MOCK_METHOD(std::string, get_initial_equation, (), (override));
-    MOCK_METHOD(std::string, get_result_equation, (), (override));
 protected:
     void validate_roots(const Root& first_root, const Root& second_root) {}
 };

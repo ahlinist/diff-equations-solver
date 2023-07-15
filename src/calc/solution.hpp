@@ -1,5 +1,4 @@
-#ifndef SOLUTION_HEADER
-#define SOLUTION_HEADER
+#pragma once
 
 #include <string>
 
@@ -17,22 +16,24 @@ namespace calc {
             const long double& coefficient_a, 
             const long double& coefficient_b, 
             const std::string& initial_equation,
+            const std::string& result_equation,
             const long double& max_amplitude_extremum_at_t);
         virtual ~Solution() {}
-        virtual std::string get_result_equation() = 0;
         bool operator==(const Solution& other) const;
-        Root get_first_root();
-        Root get_second_root();
-        long double get_coefficient_a();
-        long double get_coefficient_b();
+        Root get_first_root() const;
+        Root get_second_root() const;
+        long double get_coefficient_a() const;
+        long double get_coefficient_b() const;
         long double get_max_amplitude_extremum_at_t();
-        virtual std::string get_initial_equation();
+        std::string get_initial_equation();
+        std::string get_result_equation();
     protected:
         Root first_root{};
         Root second_root{};
         long double coefficient_a{};
         long double coefficient_b{};
         std::string initial_equation;
+        std::string result_equation;
         long double max_amplitude_extremum_at_t;
         virtual void validate_roots(const Root& first_root, const Root& second_root) = 0;
     };
@@ -45,8 +46,8 @@ namespace calc {
             const long double& coefficient_a, 
             const long double& coefficient_b, 
             const std::string& initial_equation,
+            const std::string& result_equation,
             const long double& max_amplitude_extremum_at_t);
-        std::string get_result_equation() override;
     protected:
         void validate_roots(const Root& first_root, const Root& second_root) override;
     };
@@ -59,8 +60,8 @@ namespace calc {
             const long double& coefficient_a, 
             const long double& coefficient_b, 
             const std::string& initial_equation,
+            const std::string& result_equation,
             const long double& max_amplitude_extremum_at_t);
-        std::string get_result_equation() override;
     protected:
         void validate_roots(const Root& first_root, const Root& second_root) override;
     };
@@ -73,11 +74,9 @@ namespace calc {
             const long double& coefficient_a, 
             const long double& coefficient_b, 
             const std::string& initial_equation,
+            const std::string& result_equation,
             const long double& max_amplitude_extremum_at_t);
-        std::string get_result_equation() override;
     protected:
         void validate_roots(const Root& first_root, const Root& second_root) override;
     };
 }
-
-#endif
