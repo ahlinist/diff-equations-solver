@@ -48,8 +48,14 @@ std::shared_ptr<calc::Solution> calc::OverDampedEquationSolver::solve(
 
 long double calc::OverDampedEquationSolver::calculate_max_amplitude_extremum_at_t(
         const calc::Solution::Root& first_root, const calc::Solution::Root& second_root, const long double& coefficient_a, const long double& coefficient_b) {
-    long double ln_arg = (-coefficient_b * second_root.real_part) / (coefficient_a * first_root.real_part);
-    return std::log(ln_arg) / (first_root.real_part - second_root.real_part);
+    long double ln_arg = -(coefficient_a * first_root.real_part) / (coefficient_b * second_root.real_part);
+    long double max_amplitude_extremum_at_t = 0;
+
+    if (ln_arg > 0) {
+        max_amplitude_extremum_at_t = std::log(ln_arg) / (second_root.real_part - first_root.real_part);
+    }
+
+    return max_amplitude_extremum_at_t >= 0 ? max_amplitude_extremum_at_t : 0;
 }
 
 std::shared_ptr<calc::Solution> calc::CriticallyDampedEquationSolver::solve(

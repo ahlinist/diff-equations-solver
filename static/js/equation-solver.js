@@ -46,8 +46,8 @@ const drawGraph = (data) => {
     const augend = solution.augend;
     const addend = solution.addend;
     const maxAmplitude = Math.max(
-        calculateFunctionValue(multiplier, augend, addend, 0),
-        calculateFunctionValue(multiplier, augend, addend, data.maxAmplitudeExtremumAtT)
+        Math.abs(calculateFunctionValue(multiplier, augend, addend, 0)),
+        Math.abs(calculateFunctionValue(multiplier, augend, addend, data.maxAmplitudeExtremumAtT)),
     );
 
     // Set the graph parameters
