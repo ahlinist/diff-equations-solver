@@ -17,7 +17,8 @@ namespace calc {
             const long double& coefficient_b, 
             const std::string& initial_equation,
             const std::string& result_equation,
-            const long double& max_amplitude_extremum_at_t);
+            const long double& max_amplitude_extremum_at_t,
+            const long double& decays_at_t);
         virtual ~Solution() {}
         bool operator==(const Solution& other) const;
         Root get_first_root() const;
@@ -27,6 +28,7 @@ namespace calc {
         long double get_max_amplitude_extremum_at_t();
         std::string get_initial_equation();
         std::string get_result_equation();
+        long double get_decays_at_t();
     protected:
         Root first_root{};
         Root second_root{};
@@ -35,6 +37,7 @@ namespace calc {
         std::string initial_equation;
         std::string result_equation;
         long double max_amplitude_extremum_at_t;
+        long double decays_at_t;
         virtual void validate_roots(const Root& first_root, const Root& second_root) = 0;
     };
 
@@ -47,7 +50,8 @@ namespace calc {
             const long double& coefficient_b, 
             const std::string& initial_equation,
             const std::string& result_equation,
-            const long double& max_amplitude_extremum_at_t);
+            const long double& max_amplitude_extremum_at_t,
+            const long double& decays_at_t);
     protected:
         void validate_roots(const Root& first_root, const Root& second_root) override;
     };
@@ -61,7 +65,8 @@ namespace calc {
             const long double& coefficient_b, 
             const std::string& initial_equation,
             const std::string& result_equation,
-            const long double& max_amplitude_extremum_at_t);
+            const long double& max_amplitude_extremum_at_t,
+            const long double& decays_at_t);
     protected:
         void validate_roots(const Root& first_root, const Root& second_root) override;
     };
@@ -75,7 +80,8 @@ namespace calc {
             const long double& coefficient_b, 
             const std::string& initial_equation,
             const std::string& result_equation,
-            const long double& max_amplitude_extremum_at_t);
+            const long double& max_amplitude_extremum_at_t,
+            const long double& decays_at_t);
     protected:
         void validate_roots(const Root& first_root, const Root& second_root) override;
     };

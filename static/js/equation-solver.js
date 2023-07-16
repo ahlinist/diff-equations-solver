@@ -37,10 +37,6 @@ const drawGraph = (data) => {
     const canvas = document.getElementById('graphCanvas');
     const context = canvas.getContext('2d');
     
-    //TODO: determine canvas scale and ranges dynamically from solution's params
-    const startRange = 0;
-    const endRange = 20;
-    
     const solution = data.solution;
     const multiplier = solution.multiplier;
     const augend = solution.augend;
@@ -49,9 +45,11 @@ const drawGraph = (data) => {
         Math.abs(calculateFunctionValue(multiplier, augend, addend, 0)),
         Math.abs(calculateFunctionValue(multiplier, augend, addend, data.maxAmplitudeExtremumAtT)),
     );
+    const maxT = data.decaysAtT;
 
     // Set the graph parameters
-    const scale = canvas.height / (2 * maxAmplitude);
+    const scaleX = canvas.width / maxT;
+    const scaleY = canvas.height / (2 * maxAmplitude);
     const offsetX = 20;
     const offsetY = canvas.height / 2;
     
@@ -67,21 +65,21 @@ const drawGraph = (data) => {
     context.fillStyle = 'black'; // Set the fill color for the labels
 
     // Draw labels for x-axis
-    const minXValue = Math.floor(startRange * scale);
-    const maxXValue = Math.ceil(endRange * scale);
+    const minXValue = 0;
+    const maxXValue = Math.ceil(maxT * scaleX);
 
     for (let t = minXValue; t <= maxXValue; t += 1) {
-        const labelX = t * scale + offsetX;
+        const labelX = t * scaleX + offsetX;
         const labelY = offsetY + 12;
         context.fillText(t, labelX, labelY);
     }
 
     // Draw labels for y-axis
-    const maxYValue = Math.ceil(endRange * scale / 2);
+    const maxYValue = Math.ceil(maxAmplitude * scaleY / 2);
 
     for (let y = -maxYValue; y <= maxYValue; y += 1) {
         const labelX = offsetX - 20;
-        const labelY = -y * scale + offsetY + 5;
+        const labelY = -y * scaleY + offsetY + 5;
         context.fillText(y, labelX, labelY);
     }
 
@@ -89,10 +87,10 @@ const drawGraph = (data) => {
     context.beginPath();
     context.strokeStyle = 'blue';
 
-    for (let t = startRange; t <= endRange; t += 0.1) {
+    for (let t = 0; t <= maxXValue; t += 0.1) {
       const y = calculateFunctionValue(multiplier, augend, addend, t);
-      const graphX = t * scale + offsetX;
-      const graphY = -y * scale + offsetY;
+      const graphX = t * scaleX + offsetX;
+      const graphY = -y * scaleY + offsetY;
       
       context.lineTo(graphX, graphY);
     }
@@ -131,8 +129,12 @@ const validateInput = (a, b, c, initialX, initialXPrime) => {
 
     let errorMessage = "";
 
-    if (a < 0 || b < 0 || c < 0) {
-        errorMessage += "a, b or c should be greater than 0.<br>"
+    if (a <= 0) {
+        errorMessage += "a should be greater than 0.<br>"
+    }
+
+    if (b < 0 || c < 0) {
+        errorMessage += "b or c should be greater than or equal 0.<br>"
     }
 
     if ((!initialX || initialX == 0) && (!initialXPrime || initialXPrime == 0)) {

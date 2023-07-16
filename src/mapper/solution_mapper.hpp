@@ -24,6 +24,7 @@ namespace mapper {
         std::string resultEquation{};
         Solution solution{};
         long double maxAmplitudeExtremumAtT{};
+        long double decaysAtT{};
     };
 
     class SolutionMapper {

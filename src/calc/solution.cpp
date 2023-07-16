@@ -10,14 +10,16 @@ calc::Solution::Solution(
     const long double& coefficient_b, 
     const std::string& initial_equation,
     const std::string& result_equation, 
-    const long double& max_amplitude_extremum_at_t) 
+    const long double& max_amplitude_extremum_at_t,
+    const long double& decays_at_t) 
             :   first_root{ first_root }, 
                 second_root{ second_root }, 
                 coefficient_a{ coefficient_a }, 
                 coefficient_b{ coefficient_b }, 
                 initial_equation { initial_equation }, 
                 result_equation { result_equation },
-                max_amplitude_extremum_at_t{ max_amplitude_extremum_at_t } {}
+                max_amplitude_extremum_at_t{ max_amplitude_extremum_at_t },
+                decays_at_t{ decays_at_t } {}
 
 calc::UnderDampedSolution::UnderDampedSolution(
     const Root& first_root, 
@@ -26,8 +28,9 @@ calc::UnderDampedSolution::UnderDampedSolution(
     const long double& coefficient_b, 
     const std::string& initial_equation, 
     const std::string& result_equation, 
-    const long double& max_amplitude_extremum_at_t) 
-            :  calc::Solution(first_root , second_root, coefficient_a, coefficient_b, initial_equation, result_equation, max_amplitude_extremum_at_t) 
+    const long double& max_amplitude_extremum_at_t,
+    const long double& decays_at_t) 
+            :  calc::Solution(first_root , second_root, coefficient_a, coefficient_b, initial_equation, result_equation, max_amplitude_extremum_at_t, decays_at_t) 
             { validate_roots(first_root, second_root); }
 
 calc::OverDampedSolution::OverDampedSolution(
@@ -37,8 +40,9 @@ calc::OverDampedSolution::OverDampedSolution(
     const long double& coefficient_b, 
     const std::string& initial_equation, 
     const std::string& result_equation, 
-    const long double& max_amplitude_extremum_at_t) 
-            : calc::Solution(first_root , second_root, coefficient_a, coefficient_b, initial_equation, result_equation, max_amplitude_extremum_at_t) 
+    const long double& max_amplitude_extremum_at_t,
+    const long double& decays_at_t) 
+            : calc::Solution(first_root , second_root, coefficient_a, coefficient_b, initial_equation, result_equation, max_amplitude_extremum_at_t, decays_at_t) 
             { validate_roots(first_root, second_root); }
 
 calc::CriticallyDampedSolution::CriticallyDampedSolution(
@@ -48,8 +52,9 @@ calc::CriticallyDampedSolution::CriticallyDampedSolution(
     const long double& coefficient_b, 
     const std::string& initial_equation,
     const std::string& result_equation, 
-    const long double& max_amplitude_extremum_at_t) 
-            : calc::Solution(first_root , second_root, coefficient_a, coefficient_b, initial_equation, result_equation, max_amplitude_extremum_at_t) 
+    const long double& max_amplitude_extremum_at_t,
+    const long double& decays_at_t) 
+            : calc::Solution(first_root , second_root, coefficient_a, coefficient_b, initial_equation, result_equation, max_amplitude_extremum_at_t, decays_at_t) 
             { validate_roots(first_root, second_root); }
 
 calc::Solution::Root calc::Solution::get_first_root() const {
@@ -78,6 +83,10 @@ std::string calc::Solution::get_result_equation() {
 
 long double calc::Solution::get_max_amplitude_extremum_at_t() {
     return max_amplitude_extremum_at_t;
+}
+
+long double calc::Solution::get_decays_at_t() {
+    return decays_at_t;
 }
 
 bool calc::Solution::operator==(const calc::Solution& other) const {

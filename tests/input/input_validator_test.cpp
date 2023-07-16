@@ -27,14 +27,25 @@ TEST(InputValidatorTestSuite, PassesWithInitialXPrimeNonZero) {
     //nothing thrown
 }
 
-TEST(InputValidatorTestSuite, ThrowsInvalidInputForTwoReasons) {
+TEST(InputValidatorTestSuite, ThrowsInvalidInputForNegativeCAndZeroInitialConditions) {
     input::InputValidatorImpl input_validator{};
     
     try {
         input_validator.validate_second_order(1, 2, -3, 0, 0);
         FAIL();
     } catch (const std::invalid_argument& e) {
-        EXPECT_STREQ("Initial conditions x and x' should not be 0 simultaneously.\na, b and c need to be greater than 0.\n", e.what());
+        EXPECT_STREQ("Initial conditions x and x' should not be 0 simultaneously.\nb and c need to be greater than or equal 0.\n", e.what());
+    }
+}
+
+TEST(InputValidatorTestSuite, ThrowsInvalidInputFor3DifferentReasons) {
+    input::InputValidatorImpl input_validator{};
+    
+    try {
+        input_validator.validate_second_order(0, 2, -3, 0, 0);
+        FAIL();
+    } catch (const std::invalid_argument& e) {
+        EXPECT_STREQ("Initial conditions x and x' should not be 0 simultaneously.\na needs to be greater than 0.\nb and c need to be greater than or equal 0.\n", e.what());
     }
 }
 
@@ -56,7 +67,7 @@ TEST_P(InputValidatorMultipleParametersTests, CheckIfInvalidInputExceptionIsThro
         input_validator.validate_second_order(a, b, c, initial_x, initial_x_prime);
         FAIL();
     } catch (const std::invalid_argument& e) {
-        EXPECT_STREQ("a, b and c need to be greater than 0.\n", e.what());
+        EXPECT_STREQ("b and c need to be greater than or equal 0.\n", e.what());
     }
 }
 
@@ -64,10 +75,6 @@ INSTANTIATE_TEST_CASE_P(
         CheckIfInvalidInputExceptionIsThrown,
         InputValidatorMultipleParametersTests,
         ::testing::Values(
-                std::make_tuple(-1, 1, 1, 1, 1),
                 std::make_tuple(1, -1, 1, 1, 1),
                 std::make_tuple(1, 1, -1, 1, 1),
-                std::make_tuple(-1, -1, 1, 1, 1),
-                std::make_tuple(1, -1, -1, 1, 1),
-                std::make_tuple(-1, 1, -1, 1, 1),
-                std::make_tuple(-1, -1, -1, 1, 1)));
+                std::make_tuple(1, -1, -1, 1, 1)));

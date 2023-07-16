@@ -6,6 +6,10 @@
 #include "../text/equation_formatter.hpp"
 #include "solution.hpp"
 
+const int OVER_DAMPED_DECAY_FACTOR = 500;
+const int UNDER_DAMPED_DECAY_FACTOR = 500;
+const int CRITICALLY_DAMPED_DECAY_FACTOR = 2000;
+
 calc::EquationSolver::EquationSolver(const std::shared_ptr<text::EquationFormatter> equation_formatter) : equation_formatter{ equation_formatter } {}
 
 std::shared_ptr<calc::Solution> calc::UnderDampedEquationSolver::solve(
@@ -19,8 +23,9 @@ std::shared_ptr<calc::Solution> calc::UnderDampedEquationSolver::solve(
     std::string initial_equation = equation_formatter->format_second_order(a, b, c);
     std::string result_equation = equation_formatter->format_under_damped_result(roots_real_part, first_root_imaginary_part, coefficient_a, coefficient_b);
     long double max_amplitude_extremum_at_t = calculate_max_amplitude_extremum_at_t(first_root, coefficient_a, coefficient_b);
+    long double decays_at_t = calculate_decayed_at_t(roots_real_part, coefficient_a, coefficient_b);
     return std::make_shared<calc::UnderDampedSolution>(
-        calc::UnderDampedSolution{first_root, second_root, coefficient_a, coefficient_b, initial_equation, result_equation, max_amplitude_extremum_at_t});
+        calc::UnderDampedSolution{first_root, second_root, coefficient_a, coefficient_b, initial_equation, result_equation, max_amplitude_extremum_at_t, decays_at_t});
 }
 
 long double calc::UnderDampedEquationSolver::calculate_max_amplitude_extremum_at_t(
@@ -29,6 +34,11 @@ long double calc::UnderDampedEquationSolver::calculate_max_amplitude_extremum_at
     long double arctan_denominator = coefficient_a * first_root.imaginary_part - coefficient_b * first_root.real_part;
     long double max_amplitude_extremum_at_t = std::atan2(arctan_numerator , arctan_denominator) / first_root.imaginary_part;
     return max_amplitude_extremum_at_t < 0 ? max_amplitude_extremum_at_t + M_PI / first_root.imaginary_part : max_amplitude_extremum_at_t;
+}
+
+long double calc::UnderDampedEquationSolver::calculate_decayed_at_t(const long double& root, const long double& coefficient_a, const long double& coefficient_b) {
+    long double ln_arg = coefficient_a / (UNDER_DAMPED_DECAY_FACTOR * std::sqrt(coefficient_a * coefficient_a + coefficient_b * coefficient_b));
+    return std::log(std::abs(ln_arg)) / root;
 }
 
 std::shared_ptr<calc::Solution> calc::OverDampedEquationSolver::solve(
@@ -42,8 +52,9 @@ std::shared_ptr<calc::Solution> calc::OverDampedEquationSolver::solve(
     std::string initial_equation = equation_formatter->format_second_order(a, b, c);
     std::string result_equation = equation_formatter->format_over_damped_result(first_root_real_part, second_root_real_part, coefficient_a, coefficient_b);
     long double max_amplitude_extremum_at_t = calculate_max_amplitude_extremum_at_t(first_root, second_root, coefficient_a, coefficient_b);
+    long double decays_at_t = calculate_decayed_at_t(first_root_real_part, second_root_real_part, coefficient_a, coefficient_b, max_amplitude_extremum_at_t);
     return std::make_shared<calc::OverDampedSolution>(
-        calc::OverDampedSolution{first_root, second_root, coefficient_a, coefficient_b, initial_equation, result_equation, max_amplitude_extremum_at_t});
+        calc::OverDampedSolution{first_root, second_root, coefficient_a, coefficient_b, initial_equation, result_equation, max_amplitude_extremum_at_t, decays_at_t});
 }
 
 long double calc::OverDampedEquationSolver::calculate_max_amplitude_extremum_at_t(
@@ -58,6 +69,23 @@ long double calc::OverDampedEquationSolver::calculate_max_amplitude_extremum_at_
     return max_amplitude_extremum_at_t >= 0 ? max_amplitude_extremum_at_t : 0;
 }
 
+long double calc::OverDampedEquationSolver::calculate_decayed_at_t(
+            const long double& first_root_real_part, const long double& second_root_real_part, const long double& coefficient_a, const long double& coefficient_b, const long double& max_amplitude_extremum_at_t) {
+    long double max_value = coefficient_a * std::exp(first_root_real_part * max_amplitude_extremum_at_t) + coefficient_b * std::exp(second_root_real_part * max_amplitude_extremum_at_t);
+    long double coefficient{};
+    long double root{};
+
+    if (first_root_real_part > second_root_real_part) {
+        root = first_root_real_part;
+        coefficient = coefficient_a;
+    } else {
+        root = second_root_real_part;
+        coefficient = coefficient_b;
+    }
+
+    return std::log(max_value / (coefficient * OVER_DAMPED_DECAY_FACTOR)) / root;
+}
+
 std::shared_ptr<calc::Solution> calc::CriticallyDampedEquationSolver::solve(
         const long double& discriminant, const double& a, const double& b, const double& c, const double& initial_x, const double& initial_x_prime) {
     long double roots_real_part = -b/(2*a);
@@ -68,12 +96,21 @@ std::shared_ptr<calc::Solution> calc::CriticallyDampedEquationSolver::solve(
     std::string initial_equation = equation_formatter->format_second_order(a, b, c);
     std::string result_equation = equation_formatter->format_critically_damped_result(roots_real_part, coefficient_a, coefficient_b);
     long double max_amplitude_extremum_at_t = calculate_max_amplitude_extremum_at_t(first_root, coefficient_a, coefficient_b);
+    long double decayed_at_t = calculate_decayed_at_t(roots_real_part, coefficient_a, coefficient_b, max_amplitude_extremum_at_t);
     return std::make_shared<calc::CriticallyDampedSolution>(
-        calc::CriticallyDampedSolution{first_root, second_root, coefficient_a, coefficient_b, initial_equation, result_equation, max_amplitude_extremum_at_t});
+        calc::CriticallyDampedSolution{first_root, second_root, coefficient_a, coefficient_b, initial_equation, result_equation, max_amplitude_extremum_at_t, decayed_at_t});
 }
 
 long double calc::CriticallyDampedEquationSolver::calculate_max_amplitude_extremum_at_t(
         const calc::Solution::Root& first_root, const long double& coefficient_a, const long double& coefficient_b) {
     double long max_amplitude_extremum_at_t = -(coefficient_a * first_root.real_part + coefficient_b) / (coefficient_b * first_root.real_part);
     return max_amplitude_extremum_at_t >= 0 ? max_amplitude_extremum_at_t : 0;
+}
+
+long double calc::CriticallyDampedEquationSolver::calculate_decayed_at_t(
+        const long double& root, const long double& coefficient_a, const long double& coefficient_b, const long double& max_amplitude_extremum_at_t) {
+    long double max_value = (coefficient_a + coefficient_b * max_amplitude_extremum_at_t) * std::exp(root * max_amplitude_extremum_at_t);
+    long double ln_arg = max_value / (CRITICALLY_DAMPED_DECAY_FACTOR * coefficient_b);
+
+    return std::log(ln_arg) / root;
 }

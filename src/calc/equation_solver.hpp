@@ -22,6 +22,7 @@ namespace calc {
             const calc::Solution::Root& first_root, const long double& coefficient_a, const long double& coefficient_b);
     public:
         using EquationSolver::EquationSolver;
+        long double calculate_decayed_at_t(const long double& root, const long double& coefficient_a, const long double& coefficient_b);
         std::shared_ptr<calc::Solution> solve(
             const long double& discriminant, const double& a, const double& b, const double& c, const double& initial_x, const double& initial_x_prime) override;
     };
@@ -31,6 +32,12 @@ namespace calc {
             const calc::Solution::Root& first_root, const calc::Solution::Root& second_root, const long double& coefficient_a, const long double& coefficient_b);
     public:
         using EquationSolver::EquationSolver;
+        long double calculate_decayed_at_t(
+            const long double& first_root_real_part, 
+            const long double& second_root_real_part, 
+            const long double& coefficient_a, 
+            const long double& coefficient_b, 
+            const long double& max_amplitude_extremum_at_t);
         std::shared_ptr<calc::Solution> solve(
             const long double& discriminant, const double& a, const double& b, const double& c, const double& initial_x, const double& initial_x_prime) override;
     };
@@ -40,6 +47,11 @@ namespace calc {
             const calc::Solution::Root& first_root, const long double& coefficient_a, const long double& coefficient_b);
     public:
         using EquationSolver::EquationSolver;
+        long double calculate_decayed_at_t(
+            const long double& root, 
+            const long double& coefficient_a, 
+            const long double& coefficient_b, 
+            const long double& max_amplitude_extremum_at_t);
         std::shared_ptr<calc::Solution> solve(
             const long double& discriminant, const double& a, const double& b, const double& c, const double& initial_x, const double& initial_x_prime) override;
     };
