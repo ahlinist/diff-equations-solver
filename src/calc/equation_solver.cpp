@@ -74,5 +74,6 @@ std::shared_ptr<calc::Solution> calc::CriticallyDampedEquationSolver::solve(
 
 long double calc::CriticallyDampedEquationSolver::calculate_max_amplitude_extremum_at_t(
         const calc::Solution::Root& first_root, const long double& coefficient_a, const long double& coefficient_b) {
-    return -(coefficient_a * first_root.real_part + coefficient_b) / (coefficient_b * first_root.real_part);
+    double long max_amplitude_extremum_at_t = -(coefficient_a * first_root.real_part + coefficient_b) / (coefficient_b * first_root.real_part);
+    return max_amplitude_extremum_at_t >= 0 ? max_amplitude_extremum_at_t : 0;
 }
