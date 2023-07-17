@@ -14,7 +14,7 @@ const handleFormInput = () => {
     }
 
     const url = new URL(window.location.protocol + "//" + window.location.host + "/second-order/solution");
-    url.searchParams.append("a", a || 0);
+    url.searchParams.append("a", a);
     url.searchParams.append("b", b || 0);
     url.searchParams.append("c", c || 0);
     url.searchParams.append("initial-x", initialX || 0);
@@ -33,10 +33,13 @@ const handleFormInput = () => {
 }
 
 const drawGraph = (data) => {
-    clearCanvas();
     const canvas = document.getElementById('graphCanvas');
     const context = canvas.getContext('2d');
-    
+    clearCanvas(canvas);
+
+    const canvasWidth = canvas.width;
+    const canvasHeight = canvas.height;
+
     const solution = data.solution;
     const multiplier = solution.multiplier;
     const augend = solution.augend;
@@ -45,37 +48,33 @@ const drawGraph = (data) => {
         Math.abs(calculateFunctionValue(multiplier, augend, addend, 0)),
         Math.abs(calculateFunctionValue(multiplier, augend, addend, data.maxAmplitudeExtremumAtT)),
     );
-    const maxT = data.decaysAtT;
 
     // Set the graph parameters
-    const scaleX = canvas.width / maxT;
-    const scaleY = canvas.height / (2 * maxAmplitude);
+    const scaleX = Math.ceil(canvasWidth / (data.decaysAtT * 1.1));
+    const scaleY = Math.ceil(canvasHeight / (2 * maxAmplitude * 1.1));
     const offsetX = 20;
-    const offsetY = canvas.height / 2;
+    const offsetY = canvasHeight / 2;
     
     // Draw the x and y axes
     context.beginPath();
     context.moveTo(0, offsetY);
-    context.lineTo(canvas.width, offsetY);
+    context.lineTo(canvasWidth, offsetY);
     context.moveTo(offsetX, 0);
-    context.lineTo(offsetX, canvas.height);
+    context.lineTo(offsetX, canvasHeight);
     context.strokeStyle = 'black';
     context.stroke();
     
     context.fillStyle = 'black'; // Set the fill color for the labels
 
     // Draw labels for x-axis
-    const minXValue = 0;
-    const maxXValue = Math.ceil(maxT * scaleX);
-
-    for (let t = minXValue; t <= maxXValue; t += 1) {
+    for (let t = 0; t <= canvasWidth; t += 1) {
         const labelX = t * scaleX + offsetX;
         const labelY = offsetY + 12;
         context.fillText(t, labelX, labelY);
     }
 
     // Draw labels for y-axis
-    const maxYValue = Math.ceil(maxAmplitude * scaleY / 2);
+    const maxYValue = canvasHeight / 2;
 
     for (let y = -maxYValue; y <= maxYValue; y += 1) {
         const labelX = offsetX - 20;
@@ -87,7 +86,7 @@ const drawGraph = (data) => {
     context.beginPath();
     context.strokeStyle = 'blue';
 
-    for (let t = 0; t <= maxXValue; t += 0.1) {
+    for (let t = 0; t <= canvasWidth; t += 0.1) {
       const y = calculateFunctionValue(multiplier, augend, addend, t);
       const graphX = t * scaleX + offsetX;
       const graphY = -y * scaleY + offsetY;
@@ -149,8 +148,7 @@ const validateInput = (a, b, c, initialX, initialXPrime) => {
     }
 }
 
-const clearCanvas = () => {
-    const canvas = document.getElementById('graphCanvas');
+const clearCanvas = (canvas) => {
     const context = canvas.getContext('2d');
     context.clearRect(0, 0, canvas.width, canvas.height);
 }
