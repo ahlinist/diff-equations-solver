@@ -49,8 +49,10 @@ const drawGraph = (data) => {
         Math.abs(calculateFunctionValue(multiplier, augend, addend, data.maxAmplitudeExtremumAtT)),
     );
 
+    const decaysAtT = data.decaysAtT;
+
     // Set the graph parameters
-    const scaleX = Math.ceil(canvasWidth / (data.decaysAtT * 1.1));
+    const scaleX = Math.ceil(canvasWidth / (decaysAtT * 1.1));
     const scaleY = Math.ceil(canvasHeight / (2 * maxAmplitude * 1.1));
     const offsetX = 20;
     const offsetY = canvasHeight / 2;
@@ -67,7 +69,9 @@ const drawGraph = (data) => {
     context.fillStyle = 'black'; // Set the fill color for the labels
 
     // Draw labels for x-axis
-    for (let t = 0; t <= canvasWidth; t += 1) {
+    const xAxisStep = calculateXAxisStep(decaysAtT);
+
+    for (let t = 0; t <= canvasWidth; t += xAxisStep) {
         const labelX = t * scaleX + offsetX;
         const labelY = offsetY + 12;
         context.fillText(t, labelX, labelY);
@@ -151,4 +155,16 @@ const validateInput = (a, b, c, initialX, initialXPrime) => {
 const clearCanvas = (canvas) => {
     const context = canvas.getContext('2d');
     context.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+const calculateXAxisStep = (decaysAtT) => {
+    const scaleFactor = 2.5;
+
+    if (decaysAtT > scaleFactor) {
+        const numberOfDigits = Math.trunc(decaysAtT/scaleFactor).toString().length;
+        return Math.pow(10, numberOfDigits - 1);
+    } else {
+        const numberOfDigits = Math.trunc(scaleFactor/decaysAtT).toString().length;
+        return Math.pow(10, -numberOfDigits);
+    }
 }
