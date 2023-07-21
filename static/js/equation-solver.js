@@ -49,7 +49,7 @@ const drawGraph = (data) => {
         Math.abs(calculateFunctionValue(multiplier, augend, addend, data.maxAmplitudeExtremumAtT)),
     );
 
-    const decaysAtT = data.decaysAtT;
+    const decaysAtT = data.decaysAtT || 10;
 
     // Set the graph parameters
     const scaleX = Math.ceil(canvasWidth / (decaysAtT));
