@@ -52,7 +52,7 @@ const drawGraph = (data) => {
     const decaysAtT = data.decaysAtT;
 
     // Set the graph parameters
-    const scaleX = Math.ceil(canvasWidth / (decaysAtT * 1.1));
+    const scaleX = Math.ceil(canvasWidth / (decaysAtT));
     const scaleY = Math.ceil(canvasHeight / (2 * maxAmplitude * 1.1));
     const offsetX = 20;
     const offsetY = canvasHeight / 2;
@@ -69,21 +69,22 @@ const drawGraph = (data) => {
     context.fillStyle = 'black'; // Set the fill color for the labels
 
     // Draw labels for x-axis
-    const xAxisStep = calculateXAxisStep(decaysAtT);
+    const xAxisStep = calculateAxisStep(decaysAtT);
 
     for (let t = 0; t <= canvasWidth; t += xAxisStep) {
         const labelX = t * scaleX + offsetX;
-        const labelY = offsetY + 12;
+        const labelY = offsetY + 12; //TODO: invoke once
         context.fillText(t, labelX, labelY);
     }
 
     // Draw labels for y-axis
+    const yAxisStep = calculateAxisStep(maxAmplitude);
     const maxYValue = canvasHeight / 2;
 
-    for (let y = -maxYValue; y <= maxYValue; y += 1) {
-        const labelX = offsetX - 20;
+    for (let y = -maxYValue; y <= maxYValue; y += yAxisStep) {
+        const labelX = offsetX - 20; //TODO: invoke once
         const labelY = -y * scaleY + offsetY + 5;
-        context.fillText(y, labelX, labelY);
+        context.fillText(Math.round(y * 10000) / 10000, labelX, labelY);
     }
 
     // Draw the function graph
@@ -157,14 +158,14 @@ const clearCanvas = (canvas) => {
     context.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-const calculateXAxisStep = (decaysAtT) => {
+const calculateAxisStep = (maxValue) => {
     const scaleFactor = 2.5;
 
-    if (decaysAtT > scaleFactor) {
-        const numberOfDigits = Math.trunc(decaysAtT/scaleFactor).toString().length;
+    if (maxValue > scaleFactor) {
+        const numberOfDigits = Math.trunc(maxValue/scaleFactor).toString().length;
         return Math.pow(10, numberOfDigits - 1);
     } else {
-        const numberOfDigits = Math.trunc(scaleFactor/decaysAtT).toString().length;
+        const numberOfDigits = Math.trunc(scaleFactor/maxValue).toString().length;
         return Math.pow(10, -numberOfDigits);
     }
 }
