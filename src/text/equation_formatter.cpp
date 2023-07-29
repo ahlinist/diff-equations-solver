@@ -2,6 +2,8 @@
 
 #include <sstream>
 #include <string>
+#include <memory>
+#include <stdexcept>
 
 #include "../calc/solution.hpp"
 
@@ -25,7 +27,7 @@ std::string format_operand(const double& multiplier, const std::string& multipli
     return sstm.str();
 }
 
-std::string text::SecondOrderEquationFormatter::format_second_order(const double& a, const double& b, const double& c) {
+std::string text::SecondOrderEquationFormatter::format_second_order_equation(const double& a, const double& b, const double& c) {
     std::stringstream sstm{};
 
     sstm << format_operand(a, "x''", sstm.tellp() == std::streampos(0));
@@ -36,9 +38,13 @@ std::string text::SecondOrderEquationFormatter::format_second_order(const double
     return sstm.str();
 }
 
-std::string text::SecondOrderEquationFormatter::format_under_damped_result(
-            const long double& first_root_real_part, const long double& first_root_imaginary_part, const long double& coefficient_a, const long double& coefficient_b) {
+std::string format_under_damped_solution(std::shared_ptr<calc::Solution> solution) {
     std::stringstream sstm{};
+    long double coefficient_a = solution->get_coefficient_a();
+    long double coefficient_b = solution->get_coefficient_b();
+    long double first_root_real_part = solution->get_first_root().real_part;
+    long double first_root_imaginary_part = solution->get_first_root().imaginary_part;
+
     sstm << "x = ";
 
     if (first_root_real_part) {
@@ -101,10 +107,15 @@ std::string text::SecondOrderEquationFormatter::format_under_damped_result(
     return sstm.str();
 }
 
-std::string text::SecondOrderEquationFormatter::format_over_damped_result(
-            const long double& first_root_real_part, const long double& second_root_real_part, const long double& coefficient_a, const long double& coefficient_b) {
+std::string format_over_damped_solution(std::shared_ptr<calc::Solution> solution) {
     std::stringstream sstm{};
+    long double coefficient_a = solution->get_coefficient_a();
+    long double coefficient_b = solution->get_coefficient_b();
+    long double first_root_real_part = solution->get_first_root().real_part;
+    long double second_root_real_part = solution->get_second_root().real_part;
+
     sstm << "x = ";
+    
     if (coefficient_a) {
         if (coefficient_a == -1) {
             sstm << "-";
@@ -147,9 +158,12 @@ std::string text::SecondOrderEquationFormatter::format_over_damped_result(
     return sstm.str();
 }
 
-std::string text::SecondOrderEquationFormatter::format_critically_damped_result(
-            const long double& first_root_real_part, const long double& coefficient_a, const long double& coefficient_b) {
+std::string format_critically_damped_solution(std::shared_ptr<calc::Solution> solution) {
     std::stringstream sstm{};
+    long double coefficient_a = solution->get_coefficient_a();
+    long double coefficient_b = solution->get_coefficient_b();
+    long double first_root_real_part = solution->get_first_root().real_part;
+    
     sstm << "x = ";
 
     if (coefficient_a and coefficient_b) {
@@ -190,4 +204,16 @@ std::string text::SecondOrderEquationFormatter::format_critically_damped_result(
         }
     }
     return sstm.str();
+}
+
+std::string text::SecondOrderEquationFormatter::format_second_order_solution(std::shared_ptr<calc::Solution> solution) {
+    if (std::dynamic_pointer_cast<calc::UnderDampedSolution>(solution)) {
+        return format_under_damped_solution(solution);
+    } else if (std::dynamic_pointer_cast<calc::OverDampedSolution>(solution)) {
+        return format_over_damped_solution(solution);
+    } else if (std::dynamic_pointer_cast<calc::CriticallyDampedSolution>(solution)) {
+        return format_critically_damped_solution(solution);
+    } else {
+        throw std::logic_error("Solution type not recognized");
+    }
 }

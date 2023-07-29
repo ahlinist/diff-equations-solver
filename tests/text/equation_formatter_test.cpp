@@ -15,7 +15,7 @@ TEST_P(EquationFormatterMultipleParametersTests, ChecksIfTheEquationIsFormattedC
     double b = std::get<2>(GetParam());
     double c = std::get<3>(GetParam());
 
-    ASSERT_EQ(expected, equation_formatter.format_second_order(a, b ,c));
+    ASSERT_EQ(expected, equation_formatter.format_second_order_equation(a, b ,c));
 }
 
 INSTANTIATE_TEST_CASE_P(

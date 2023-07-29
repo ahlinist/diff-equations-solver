@@ -22,10 +22,10 @@ const handleFormInput = () => {
     
     fetch(url)
         .then(response => response.json())
-        .then(data => {
-            document.querySelector("div#initialEquation").textContent = data.initialEquation;
-            document.querySelector("div#resultEquation").textContent = data.resultEquation;
-            drawGraph(data);
+        .then(response => {
+            document.querySelector("div#initialEquation").textContent = response.initialEquation;
+            document.querySelector("div#resultEquation").textContent = response.resultEquation;
+            drawGraph(response.functionDataPoints);
         })
         .catch(error => {
             console.error(error);
@@ -40,19 +40,14 @@ const drawGraph = (data) => {
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
 
-    const solution = data.solution;
-    const multiplier = solution.multiplier;
-    const augend = solution.augend;
-    const addend = solution.addend;
-    const maxAmplitude = Math.max(
-        Math.abs(calculateFunctionValue(multiplier, augend, addend, 0)),
-        Math.abs(calculateFunctionValue(multiplier, augend, addend, data.maxAmplitudeExtremumAtT)),
-    );
+    const maxAmplitude = data.reduce((max, obj) => {
+        return obj.y > max ? obj.y : max;
+      }, data[0].y);
 
-    const decaysAtT = data.decaysAtT || 10;
+    const maxTime = Math.max(...data.map(entry => entry.t));
 
     // Set the graph parameters
-    const scaleX = Math.ceil(canvasWidth / (decaysAtT));
+    const scaleX = Math.ceil(canvasWidth / (maxTime));
     const scaleY = Math.ceil(canvasHeight / (2 * maxAmplitude * 1.1));
     const offsetX = 20;
     const offsetY = canvasHeight / 2;
@@ -69,7 +64,7 @@ const drawGraph = (data) => {
     context.fillStyle = 'black'; // Set the fill color for the labels
 
     // Draw labels for x-axis
-    const xAxisStep = calculateAxisStep(decaysAtT);
+    const xAxisStep = calculateAxisStep(maxTime);
 
     for (let t = 0; t <= canvasWidth; t += xAxisStep) {
         const labelX = t * scaleX + offsetX;
@@ -91,40 +86,13 @@ const drawGraph = (data) => {
     context.beginPath();
     context.strokeStyle = 'blue';
 
-    for (let t = 0; t <= canvasWidth; t += 0.1) {
-      const y = calculateFunctionValue(multiplier, augend, addend, t);
-      const graphX = t * scaleX + offsetX;
-      const graphY = -y * scaleY + offsetY;
-      
-      context.lineTo(graphX, graphY);
-    }
+    for (const dataPoint of data) {
+        const graphX = dataPoint.t * scaleX + offsetX;
+        const graphY = -dataPoint.y * scaleY + offsetY;
+        context.lineTo(graphX, graphY);
+      }
     
     context.stroke();
-}
-
-const calculateFunctionValue = (multiplier, augend, addend, t) => {
-    const multiplierValue = calculateTerm(multiplier, t); 
-    const augendValue = calculateTerm(augend, t);
-    const addendValue = calculateTerm(addend, t);
-    return multiplierValue * (augendValue + addendValue);
-}
-
-const calculateTerm = (term, t) => {
-    if (term.type === "e") {
-        return term.coefficient * Math.pow(Math.E, term.argument * t);
-    }
-
-    if (term.type === "sin") {
-        return term.coefficient * Math.sin(term.argument * t);
-    }
-
-    if (term.type === "cos") {
-        return term.coefficient * Math.cos(term.argument * t);
-    }
-
-    if (term.type === "t") {
-        return term.coefficient * t;
-    }
 }
 
 const validateInput = (a, b, c, initialX, initialXPrime) => {

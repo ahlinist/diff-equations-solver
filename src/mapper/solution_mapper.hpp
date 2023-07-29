@@ -1,40 +1,27 @@
 #pragma once
 
 #include <string>
-#include <memory>
+#include <vector>
 #include <map>
 
 #include "../calc/solution.hpp"
+#include "../model/domain_model.hpp"
 
 namespace mapper {
-    struct Term {
-        long double coefficient{};
-        std::string type{};
-        long double argument{};
-    };
-
-    struct Solution {
-        Term multiplier{};
-        Term augend{};
-        Term addend{};
-    };
-
-    struct Response {
+    struct SecondOrderSolutionDto {
         std::string initialEquation{};
         std::string resultEquation{};
-        Solution solution{};
-        long double maxAmplitudeExtremumAtT{};
-        long double decaysAtT{};
+        std::vector<std::map<std::string, long double>> functionDataPoints{};
     };
 
     class SolutionMapper {
     public:
         virtual ~SolutionMapper() {}
-        virtual std::string serialize(std::shared_ptr<calc::Solution> solution) = 0;
+        virtual std::string serialize(model::SolvedSecondOrderEquation solved_equation) = 0;
     };
 
     class SolutionMapperImpl : public SolutionMapper {
     public:
-        std::string serialize(std::shared_ptr<calc::Solution> solution) override;
+        std::string serialize(model::SolvedSecondOrderEquation solved_equation) override;
     };
 }
