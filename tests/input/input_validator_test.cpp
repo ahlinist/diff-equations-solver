@@ -11,17 +11,17 @@ TEST(InputValidatorTestSuite, ThrowsInvalidInputExceptionForBothXAndXPrimeEqualZ
         input_validator.validate_second_order(1, 2, 3, 0, 0);
         FAIL();
     } catch (const std::invalid_argument& e) {
-        EXPECT_STREQ("Initial conditions x and x' should not be 0 simultaneously.\n", e.what());
+        EXPECT_STREQ("Initial conditions y and y' should not be 0 simultaneously.\n", e.what());
     }
 }
 
-TEST(InputValidatorTestSuite, PassesWithInitialXNonZero) {
+TEST(InputValidatorTestSuite, PassesWithInitialYNonZero) {
     input::InputValidatorImpl input_validator{};
     input_validator.validate_second_order(1, 2, 3, 4, 0);
     //nothing thrown
 }
 
-TEST(InputValidatorTestSuite, PassesWithInitialXPrimeNonZero) {
+TEST(InputValidatorTestSuite, PassesWithInitialYPrimeNonZero) {
     input::InputValidatorImpl input_validator{};
     input_validator.validate_second_order(1, 2, 3, 0, 4);
     //nothing thrown
@@ -34,7 +34,7 @@ TEST(InputValidatorTestSuite, ThrowsInvalidInputForNegativeCAndZeroInitialCondit
         input_validator.validate_second_order(1, 2, -3, 0, 0);
         FAIL();
     } catch (const std::invalid_argument& e) {
-        EXPECT_STREQ("Initial conditions x and x' should not be 0 simultaneously.\nb and c need to be greater than or equal 0.\n", e.what());
+        EXPECT_STREQ("Initial conditions y and y' should not be 0 simultaneously.\nb and c need to be greater than or equal 0.\n", e.what());
     }
 }
 
@@ -45,7 +45,7 @@ TEST(InputValidatorTestSuite, ThrowsInvalidInputFor3DifferentReasons) {
         input_validator.validate_second_order(0, 2, -3, 0, 0);
         FAIL();
     } catch (const std::invalid_argument& e) {
-        EXPECT_STREQ("Initial conditions x and x' should not be 0 simultaneously.\na needs to be greater than 0.\nb and c need to be greater than or equal 0.\n", e.what());
+        EXPECT_STREQ("Initial conditions y and y' should not be 0 simultaneously.\na needs to be greater than 0.\nb and c need to be greater than or equal 0.\n", e.what());
     }
 }
 
@@ -57,14 +57,14 @@ TEST_P(InputValidatorMultipleParametersTests, CheckIfInvalidInputExceptionIsThro
     double a = std::get<0>(GetParam());
     double b = std::get<1>(GetParam());
     double c = std::get<2>(GetParam());
-    double initial_x = std::get<3>(GetParam());
-    double initial_x_prime = std::get<4>(GetParam());
+    double initial_y = std::get<3>(GetParam());
+    double initial_y_prime = std::get<4>(GetParam());
 
     input::InputValidatorImpl input_validator{};
 
     //when
     try {
-        input_validator.validate_second_order(a, b, c, initial_x, initial_x_prime);
+        input_validator.validate_second_order(a, b, c, initial_y, initial_y_prime);
         FAIL();
     } catch (const std::invalid_argument& e) {
         EXPECT_STREQ("b and c need to be greater than or equal 0.\n", e.what());

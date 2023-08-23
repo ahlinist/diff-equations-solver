@@ -10,7 +10,7 @@
 class MockUnderDampedEquationSolver : public calc::EquationSolver {
 public:
     std::shared_ptr<calc::Solution> solve(
-            const long double& discriminant, const double& a, const double& b, const double& c, const double& initial_x, const double& initial_x_prime) {
+            const long double& discriminant, const double& a, const double& b, const double& c, const double& initial_y, const double& initial_y_prime) {
         return nullptr;
     }
 };
@@ -18,7 +18,7 @@ public:
 class MockOverDampedEquationSolver : public calc::EquationSolver {
 public:
     std::shared_ptr<calc::Solution> solve(
-            const long double& discriminant, const double& a, const double& b, const double& c, const double& initial_x, const double& initial_x_prime) {
+            const long double& discriminant, const double& a, const double& b, const double& c, const double& initial_y, const double& initial_y_prime) {
         return nullptr;
     }
 };
@@ -26,7 +26,7 @@ public:
 class MockCriticallyDampedEquationSolver : public calc::EquationSolver {
 public:
     std::shared_ptr<calc::Solution> solve(
-            const long double& discriminant, const double& a, const double& b, const double& c, const double& initial_x, const double& initial_x_prime) {
+            const long double& discriminant, const double& a, const double& b, const double& c, const double& initial_y, const double& initial_y_prime) {
         return nullptr;
     }
 };

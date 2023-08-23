@@ -13,7 +13,7 @@
 
 class MockEquationSolver : public calc::EquationSolver {
 public:
-    MOCK_METHOD(std::shared_ptr<calc::Solution>, solve, (const long double& discriminant, const double& a, const double& b, const double& c, const double& initial_x, const double& initial_x_prime), (override));
+    MOCK_METHOD(std::shared_ptr<calc::Solution>, solve, (const long double& discriminant, const double& a, const double& b, const double& c, const double& initial_y, const double& initial_y_prime), (override));
 };
 
 class MockEquationSolverSelector : public calc::EquationSolverSelector {

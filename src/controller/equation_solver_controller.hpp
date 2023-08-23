@@ -20,13 +20,13 @@ namespace controller {
             const std::shared_ptr<input::InputValidator> input_validator);
         virtual ~EquationSolverController() {}
         virtual std::string solve_second_order(
-            const double& a, const double& b, const double& c, const double& initial_x, const double& initial_x_prime) = 0;
+            const double& a, const double& b, const double& c, const double& initial_y, const double& initial_y_prime) = 0;
     };
 
     class EquationSolverControllerImpl : public EquationSolverController {
     public:
         using EquationSolverController::EquationSolverController;
         std::string solve_second_order(
-            const double& a, const double& b, const double& c, const double& initial_x, const double& initial_x_prime) override;
+            const double& a, const double& b, const double& c, const double& initial_y, const double& initial_y_prime) override;
     };
 }

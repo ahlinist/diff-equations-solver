@@ -22,13 +22,13 @@ void router::EquationSolverRouter::register_routes() {
         double a = std::stod(request.get_param_value("a"));
         double b = std::stod(request.get_param_value("b"));
         double c = std::stod(request.get_param_value("c"));
-        double initial_x = std::stod(request.get_param_value("initial-x"));
-        double initial_x_prime = std::stod(request.get_param_value("initial-x-prime"));
+        double initial_y = std::stod(request.get_param_value("initial-y"));
+        double initial_y_prime = std::stod(request.get_param_value("initial-y-prime"));
 
         std::string responseBody{};
 
         try {
-            response.set_content(equation_solver_controller->solve_second_order(a, b, c, initial_x, initial_x_prime), "application/json");
+            response.set_content(equation_solver_controller->solve_second_order(a, b, c, initial_y, initial_y_prime), "application/json");
         } 
         catch (const std::invalid_argument& e) {
             response.status = 400;

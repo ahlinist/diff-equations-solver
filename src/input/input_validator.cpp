@@ -3,11 +3,11 @@
 #include <string>
 #include <stdexcept>
 
-void input::InputValidatorImpl::validate_second_order(const double& a, const double& b, const double& c, const double& initial_x, const double& initial_x_prime) {
+void input::InputValidatorImpl::validate_second_order(const double& a, const double& b, const double& c, const double& initial_y, const double& initial_y_prime) {
     std::string result{};
 
-    if (initial_x == 0 and initial_x_prime == 0) {
-        result += "Initial conditions x and x' should not be 0 simultaneously.\n";
+    if (initial_y == 0 and initial_y_prime == 0) {
+        result += "Initial conditions y and y' should not be 0 simultaneously.\n";
     }
 
     if (a <= 0) {

@@ -30,9 +30,9 @@ std::string format_operand(const double& multiplier, const std::string& multipli
 std::string text::SecondOrderEquationFormatter::format_second_order_equation(const double& a, const double& b, const double& c) {
     std::stringstream sstm{};
 
-    sstm << format_operand(a, "x''", sstm.tellp() == std::streampos(0));
-    sstm << format_operand(b, "x'", sstm.tellp() == std::streampos(0));
-    sstm << format_operand(c, "x", sstm.tellp() == std::streampos(0));
+    sstm << format_operand(a, "y''", sstm.tellp() == std::streampos(0));
+    sstm << format_operand(b, "y'", sstm.tellp() == std::streampos(0));
+    sstm << format_operand(c, "y", sstm.tellp() == std::streampos(0));
     sstm << "=0";
 
     return sstm.str();
@@ -45,7 +45,7 @@ std::string format_under_damped_solution(std::shared_ptr<calc::Solution> solutio
     long double first_root_real_part = solution->get_first_root().real_part;
     long double first_root_imaginary_part = solution->get_first_root().imaginary_part;
 
-    sstm << "x = ";
+    sstm << "y = ";
 
     if (first_root_real_part) {
         if (first_root_real_part == 1) {
@@ -114,7 +114,7 @@ std::string format_over_damped_solution(std::shared_ptr<calc::Solution> solution
     long double first_root_real_part = solution->get_first_root().real_part;
     long double second_root_real_part = solution->get_second_root().real_part;
 
-    sstm << "x = ";
+    sstm << "y = ";
     
     if (coefficient_a) {
         if (coefficient_a == -1) {
@@ -164,7 +164,7 @@ std::string format_critically_damped_solution(std::shared_ptr<calc::Solution> so
     long double coefficient_b = solution->get_coefficient_b();
     long double first_root_real_part = solution->get_first_root().real_part;
     
-    sstm << "x = ";
+    sstm << "y = ";
 
     if (coefficient_a and coefficient_b) {
         sstm << "(";

@@ -22,12 +22,12 @@ INSTANTIATE_TEST_CASE_P(
         FormatInitialEquation,
         EquationFormatterMultipleParametersTests,
         ::testing::Values(
-                std::make_tuple("x''+x'+x=0", 1, 1, 1),
-                std::make_tuple("-x''-x'-x=0", -1, -1, -1),
-                std::make_tuple("-x''-x'=0", -1, -1, 0),
-                std::make_tuple("-x''=0", -1, 0, 0),
-                std::make_tuple("x''=0", 1, 0, 0),
-                std::make_tuple("x'=0", 0, 1, 0),
-                std::make_tuple("x=0", 0, 0, 1),
-                std::make_tuple("3x''-2x'+x=0", 3, -2, 1),
-                std::make_tuple("-x'-x=0", 0, -1, -1)));
+                std::make_tuple("y''+y'+y=0", 1, 1, 1),
+                std::make_tuple("-y''-y'-y=0", -1, -1, -1),
+                std::make_tuple("-y''-y'=0", -1, -1, 0),
+                std::make_tuple("-y''=0", -1, 0, 0),
+                std::make_tuple("y''=0", 1, 0, 0),
+                std::make_tuple("y'=0", 0, 1, 0),
+                std::make_tuple("y=0", 0, 0, 1),
+                std::make_tuple("3y''-2y'+y=0", 3, -2, 1),
+                std::make_tuple("-y'-y=0", 0, -1, -1)));

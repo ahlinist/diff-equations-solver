@@ -9,30 +9,30 @@
 </head>
 <body>
     <h1 class="text-center">Differential equations solver</h1>
-    <p class="text-center">Hello! I can solve linear second order homogenous differential equations (e.g. harmonic oscillator) such as: ax'' + bx' + c = 0.</p>
+    <p class="text-center">Hello! I can solve linear second order homogenous differential equations (e.g. harmonic oscillator) such as: ay'' + by' + c = 0.</p>
 
     <form id="equation-form">
         <div class="row">
           <div class="col"></div>
           <div class="col">
             <input name="a" type="number" class="form-control" aria-describedby="aHelp" placeholder="Coefficient a" min="0" oninput="handleFormInput()">
-            <small id="aHelp" class="form-text text-muted">Mass</small>
+            <small id="aHelp" class="form-text text-muted">Mass, kg</small>
           </div>
           <div class="col">
             <input name="b" type="number" class="form-control" aria-describedby="bHelp" placeholder="Coefficient b" min="0" oninput="handleFormInput()">
-            <small id="bHelp" class="form-text text-muted">Damping coefficient</small>
+            <small id="bHelp" class="form-text text-muted">Damping coefficient, N*s/m</small>
           </div>
           <div class="col">
             <input name="c" type="number" class="form-control" aria-describedby="cHelp" placeholder="Coefficient c" min="0" oninput="handleFormInput()">
-            <small id="cHelp" class="form-text text-muted">Spring stiffness</small>
+            <small id="cHelp" class="form-text text-muted">Spring stiffness, N/m</small>
           </div>
           <div class="col">
-            <input name="initial-x" type="number" class="form-control" aria-describedby="initial-xHelp" placeholder="x(0)" oninput="handleFormInput()">
-            <small id="initial-xHelp" class="form-text text-muted">Displacement at t = 0</small>
+            <input name="initial-y" type="number" class="form-control" aria-describedby="initial-yHelp" placeholder="y(0)" oninput="handleFormInput()">
+            <small id="initial-yHelp" class="form-text text-muted">Displacement, m at t = 0 s</small>
           </div>
           <div class="col">
-            <input name="initial-x-prime" type="number" class="form-control" aria-describedby="initial-x-primeHelp" placeholder="x'(0)" oninput="handleFormInput()">
-            <small id="initial-x-primeHelp" class="form-text text-muted">Velocity at t = 0</small>
+            <input name="initial-y-prime" type="number" class="form-control" aria-describedby="initial-y-primeHelp" placeholder="y'(0)" oninput="handleFormInput()">
+            <small id="initial-y-primeHelp" class="form-text text-muted">Velocity, m/s at t = 0 s</small>
           </div>
           <div class="col"></div>
         </div>

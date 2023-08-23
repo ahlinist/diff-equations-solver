@@ -22,13 +22,13 @@ namespace service {
             const std::shared_ptr<calc::FunctionValueCalculator> function_value_calculator);
         virtual ~EquationSolverService() {}
         virtual model::SolvedSecondOrderEquation solve_second_order(
-            const double& a, const double& b, const double& c, const double& initial_x, const double& initial_x_prime) = 0;
+            const double& a, const double& b, const double& c, const double& initial_y, const double& initial_y_prime) = 0;
     };
 
     class EquationSolverServiceImpl : public EquationSolverService {
     public:
         using EquationSolverService::EquationSolverService;
         virtual model::SolvedSecondOrderEquation solve_second_order(
-            const double& a, const double& b, const double& c, const double& initial_x, const double& initial_x_prime) override;
+            const double& a, const double& b, const double& c, const double& initial_y, const double& initial_y_prime) override;
     };
 }

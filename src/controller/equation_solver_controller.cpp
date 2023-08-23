@@ -16,9 +16,9 @@ controller::EquationSolverController::EquationSolverController(
         : equation_solver_service{ equation_solver_service }, solution_mapper{ solution_mapper }, input_validator{ input_validator } {}
 
 std::string controller::EquationSolverControllerImpl::solve_second_order(
-        const double& a, const double& b, const double& c, const double& initial_x, const double& initial_x_prime) {
-    input_validator->validate_second_order(a, b, c, initial_x, initial_x_prime);
-    model::SolvedSecondOrderEquation solved_equation = equation_solver_service->solve_second_order(a, b, c, initial_x, initial_x_prime);
+        const double& a, const double& b, const double& c, const double& initial_y, const double& initial_y_prime) {
+    input_validator->validate_second_order(a, b, c, initial_y, initial_y_prime);
+    model::SolvedSecondOrderEquation solved_equation = equation_solver_service->solve_second_order(a, b, c, initial_y, initial_y_prime);
     return solution_mapper->serialize(solved_equation);
 
     //TODO: to check how to return string reference instead of copying a string

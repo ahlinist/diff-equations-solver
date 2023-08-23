@@ -3,10 +3,10 @@ const handleFormInput = () => {
     const a = form.querySelector("input[name='a']").value;
     const b = form.querySelector("input[name='b']").value;
     const c = form.querySelector("input[name='c']").value;
-    const initialX = form.querySelector("input[name='initial-x']").value;
-    const initialXPrime = form.querySelector("input[name='initial-x-prime']").value;
+    const initialY = form.querySelector("input[name='initial-y']").value;
+    const initialYPrime = form.querySelector("input[name='initial-y-prime']").value;
 
-    const isInputValid = validateInput(a, b, c, initialX, initialXPrime);
+    const isInputValid = validateInput(a, b, c, initialY, initialYPrime);
 
     if (!isInputValid) {
         clearCanvas();
@@ -17,8 +17,8 @@ const handleFormInput = () => {
     url.searchParams.append("a", a);
     url.searchParams.append("b", b || 0);
     url.searchParams.append("c", c || 0);
-    url.searchParams.append("initial-x", initialX || 0);
-    url.searchParams.append("initial-x-prime", initialXPrime || 0);
+    url.searchParams.append("initial-y", initialY || 0);
+    url.searchParams.append("initial-y-prime", initialYPrime || 0);
     
     fetch(url)
         .then(response => response.json())
@@ -95,7 +95,7 @@ const drawGraph = (data) => {
     context.stroke();
 }
 
-const validateInput = (a, b, c, initialX, initialXPrime) => {
+const validateInput = (a, b, c, initialY, initialYPrime) => {
     const errorBox = document.querySelector("p#error-message");
     errorBox.innerHTML = "";
 
@@ -109,7 +109,7 @@ const validateInput = (a, b, c, initialX, initialXPrime) => {
         errorMessage += "b or c should be greater than or equal 0.<br>"
     }
 
-    if ((!initialX || initialX == 0) && (!initialXPrime || initialXPrime == 0)) {
+    if ((!initialY || initialY == 0) && (!initialYPrime || initialYPrime == 0)) {
         errorMessage += "x(0) and x'(0) can't be zero at the same time.<br>"
     }
 
